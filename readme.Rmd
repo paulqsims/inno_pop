@@ -1,0 +1,60 @@
+---
+title: "readme"
+author: "Paul Q. Sims"
+date: "7/13/2020"
+output: github_document
+---
+
+## Description
+
+Data and code associated with the publication “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. This repository is permanent archived at INSERT DOI HERE.
+
+## Authors
+
+Paul Q. Sims (<paul.q.sims@gmail.com>)
+
+Simon M. Reader (<simon.reader@mcgill.ca>)
+
+## Directory structure
+
+* `data/` Data used in analysis
+* `R/`    Self-contained R scripts and functions used for the analyses and in generating plots
+
+## Metadata
+
+Reference file: mydata file.csv
+
+```{r, echo = FALSE, results = TRUE, message = FALSE}
+
+library(tidyverse)
+
+data_analysis <- 
+  read_csv("data/data_Sims-Reader_2020.csv")
+
+# Write out descriptions associated with each column header
+var_names <- names(data_analysis)
+var_descrip <- c(
+  "Population: Lower or upper Aripo",
+  "Site sampled",
+  "Unique site identifier",
+  "Trial: 1 or 2",
+  "Group id",
+  "Latency to reach the goal zone (zone 11)",
+  "Total zones entered",
+  "Body length (mm)",
+  "Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1")
+
+var_metadata <- tibble(var_names,var_descrip) %>%
+                  rename(Column = "var_names", Description = "var_descrip")
+
+knitr::kable(var_metadata)
+```
+
+## License
+
+This software is licensed under the MIT License and the data is licensed under CC0 - see the LICENSE.md file for details. ADD LINKS HERE.
+
+## Funding information
+
+This work was supported by the Natural Sciences and Engineering Research Council of Canada (NSERC; Discovery grants #418342-2012 and 429385-2012) and the Canada Foundation for Innovation (grant #29433).
+

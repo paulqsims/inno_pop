@@ -1,0 +1,99 @@
+################################################################################
+# Function: Analysis - Predictors of innovation 
+# Author: Paul Q. Sims
+# Contact: paul.q.sims@gmail.com
+# Date: 2020
+# Purpose: Predictors of innovation analyses for Sims and Reader 2020
+################################################################################
+
+# Housekeeping ----
+
+library(tidyverse)
+library(nlme)
+
+data_analysis <- 
+  read_csv("data/data_analysis.csv") %>%
+  mutate(across(where(is.character), ~ as_factor(.x))) # Convert characters to factors
+
+# Load custom functions 
+source("r/XX_my-functions.R")
+
+# Create dataset without NAs - lme won't remove them
+data_analysis_NA_inno <-
+  data_analysis %>%
+  select(goal_z_lat_min_LN, tot_z_med_sc, pop, group,
+         site_uni, body_length_med_sc, trial) %>%
+  drop_na() 
+
+# Random effect testing ----
+
+# Test for significant group differences
+
+inno_full_pred <- formula(goal_z_lat_min_LN ~ tot_z_med_sc * pop +
+                            body_length_med_sc * pop +
+                            trial * pop)
+
+inno_predict_full_m <- 
+  lme(inno_full_pred,
+      weights = varIdent(form = ~ 1|site_uni * pop),
+      random = ~ 1 | group,
+      data = data_analysis_NA_inno,
+      method = "REML")
+
+inno_predict_red_rand_m1 <- 
+  gls(inno_full_pred,
+      weights = varIdent(form = ~ 1|site_uni * pop),
+      data = data_analysis_NA_inno,
+      method = "REML")
+
+anova(inno_predict_full_m, inno_predict_red_rand_m1)
+
+# Fixed effect selection ----
+
+# Test significance of interactions
+
+inno_predict_red_fix_m1 <- 
+  update(inno_predict_full_m, method = "ML")
+
+model_sel_temp1 <- drop1(inno_predict_red_fix_m1, test = "Chi")
+model_sel_temp1
+
+m1_temp <- update(inno_predict_red_fix_m1, ~ . -pop:body_length_med_sc)
+model_sel_temp2 <- drop1(m1_temp, test = "Chi")
+model_sel_temp2
+
+m2_temp <- update(m1_temp, ~ . -pop:trial)
+model_sel_temp3 <- drop1(m2_temp, test = "Chi")
+model_sel_temp3
+
+# Final model of innovation predictors
+
+inno_pred_reduc <- update(inno_full_pred, ~ . 
+                            -pop:body_length_med_sc -pop:trial)
+
+# Relevel population for testing total zones slope in other population
+# data_analysis_NA$pop <- fct_relevel(data_analysis_NA$pop, "Upper Aripo") 
+# data_analysis_NA$pop <- fct_relevel(data_analysis_NA$pop, "Lower Aripo") 
+
+inno_predict_reduc_m <- 
+  lme(inno_pred_reduc,
+      weights = varIdent(form = ~ 1|site_uni * pop),
+      random = ~ 1 | group,
+      data = data_analysis_NA_inno)
+
+# Innovation model summary
+summary(inno_predict_reduc_m)
+
+# R2
+MuMIn::r.squaredGLMM(inno_predict_reduc_m)
+
+# Tidy innovation predictor model
+inno_predict_final_tidy_m <-
+  inno_predict_reduc_m %>%
+  tidy() %>%
+  filter(effect == "fixed") %>%
+  mutate(across(.cols = c(estimate:statistic), ~round_est(.x)),
+         p_value = round_pval(p.value)) %>%
+  select("term", "estimate","std.error", "statistic", "p_value") # deselect "df" since not included in tidy
+
+inno_predict_final_tidy_m
