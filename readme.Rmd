@@ -7,7 +7,7 @@ output: github_document
 
 ## Description
 
-Data and code associated with the publication “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. This repository is permanent archived at INSERT DOI HERE.
+Data and code associated with the publication “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. Insert publication information here. This repository is permanent archived at INSERT Zenodo DOI HERE.
 
 ## Authors
 
@@ -22,7 +22,7 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
 
 ## Metadata
 
-Reference file: mydata file.csv
+Reference file: data_Sims-Reader_2020.csv
 
 ```{r, echo = FALSE, results = TRUE, message = FALSE}
 
@@ -52,7 +52,7 @@ knitr::kable(var_metadata)
 
 ## License
 
-This software is licensed under the MIT License and the data is licensed under CC0 - see the LICENSE.md file for details. ADD LINKS HERE.
+This software is licensed under the MIT License and the data is licensed under CC0 - see the [LICENSE.md](https://github.com/paulqsims/inno_pop/blob/master/license.md) file for details. ADD LINKS HERE.
 
 ## Funding information
 

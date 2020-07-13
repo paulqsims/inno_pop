@@ -7,8 +7,9 @@ Paul Q. Sims
 
 Data and code associated with the publication “An investigation of
 population variation in maze exploration and its predictors in wild
-Trinidadian guppies (*Poecilia reticulata*)”. This repository is
-permanent archived at INSERT DOI HERE.
+Trinidadian guppies (*Poecilia reticulata*)”. Insert publication
+information here. This repository is permanent archived at INSERT Zenodo
+DOI HERE.
 
 ## Authors
 
@@ -24,8 +25,8 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
 
 ## Metadata
 
-Reference file: mydata
-file.csv
+Reference file:
+data\_Sims-Reader\_2020.csv
 
 | Column       | Description                                                                                    |
 | :----------- | :--------------------------------------------------------------------------------------------- |
@@ -42,7 +43,9 @@ file.csv
 ## License
 
 This software is licensed under the MIT License and the data is licensed
-under CC0 - see the LICENSE.md file for details. ADD LINKS HERE.
+under CC0 - see the
+[LICENSE.md](https://github.com/paulqsims/inno_pop/blob/master/license.md)
+file for details. ADD LINKS HERE.
 
 ## Funding information
 
