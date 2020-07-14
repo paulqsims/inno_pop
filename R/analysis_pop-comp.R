@@ -23,7 +23,7 @@ source("r/my-functions.R")
 
 # Body length, total zones entered
 
-length_totz_popcomp_tidy_m <- 
+m_length_totz_popcomp_tidy <- 
   data_analysis %>%
   select(group, pop, trial, body_length_LN, tot_z_LN) %>%
   filter(trial == 1) %>%
@@ -40,14 +40,14 @@ length_totz_popcomp_tidy_m <-
   select(-c(data, model, p.value)) 
 
 # Body length population comparison summary
-body_length_m <-
+m_body_length <-
   data_analysis %>%
   filter(trial == 1) %>%
   lm(body_length_LN ~ pop, data = .) %>%
   summary(.)
 
 # Total zones entered population comparison summary
-tot_z_m <-
+m_tot_z <-
   data_analysis %>%
   filter(trial == 1) %>%
   lm(tot_z_LN ~ pop, data = .) %>%
@@ -67,7 +67,7 @@ data_analysis_NA_inno <-
 # data_analysis_NA$pop <- fct_relevel(data_analysis_NA$pop, "Lower Aripo") 
 
 # Reduced innovation predictor model
-inno_predict_final_m <- 
+m_inno_predict_final <- 
   lme(goal_z_lat_LN ~ tot_z_sc * pop + 
         body_length_sc + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
@@ -76,8 +76,8 @@ inno_predict_final_m <-
       method = "REML")
 
 # Tidy innovation predictor model
-inno_predict_final_tidy_m <-
-  inno_predict_final_m %>%
+m_inno_predict_final_tidy <-
+  m_inno_predict_final %>%
   tidy() %>%
   filter(effect == "fixed",
          term %in% c("(Intercept)", "popUpper Aripo")) %>%
@@ -96,24 +96,24 @@ data_analysis_NA_learn <-
   drop_na() 
 
 # Reduced learning population comparison model
-learn_pop_comp_m <- 
+m_learn_pop_comp <- 
   gls(learn_prop_LN ~ pop,
       weights = varIdent(form = ~ 1|site_uni * pop),
       data = data_analysis_NA_learn,
       method = "REML")
 
 # Model summary: population differences in learning
-summary(learn_pop_comp_m)
+summary(m_learn_pop_comp)
 
 # Reduced learning model
-learn_m <- update(learn_pop_comp_m, ~ 1)
+m_learn <- update(m_learn_pop_comp, ~ 1)
 
 # Model summary: learning w/out population differences
-summary(learn_m)
+summary(m_learn)
 
 # Tidy learning population comparison model
-learn_pop_comp_tidy_m <-
-  learn_pop_comp_m %>%
+m_learn_pop_comp_tidy <-
+  m_learn_pop_comp %>%
   broom.mixed::tidy() %>%
   mutate(response = "improvement_ratio",
          across(.cols = c(estimate:statistic), ~round_est(.x)),
@@ -124,9 +124,9 @@ learn_pop_comp_tidy_m <-
 
 # Bind all population comparisons together
 
-pop_comp_final_tidy_m <-
-  bind_rows(learn_pop_comp_tidy_m, inno_predict_final_tidy_m,
-            length_totz_popcomp_tidy_m) %>%
+m_pop_comp_final_tidy <-
+  bind_rows(m_learn_pop_comp_tidy, m_inno_predict_final_tidy,
+            m_length_totz_popcomp_tidy) %>%
   rename(predictor = "term")
 
-print(pop_comp_final_tidy_m)
+print(m_pop_comp_final_tidy)
