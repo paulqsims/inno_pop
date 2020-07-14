@@ -15,7 +15,7 @@ library(nlme)
 source("R/my-functions.R")
 
 data_analysis <- 
-  read_csv_wfact("data/data_Sims-Reader_2020_mod.csv") 
+  read_csv_wfact("data_Sims-Reader_2020_mod") 
 
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_inno <-
@@ -74,6 +74,14 @@ inno_pred_reduc <- update(inno_full_pred, ~ .
 # data_analysis_NA$pop <- fct_relevel(data_analysis_NA$pop, "Upper Aripo") 
 # data_analysis_NA$pop <- fct_relevel(data_analysis_NA$pop, "Lower Aripo") 
 
+# Change trial contrasts in order to get marginal effects for average trial 
+contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
+contrasts(data_analysis_NA_inno$trial) # check
+
+# For changing trial back to dummy coding
+# contrasts(mydata$trial.F) <- c(0,1)
+# contrasts(mydata$trial.F) # check
+
 m_inno_predict_reduc <- 
   lme(inno_pred_reduc,
       weights = varIdent(form = ~ 1|site_uni * pop),
@@ -89,7 +97,7 @@ MuMIn::r.squaredGLMM(m_inno_predict_reduc)
 # Tidy innovation predictor model
 m_inno_predict_final_tidy <-
   m_inno_predict_reduc %>%
-  tidy() %>%
+  broom.mixed::tidy() %>%
   filter(effect == "fixed") %>%
   mutate(across(.cols = c(estimate:statistic), ~round_est(.x)),
          p_value = round_pval(p.value)) %>%

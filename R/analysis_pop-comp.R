@@ -65,6 +65,14 @@ data_analysis_NA_inno <-
 # data_analysis_NA$pop <- fct_relevel(data_analysis_NA$pop, "Upper Aripo") 
 # data_analysis_NA$pop <- fct_relevel(data_analysis_NA$pop, "Lower Aripo") 
 
+# Change trial contrasts in order to get marginal effects for average trial 
+contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
+contrasts(data_analysis_NA_inno$trial) # check
+
+# For changing trial back to dummy coding
+# contrasts(mydata$trial.F) <- c(0,1)
+# contrasts(mydata$trial.F) # check
+
 # Reduced innovation predictor model
 m_inno_predict_final <- 
   lme(goal_z_lat_LN ~ tot_z_sc * pop + 
@@ -77,7 +85,7 @@ m_inno_predict_final <-
 # Tidy innovation predictor model
 m_inno_predict_final_tidy <-
   m_inno_predict_final %>%
-  tidy() %>%
+  broom.mixed::tidy() %>%
   filter(effect == "fixed",
          term %in% c("(Intercept)", "popUpper Aripo")) %>%
   mutate(response = "goal_z_lat_LN",
