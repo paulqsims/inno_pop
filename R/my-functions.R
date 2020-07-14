@@ -8,10 +8,13 @@
 
 # Reads in data and converts characters to factors
 #
+# Only need to input file name without extension in quotes
+# Assumes file is in the data directory
 
 read_csv_wfact <- function(data) {
-  read_csv("data/data_Sims-Reader_2020_mod.csv") %>%
-  mutate(across(where(is.character), ~ as_factor(.x))) 
+  read_csv(paste0("data/", data, ".csv", sep = "")) %>%
+  mutate(across(where(is.character), ~ as_factor(.x)),
+         trial = as.factor(trial))
 }
 
 # Mean centers and standardizes (1 SD) vector with NA value removal option

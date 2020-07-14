@@ -14,7 +14,7 @@ library(tidyverse)
 source("R/my-functions.R")
 
 data_analysis <- 
-  read_csv_wfact("data/data_Sims-Reader_2020.csv") 
+  read_csv_wfact("data_Sims-Reader_2020") 
 
 # Log transform and standardize data to 1 SD
 data_analysis_mod <-

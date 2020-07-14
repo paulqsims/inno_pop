@@ -16,7 +16,7 @@ library(broom)
 source("R/my-functions.R")
 
 data_analysis <- 
-  read_csv_wfact("data/data_Sims-Reader_2020_mod.csv") 
+  read_csv_wfact("data_Sims-Reader_2020_mod") 
 
 # Population comparisons ----
 

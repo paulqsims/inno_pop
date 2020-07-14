@@ -19,7 +19,7 @@ source("R/my-functions.R")
 
 # Read in data
 data_analysis <- 
-  read_csv_wfact("data/data_Sims-Reader_2020_mod.csv")
+  read_csv_wfact("data_Sims-Reader_2020_mod") 
 
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_inno <-
