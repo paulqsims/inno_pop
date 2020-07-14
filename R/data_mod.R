@@ -15,7 +15,7 @@ data_analysis <-
   mutate(across(where(is.character), ~as_factor(.x))) # Convert characters to factors
 
 # Load custom functions 
-source("R/XX_my-functions.R")
+source("R/my-functions.R")
 
 data_analysis_mod <-
   data_analysis %>%

@@ -16,7 +16,7 @@ data_analysis <-
   mutate(across(where(is.character), ~ as_factor(.x))) # Convert characters to factors
 
 # Load custom functions 
-source("r/XX_my-functions.R")
+source("r/my-functions.R")
 
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_inno <-
