@@ -57,7 +57,7 @@ tot_z_m <-
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_inno <-
   data_analysis %>%
-  select(goal_z_lat_min_LN, tot_z_sc, pop, group,
+  select(goal_z_lat_LN, tot_z_sc, pop, group,
          site_uni, body_length_sc, trial) %>%
   drop_na() 
 
@@ -67,7 +67,7 @@ data_analysis_NA_inno <-
 
 # Reduced innovation predictor model
 inno_predict_final_m <- 
-  lme(goal_z_lat_min_LN ~ tot_z_sc * pop + 
+  lme(goal_z_lat_LN ~ tot_z_sc * pop + 
         body_length_sc + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
@@ -80,7 +80,7 @@ inno_predict_final_tidy_m <-
   tidy() %>%
   filter(effect == "fixed",
          term %in% c("(Intercept)", "popUpper Aripo")) %>%
-  mutate(response = "goal_z_lat_min_LN",
+  mutate(response = "goal_z_lat_LN",
          across(.cols = c(estimate:statistic), ~round_est(.x)),
          p_value = round_pval(p.value)) %>%
   select("response", "term", "estimate","std.error", "statistic", "p_value") # deselect "df" since not included in tidy
@@ -90,13 +90,13 @@ inno_predict_final_tidy_m <-
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_learn <-
   data_analysis %>%
-  select(learn_prop_min_LN, tot_z_sc, pop, group,
+  select(learn_prop_LN, tot_z_sc, pop, group,
          site_uni, body_length_sc, trial) %>%
   drop_na() 
 
 # Reduced learning population comparison model
 learn_pop_comp_m <- 
-  gls(learn_prop_min_LN ~ pop,
+  gls(learn_prop_LN ~ pop,
       weights = varIdent(form = ~ 1|site_uni * pop),
       data = data_analysis_NA_learn,
       method = "REML")
