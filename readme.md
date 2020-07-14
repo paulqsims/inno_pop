@@ -21,6 +21,24 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
   - `R/` Self-contained R scripts and functions used for the analyses
     and in generating plots
 
+## Prerequisites: R packages
+
+Data clean up
+
+  - `tidyverse`
+  - `broom`, `broom.mixed`
+
+Analysis
+
+  - `nlme`
+  - `MuMIn`
+
+Plots
+
+  - `ggplot2`
+  - `ggsignif`
+  - `effects`
+
 ## Metadata
 
 Reference file:
