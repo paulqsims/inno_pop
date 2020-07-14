@@ -108,23 +108,6 @@ p <- ggplot(data_inno_mean_plot,
 
 print(p)
 
-# ggsave(p, file = "figs/inno-pop-comp_inno.png",
-#        width = 9.75, height = 7.33, dpi = 300,
-#        device = "png")
-#        
-
-ggsave(p, file = "res/PopComp_Innovation.png",
-       width = 8, height = 8, units = "in",dpi = 300,
-       device = "png")
-
-ggsave(p, file = "res/PopComp_Innovation.pdf",
-       width = 8, height = 8, units = "in",dpi = 300,
-       device = "pdf")
-
-ggsave(p, file = "res/PopComp_Innovation.svg",
-       width = 8, height = 8, units = "in",dpi = 300,
-       device = "svg")
-
 # Innovation : predicted by total zones entered ----
 
 # Get min and max values for total zones entered for lower and upper aripo 
@@ -207,15 +190,3 @@ p <- ggplot(data_inno_mean_plot,
         plot.margin = margin(1, 0.5, 0.5, 0.25, "cm")) 
 
 print(p)
-
-ggsave(p, file = "res/InnoPredict_TotZEnt.png",
-       width = 8, height = 6, units = "in",dpi = 300,
-       device = "png")
-
-ggsave(p, file = "res/InnoPredict_TotZEnt.pdf",
-       width = 8, height = 6, units = "in",dpi = 300,
-       device = "pdf")
-
-ggsave(p, file = "res/InnoPredict_TotZEnt.svg",
-       width = 8, height = 6, units = "in",dpi = 300,
-       device = "svg")
