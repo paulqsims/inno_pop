@@ -9,6 +9,7 @@
 # Housekeeping ----
 
 library(tidyverse)
+library(broom)
 
 data_analysis <- 
   read_csv("data/data_Sims-Reader_2020_mod.csv") %>%
@@ -23,9 +24,9 @@ source("r/my-functions.R")
 
 length_totz_popcomp_tidy_m <- 
   data_analysis %>%
-  select(group, pop, trial, body_length_med_LN, tot_z_med_LN) %>%
+  select(group, pop, trial, body_length_LN, tot_z_LN) %>%
   filter(trial == 1) %>%
-  pivot_longer(cols = c("body_length_med_LN", "tot_z_med_LN"),
+  pivot_longer(cols = c("body_length_LN", "tot_z_LN"),
                names_to = "response",
                values_to = "value") %>%
   group_by(response) %>%
@@ -33,22 +34,22 @@ length_totz_popcomp_tidy_m <-
   mutate(model = map(data, ~lm(value ~ pop, data = .)), 
          tidy_model = map(model, tidy)) %>%
   unnest(tidy_model) %>%
-  mutate(across(.cols = c(estimate:statistic), ~round_est(.x)),
+  mutate(across(.cols = c(estimate:statistic), ~ round_est(.x)),
          p_value = round_pval(p.value)) %>%
-  select(-c(data,model,p.value)) 
+  select(-c(data, model, p.value)) 
 
 # Body length population comparison summary
 body_length_m <-
   data_analysis %>%
   filter(trial == 1) %>%
-  lm(body_length_med_LN ~ pop, data = .) %>%
+  lm(body_length_LN ~ pop, data = .) %>%
   summary(.)
 
 # Total zones entered population comparison summary
 tot_z_m <-
   data_analysis %>%
   filter(trial == 1) %>%
-  lm(tot_z_med_LN ~ pop, data = .) %>%
+  lm(tot_z_LN ~ pop, data = .) %>%
   summary(.)
 
 # Innovation 
@@ -56,8 +57,8 @@ tot_z_m <-
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_inno <-
   data_analysis %>%
-  select(goal_z_lat_min_LN, tot_z_med_sc, pop, group,
-         site_uni, body_length_med_sc, trial) %>%
+  select(goal_z_lat_min_LN, tot_z_sc, pop, group,
+         site_uni, body_length_sc, trial) %>%
   drop_na() 
 
 # Relevel population for testing total zones slope in other population
@@ -66,8 +67,8 @@ data_analysis_NA_inno <-
 
 # Reduced innovation predictor model
 inno_predict_final_m <- 
-  lme(goal_z_lat_min_LN ~ tot_z_med_sc * pop + 
-        body_length_med_sc + trial,
+  lme(goal_z_lat_min_LN ~ tot_z_sc * pop + 
+        body_length_sc + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
       data = data_analysis_NA_inno,
@@ -89,8 +90,8 @@ inno_predict_final_tidy_m <-
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_learn <-
   data_analysis %>%
-  select(learn_prop_min_LN, tot_z_med_sc, pop, group,
-         site_uni, body_length_med_sc, trial) %>%
+  select(learn_prop_min_LN, tot_z_sc, pop, group,
+         site_uni, body_length_sc, trial) %>%
   drop_na() 
 
 # Reduced learning population comparison model
