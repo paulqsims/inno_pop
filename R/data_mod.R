@@ -10,13 +10,13 @@
 
 library(tidyverse)
 
-data_analysis <- 
-  read_csv("data/data_Sims-Reader_2020.csv") %>%
-  mutate(across(where(is.character), ~as_factor(.x))) # Convert characters to factors
-
 # Load custom functions 
 source("R/my-functions.R")
 
+data_analysis <- 
+  read_csv_wfact("data/data_Sims-Reader_2020.csv") 
+
+# Log transform and standardize data to 1 SD
 data_analysis_mod <-
   data_analysis %>%
   mutate(across(.cols = c(goal_z_lat, body_length,  # log transformations

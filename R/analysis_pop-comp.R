@@ -12,11 +12,11 @@ library(tidyverse)
 library(nlme)
 library(broom)
 
+# Load custom functions 
+source("R/my-functions.R")
+
 data_analysis <- 
   read_csv_wfact("data/data_Sims-Reader_2020_mod.csv") 
-
-# Load custom functions 
-source("r/my-functions.R")
 
 # Population comparisons ----
 

@@ -11,11 +11,11 @@
 library(tidyverse)
 library(nlme)
 
+# Load custom functions 
+source("R/my-functions.R")
+
 data_analysis <- 
   read_csv_wfact("data/data_Sims-Reader_2020_mod.csv") 
-
-# Load custom functions 
-source("r/my-functions.R")
 
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_inno <-

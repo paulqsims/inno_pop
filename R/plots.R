@@ -14,6 +14,9 @@ library(ggplot2)
 library(ggsignif) # sig stars
 library(effects) # marginal effects
 
+# Load custom functions 
+source("R/my-functions.R")
+
 # Read in data
 data_analysis <- 
   read_csv_wfact("data/data_Sims-Reader_2020_mod.csv")
