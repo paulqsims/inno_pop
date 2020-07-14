@@ -16,7 +16,7 @@ library(effects)
 
 # Read in data
 data_analysis <- 
-  read_csv("data/data_analysis.csv") %>%
+  read_csv("data/data_Sims-Reader_2020_mod.csv") %>%
   mutate(across(where(is.character), ~as_factor(.x))) 
 
 # Create dataset without NAs - lme won't remove them
