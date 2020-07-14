@@ -39,6 +39,8 @@ Reference file:
 | tot\_z       | Total zones entered                                                                            |
 | body\_length | Body length (mm)                                                                               |
 | learn\_prop  | Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1 |
+| LN           | Natural log transformation                                                                     |
+| sc           | Mean centered and standardized by 1 standard deviation                                         |
 
 ## License
 

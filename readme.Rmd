@@ -32,7 +32,8 @@ data_analysis <-
   read_csv("data/data_Sims-Reader_2020.csv")
 
 # Write out descriptions associated with each column header
-var_names <- names(data_analysis)
+var_names <- names(data_analysis) %>%
+  append(., c("LN", "sc"))
 var_descrip <- c(
   "Population: Lower or upper Aripo",
   "Site sampled",
@@ -42,7 +43,9 @@ var_descrip <- c(
   "Latency to reach the goal zone (zone 11)",
   "Total zones entered",
   "Body length (mm)",
-  "Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1")
+  "Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1",
+  "Natural log transformation",
+  "Mean centered and standardized by 1 standard deviation")
 
 var_metadata <- tibble(var_names,var_descrip) %>%
                   rename(Column = "var_names", Description = "var_descrip")
