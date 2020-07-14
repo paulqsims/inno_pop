@@ -6,6 +6,14 @@
 # Purpose: Custom functions for analyses and formatting
 ################################################################################
 
+# Reads in data and converts characters to factors
+#
+
+read_csv_wfact <- function(data) {
+  read_csv("data/data_Sims-Reader_2020_mod.csv") %>%
+  mutate(across(where(is.character), ~ as_factor(.x))) 
+}
+
 # Mean centers and standardizes (1 SD) vector with NA value removal option
 #
 # Note that the default is False so removal must be specified
