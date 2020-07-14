@@ -1,7 +1,7 @@
 ---
 title: "readme"
-author: "Paul Q. Sims"
-date: "7/13/2020"
+#author: "Paul Q. Sims"
+#date: "7/13/2020"
 output: github_document
 ---
 

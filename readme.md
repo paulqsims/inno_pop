@@ -1,7 +1,5 @@
 readme
 ================
-Paul Q. Sims
-7/13/2020
 
 ## Description
 
