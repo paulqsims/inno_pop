@@ -21,44 +21,44 @@ source("r/my-functions.R")
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_inno <-
   data_analysis %>%
-  select(goal_z_lat_min_LN, tot_z_med_sc, pop, group,
-         site_uni, body_length_med_sc, trial) %>%
+  select(goal_z_lat_LN, tot_z_sc, pop, group,
+         site_uni, body_length_sc, trial) %>%
   drop_na() 
 
 # Random effect testing ----
 
 # Test for significant group differences
 
-inno_full_pred <- formula(goal_z_lat_min_LN ~ tot_z_med_sc * pop +
-                            body_length_med_sc * pop +
+inno_full_pred <- formula(goal_z_lat_LN ~ tot_z_sc * pop +
+                            body_length_sc * pop +
                             trial * pop)
 
-inno_predict_full_m <- 
+m_inno_predict_full <- 
   lme(inno_full_pred,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
       data = data_analysis_NA_inno,
       method = "REML")
 
-inno_predict_red_rand_m1 <- 
+m1_inno_predict_red_rand <- 
   gls(inno_full_pred,
       weights = varIdent(form = ~ 1|site_uni * pop),
       data = data_analysis_NA_inno,
       method = "REML")
 
-anova(inno_predict_full_m, inno_predict_red_rand_m1)
+anova(m_inno_predict_full, m1_inno_predict_red_rand)
 
 # Fixed effect selection ----
 
 # Test significance of interactions
 
-inno_predict_red_fix_m1 <- 
-  update(inno_predict_full_m, method = "ML")
+m1_inno_predict_red_fix <- 
+  update(m_inno_predict_full, method = "ML")
 
-model_sel_temp1 <- drop1(inno_predict_red_fix_m1, test = "Chi")
+model_sel_temp1 <- drop1(m1_inno_predict_red_fix, test = "Chi")
 model_sel_temp1
 
-m1_temp <- update(inno_predict_red_fix_m1, ~ . -pop:body_length_med_sc)
+m1_temp <- update(m1_inno_predict_red_fix, ~ . -pop:body_length_sc)
 model_sel_temp2 <- drop1(m1_temp, test = "Chi")
 model_sel_temp2
 
@@ -69,31 +69,31 @@ model_sel_temp3
 # Final model of innovation predictors
 
 inno_pred_reduc <- update(inno_full_pred, ~ . 
-                            -pop:body_length_med_sc -pop:trial)
+                            -pop:body_length_sc -pop:trial)
 
 # Relevel population for testing total zones slope in other population
 # data_analysis_NA$pop <- fct_relevel(data_analysis_NA$pop, "Upper Aripo") 
 # data_analysis_NA$pop <- fct_relevel(data_analysis_NA$pop, "Lower Aripo") 
 
-inno_predict_reduc_m <- 
+m_inno_predict_reduc <- 
   lme(inno_pred_reduc,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
       data = data_analysis_NA_inno)
 
 # Innovation model summary
-summary(inno_predict_reduc_m)
+summary(m_inno_predict_reduc)
 
 # R2
-MuMIn::r.squaredGLMM(inno_predict_reduc_m)
+MuMIn::r.squaredGLMM(m_inno_predict_reduc)
 
 # Tidy innovation predictor model
-inno_predict_final_tidy_m <-
-  inno_predict_reduc_m %>%
+m_inno_predict_final_tidy <-
+  m_inno_predict_reduc %>%
   tidy() %>%
   filter(effect == "fixed") %>%
   mutate(across(.cols = c(estimate:statistic), ~round_est(.x)),
          p_value = round_pval(p.value)) %>%
   select("term", "estimate","std.error", "statistic", "p_value") # deselect "df" since not included in tidy
 
-inno_predict_final_tidy_m
+m_inno_predict_final_tidy

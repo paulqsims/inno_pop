@@ -22,13 +22,13 @@ data_analysis <-
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_inno <-
   data_analysis %>%
-  select(goal_z_lat_min, goal_z_lat_min_LN, tot_z_med_sc, pop, group,
-         site_uni, body_length_med_sc, trial) %>%
+  select(goal_z_lat, goal_z_lat_LN, tot_z_sc, pop, group,
+         site_uni, body_length_sc, trial) %>%
   drop_na() 
 
 # Create reduced innovation model 
 inno_predict_reduc_m <- 
-  lme(goal_z_lat_min_LN ~ tot_z_med_sc * pop + body_length_med_sc + 
+  lme(goal_z_lat_LN ~ tot_z_sc * pop + body_length_sc + 
         trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
@@ -38,7 +38,7 @@ inno_predict_reduc_m <-
 data_inno_mean_plot <-
   data_analysis_NA_inno %>%
   group_by(group) %>%
-  mutate(inno_mean = mean(goal_z_lat_min,
+  mutate(inno_mean = mean(goal_z_lat,
                           na.rm = TRUE),
          Population = pop) %>% # needed for total zones predictor plot for plot legend
   filter(trial == 1) 
@@ -132,9 +132,9 @@ ggsave(p, file = "res/PopComp_Innovation.svg",
 tot_z_range <-  
   data_analysis_NA_inno %>%
   group_by(pop) %>%
-  select(tot_z_med_sc) %>%
-  summarize(min_totz = min(tot_z_med_sc, na.rm = TRUE),  # get real ranges of tot z
-            max_totz = max(tot_z_med_sc, na.rm = TRUE)) %>%
+  select(tot_z_sc) %>%
+  summarize(min_totz = min(tot_z_sc, na.rm = TRUE),  # get real ranges of tot z
+            max_totz = max(tot_z_sc, na.rm = TRUE)) %>%
   pivot_wider(names_from = pop, values_from = c(min_totz,
                                                 max_totz)) %>%
   rename(min_LA = `min_totz_Lower Aripo`, max_LA = `max_totz_Lower Aripo`,
@@ -144,16 +144,16 @@ tot_z_range <-
 # marginal means, mean of trial and total zones entered
 data_inno_means <- 
   as.data.frame(
-    Effect(c("tot_z_med_sc", "pop"), inno_predict_reduc_m,
+    Effect(c("tot_z_sc", "pop"), inno_predict_reduc_m,
            data_analysis_NA_inno)) %>%
   mutate(across(.cols = fit:upper, ~ exp(.x)),  # backtransform to normal
-         tot_z_med_sc = ifelse(  # remove tot z values outside real range
-           pop == "Lower Aripo" & tot_z_med_sc < tot_z_range$min_LA |
-           pop == "Lower Aripo" & tot_z_med_sc > tot_z_range$max_LA, NA,
+         tot_z_sc = ifelse(  # remove tot z values outside real range
+           pop == "Lower Aripo" & tot_z_sc < tot_z_range$min_LA |
+           pop == "Lower Aripo" & tot_z_sc > tot_z_range$max_LA, NA,
            ifelse(
-             pop == "Upper Aripo" & tot_z_med_sc < tot_z_range$min_UA |
-             pop == "Upper Aripo" & tot_z_med_sc > tot_z_range$max_UA, NA,
-               tot_z_med_sc))) %>%
+             pop == "Upper Aripo" & tot_z_sc < tot_z_range$min_UA |
+             pop == "Upper Aripo" & tot_z_sc > tot_z_range$max_UA, NA,
+               tot_z_sc))) %>%
   rename(Population = "pop") # crucial for plot legend to say Population
 
 # Plot estimated innovation predicted by total zones entered by population
@@ -171,14 +171,14 @@ custom_labels.y <- c(expression(atop("3","(e"^1*")")),
 custom_breaks.y <- round(exp(seq(from = 1,to = 6, by = 1)), digits = 0)
 
 p <- ggplot(data_inno_mean_plot,
-            aes(x = tot_z_med_sc,
+            aes(x = tot_z_sc,
                 y = inno_mean,
                 color = Population,
                 shape = Population)) + 
   geom_point(size = 3.5,
              alpha = 0.9) +
   geom_line(data = data_inno_means,
-            aes(x = tot_z_med_sc,
+            aes(x = tot_z_sc,
                 y = fit,
                 color = Population,
                 linetype = Population),
