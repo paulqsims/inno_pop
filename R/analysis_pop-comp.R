@@ -13,8 +13,7 @@ library(nlme)
 library(broom)
 
 data_analysis <- 
-  read_csv("data/data_Sims-Reader_2020_mod.csv") %>%
-  mutate(across(where(is.character), ~as_factor(.x))) # Convert characters to factors
+  read_csv_wfact("data/data_Sims-Reader_2020_mod.csv") 
 
 # Load custom functions 
 source("r/my-functions.R")
