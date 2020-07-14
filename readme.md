@@ -24,8 +24,6 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
 ## Metadata
 
 Reference file:
-[data\_Sims-Reader\_2020.csv](https://github.com/paulqsims/inno_pop/blob/master/data/data_Sims-Reader_2020.csv)
-and
 [data\_Sims-Reader\_2020\_mod.csv](https://github.com/paulqsims/inno_pop/blob/master/data/data_Sims-Reader_2020_mod.csv)
 
 | Column       | Description                                                                                    |
