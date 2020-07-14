@@ -11,8 +11,8 @@
 library(tidyverse)
 library(nlme)
 library(ggplot2)
-library(ggsignif)
-library(effects)
+library(ggsignif) # sig stars
+library(effects) # marginal effects
 
 # Read in data
 data_analysis <- 
@@ -83,7 +83,7 @@ p <- ggplot(data_inno_mean_plot,
                 position = position_dodge(width = 0.9),
                 size = 1.25) +
   geom_signif(comparisons = list(c("Lower Aripo", "Upper Aripo")), 
-              map_signif_level = T, annotation = "*", vjust = 0.65, # removed "\nP = 0.011" from inside the quotations in annotation
+              map_signif_level = T, annotation = "*", vjust = 0.65, 
               y_position = 6.6, color = "black", size = 1,
               textsize = 12, fontface = "bold") +
   xlab("Population") +
@@ -92,7 +92,7 @@ p <- ggplot(data_inno_mean_plot,
                      name = "Population") +
   scale_shape_discrete(name = "Population") + 
   scale_y_continuous(trans = "log",
-                     breaks = trans_breaks("log", function(x) exp(x)), 
+                     breaks = scales::trans_breaks("log", function(x) exp(x)), 
                      labels = number_format(accuracy = 1)) +
   coord_trans(y = 'log') +
   theme_bw() +
