@@ -79,8 +79,8 @@ contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
 contrasts(data_analysis_NA_inno$trial) # check
 
 # For changing trial back to dummy coding
-# contrasts(mydata$trial.F) <- c(0,1)
-# contrasts(mydata$trial.F) # check
+# contrasts(data_analysis_NA_inno$trial) <- c(0,1)
+# contrasts(data_analysis_NA_inno$trial) # check
 
 m_inno_predict_reduc <- 
   lme(inno_pred_reduc,
