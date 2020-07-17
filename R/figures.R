@@ -37,7 +37,7 @@ contrasts(data_analysis_NA_inno$trial) # check
 # contrasts(mydata$trial.F) # check
 
 # Create reduced innovation model 
-inno_predict_reduc_m <- 
+m_inno_predict_reduc <- 
   lme(goal_z_lat_LN ~ tot_z_sc * pop + body_length_sc + 
         trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
@@ -61,7 +61,7 @@ data_inno_mean_plot <-
 # marginal means, mean of trial and total zones entered
 data_inno_means <- 
   as.data.frame(
-    Effect("pop", inno_predict_reduc_m,
+    Effect("pop", m_inno_predict_reduc,
            data_analysis_NA_inno)) %>%
     mutate(across(.cols = fit:upper, ~ exp(.x))) # backtransform to normal
 
