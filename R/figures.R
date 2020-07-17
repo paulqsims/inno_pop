@@ -19,7 +19,7 @@ source("R/my-functions.R")
 
 # Read in data
 data_analysis <- 
-  read_csv_wfact("data_Sims-Reader_2020_mod") 
+  read_mod_data("data_Sims-Reader_2020") 
 
 # Create dataset without NAs - lme won't remove them
 data_analysis_NA_inno <-
@@ -103,7 +103,7 @@ p <- ggplot(data_inno_mean_plot,
   scale_shape_discrete(name = "Population") + 
   scale_y_continuous(trans = "log",
                      breaks = scales::trans_breaks("log", function(x) exp(x)), 
-                     labels = number_format(accuracy = 1)) +
+                     labels = scales::number_format(accuracy = 1)) +
   coord_trans(y = 'log') +
   theme_bw() +
   theme(panel.grid.major = element_blank(),

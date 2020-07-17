@@ -6,8 +6,8 @@ readme
 Data and code associated with the publication “An investigation of
 population variation in maze exploration and its predictors in wild
 Trinidadian guppies (*Poecilia reticulata*)”. (Insert publication
-information here). This repository is permanent archived at (Zenodo DOI
-HERE).
+information here). This repository is permanently archived at Zenodo
+(DOI).
 
 ## Authors
 
@@ -42,7 +42,7 @@ Plots
 ## Metadata
 
 Reference file:
-[data\_Sims-Reader\_2020\_mod.csv](https://github.com/paulqsims/inno_pop/blob/master/data/data_Sims-Reader_2020_mod.csv)
+[data\_Sims-Reader\_2020.csv](https://github.com/paulqsims/inno_pop/blob/master/data/data_Sims-Reader_2020.csv)
 
 | Column       | Description                                                                                    |
 | :----------- | :--------------------------------------------------------------------------------------------- |

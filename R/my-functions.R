@@ -4,17 +4,25 @@
 # Contact: paul.q.sims@gmail.com
 # Date: 2020
 # Purpose: Custom functions for analyses and formatting
-################################################################################
+###############################################################################
 
 # Reads in data and converts characters to factors
+# Also mutates variables
 #
 # Only need to input file name without extension in quotes
 # Assumes file is in the data directory
 
-read_csv_wfact <- function(data) {
+read_mod_data <- function(data) {
   read_csv(paste0("data/", data, ".csv", sep = "")) %>%
   mutate(across(where(is.character), ~ as_factor(.x)),
-         trial = as.factor(trial))
+         trial = as.factor(trial),
+         across(.cols = c(goal_z_lat, body_length,  # log transformations
+                            learn_prop, tot_z),  
+                  ~ log(.x),
+                  .names = "{col}_LN"),
+         across(.cols = c(body_length, tot_z),  # mean center and scale variables by 1 SD
+                  ~ na_rm_scale(.x, na.rm = T),
+                  .names = "{col}_sc"))
 }
 
 # Mean centers and standardizes (1 SD) vector with NA value removal option
