@@ -10,7 +10,7 @@
 # Also mutates variables
 #
 # Only need to input file name without extension in quotes
-# Assumes file is in the data directory
+# Assumes file is in the data directory and files are .csv 
 
 read_mod_data <- function(data) {
   read_csv(paste0("data/", data, ".csv", sep = "")) %>%
