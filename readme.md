@@ -37,6 +37,7 @@ Plots
 
   - `ggplot2`
   - `ggsignif`
+  - `scales`
   - `effects`
 
 ## Metadata
