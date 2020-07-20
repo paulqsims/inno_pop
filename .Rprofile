@@ -3,4 +3,4 @@
 options(scipen=10)
 
 # Source files
-source('R/my-functions.R')
+source('R/custom-functions.R')
