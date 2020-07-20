@@ -6,22 +6,25 @@
 # Purpose: Plots for Sims and Reader 2020, Behavioural Processes
 ################################################################################
 
-# Housekeeping -----
+#### Housekeeping #### 
 
-library(tidyverse)
-library(nlme)
-library(ggplot2)
-library(ggsignif) # sig stars
-library(effects) # marginal effects
+library(tidyverse)  # for cleaning and modifying data
+library(nlme)  # formixed models and generalized least squares
+library(ggplot2)  # for plots
+library(ggsignif)  # for sig stars
+library(effects)  # for marginal effects
 
 # Load custom functions 
-source("R/my-functions.R")
+
+source("R/custom-functions.R")
 
 # Read in data
+
 data_analysis <- 
   read_mod_data("data_Sims-Reader_2020") 
 
 # Create dataset without NAs - lme won't remove them
+
 data_analysis_NA_inno <-
   data_analysis %>%
   select(goal_z_lat, goal_z_lat_LN, tot_z_sc, pop, group,
@@ -29,6 +32,7 @@ data_analysis_NA_inno <-
   drop_na() 
 
 # Change trial contrasts in order to get marginal effects for average trial 
+
 contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
 contrasts(data_analysis_NA_inno$trial) # check
 
@@ -37,6 +41,7 @@ contrasts(data_analysis_NA_inno$trial) # check
 # contrasts(mydata$trial.F) # check
 
 # Create reduced innovation model 
+
 m_inno_predict_reduc <- 
   lme(goal_z_lat_LN ~ tot_z_sc * pop + body_length_sc + 
         trial,
@@ -45,20 +50,20 @@ m_inno_predict_reduc <-
       data = data_analysis_NA_inno)
 
 # Obtain raw values for innovation, averaged between trial 1 and trial 2
+
 data_inno_mean_plot <-
   data_analysis_NA_inno %>%
   group_by(group) %>%
   mutate(inno_mean = mean(goal_z_lat,
                           na.rm = TRUE),
-         Population = pop) %>% # needed for total zones predictor plot for plot legend
+         Population = pop) %>% # rename for total zones predictor plot for plot legend
   filter(trial == 1) 
 
-# ----- end
-
-# Innovation : Population comparison ----
+#### Innovation: Population comparison #### 
 
 # Obtain predicted values for each population
-# marginal means, mean of trial and total zones entered
+#   marginal means, mean of trial, and total zones entered
+
 data_inno_means <- 
   as.data.frame(
     Effect("pop", m_inno_predict_reduc,
@@ -67,24 +72,25 @@ data_inno_means <-
 
 # Plot estimated mean of innovation for each population
 # data points represent raw latency values, averaged across trials
-p <- ggplot(data_inno_mean_plot, 
+
+p <- ggplot(data_inno_mean_plot,  
             aes(x = pop,
                 y = inno_mean,
                 color = pop,
                 shape = pop,
                 fill = pop)) + 
-  geom_point(size = 2.8,
+  geom_point(size = 2.8,  # raw data points
              alpha = 0.65,
              position = position_jitterdodge(),
              show.legend = F) +
-  geom_point(data = data_inno_means,
+  geom_point(data = data_inno_means,  # population means
              aes(x = pop,
                  y = fit,
                  color = pop,
                  shape = pop,
                  fill = pop),
              size=5.8) +
-  geom_errorbar(data = data_inno_means, 
+  geom_errorbar(data = data_inno_means,  # population error bars
                 aes(x = pop,
                     y = fit,
                     ymin=lower,
@@ -92,7 +98,7 @@ p <- ggplot(data_inno_mean_plot,
                 width=.3,                    
                 position = position_dodge(width = 0.9),
                 size = 1.25) +
-  geom_signif(comparisons = list(c("Lower Aripo", "Upper Aripo")), 
+  geom_signif(comparisons = list(c("Lower Aripo", "Upper Aripo")),  # significance brackets 
               map_signif_level = T, annotation = "*", vjust = 0.65, 
               y_position = 6.6, color = "black", size = 1,
               textsize = 12, fontface = "bold") +
@@ -101,10 +107,10 @@ p <- ggplot(data_inno_mean_plot,
   scale_color_manual(values = c("#E41A1C", "#377EB8","#377EB8"),
                      name = "Population") +
   scale_shape_discrete(name = "Population") + 
-  scale_y_continuous(trans = "log",
+  scale_y_continuous(trans = "log",  # transforming Y axis to log scale
                      breaks = scales::trans_breaks("log", function(x) exp(x)), 
                      labels = scales::number_format(accuracy = 1)) +
-  coord_trans(y = 'log') +
+  coord_trans(y = 'log') +  # transforming Y axis to log scale
   theme_bw() +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
@@ -118,26 +124,28 @@ p <- ggplot(data_inno_mean_plot,
 
 print(p)
 
-# Innovation : predicted by total zones entered ----
+#### Innovation predicted by total zones entered ####
 
 # Get min and max values for total zones entered for lower and upper aripo 
 #   populations, restrict line plot values by raw data
+
 tot_z_range <-  
   data_analysis_NA_inno %>%
   group_by(pop) %>%
   select(tot_z_sc) %>%
   summarize(min_totz = min(tot_z_sc, na.rm = TRUE),  # get real ranges of tot z
             max_totz = max(tot_z_sc, na.rm = TRUE)) %>%
-  pivot_wider(names_from = pop, values_from = c(min_totz,
+  pivot_wider(names_from = pop, values_from = c(min_totz,  # reshape data to wide
                                                 max_totz)) %>%
   rename(min_LA = `min_totz_Lower Aripo`, max_LA = `max_totz_Lower Aripo`,
          min_UA = `min_totz_Upper Aripo`, max_UA = `max_totz_Upper Aripo`)
 
 # Obtain predicted values for each population
-# marginal means, mean of trial and total zones entered
+#   marginal means, mean of trial and total zones entered
+
 data_inno_means <- 
   as.data.frame(
-    Effect(c("tot_z_sc", "pop"), inno_predict_reduc_m,
+    Effect(c("tot_z_sc", "pop"), inno_predict_reduc_m,  # marginal means
            data_analysis_NA_inno)) %>%
   mutate(across(.cols = fit:upper, ~ exp(.x)),  # backtransform to normal
          tot_z_sc = ifelse(  # remove tot z values outside real range
@@ -150,11 +158,12 @@ data_inno_means <-
   rename(Population = "pop") # crucial for plot legend to say Population
 
 # Plot estimated innovation predicted by total zones entered by population
-# data points represent raw latency values, averaged across trials and total
+#   data points represent raw latency values, averaged across trials and total
 #   zones entered for trial 1
 
-# Get custom y label values and breaks
-# custom_labels.y <- round(exp(seq(from = 1,to = 6, by = 1)), digits = 0)
+# Get custom y label values and breaks and add to custom_labels.y
+# round(exp(seq(from = 1,to = 6, by = 1)), digits = 0)
+
 custom_labels.y <- c(expression(atop("3","(e"^1*")")),
                      expression(atop("7","(e"^2*")")),
                      expression(atop("20","(e"^3*")")),
@@ -168,9 +177,9 @@ p <- ggplot(data_inno_mean_plot,
                 y = inno_mean,
                 color = Population,
                 shape = Population)) + 
-  geom_point(size = 3.5,
+  geom_point(size = 3.5,  # raw data
              alpha = 0.9) +
-  geom_line(data = data_inno_means,
+  geom_line(data = data_inno_means,  # predicted values
             aes(x = tot_z_sc,
                 y = fit,
                 color = Population,
@@ -181,7 +190,7 @@ p <- ggplot(data_inno_mean_plot,
   scale_color_manual(values = c("#E41A1C", "#377EB8","#377EB8"),
                      name = "Population") +
   scale_shape_discrete(name = "Population") + 
-  scale_y_continuous(trans = "log",
+  scale_y_continuous(trans = "log",  # log transformed y-axis
                      breaks = custom_breaks.y, 
                      labels = custom_labels.y) + 
   theme_bw() +
