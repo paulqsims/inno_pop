@@ -3,11 +3,10 @@ readme
 
 ## Description
 
-Data and code associated with the publication “An investigation of
-population variation in maze exploration and its predictors in wild
-Trinidadian guppies (*Poecilia reticulata*)”. (Insert publication
-information here). This repository is permanently archived at Zenodo
-(DOI).
+Data and code associated with the study “An investigation of population
+variation in maze exploration and its predictors in wild Trinidadian
+guppies (*Poecilia reticulata*)”. *In prep*. This repository will be
+permanently archived at Zenodo.
 
 ## Authors
 
@@ -17,9 +16,9 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
 
 ## Directory structure
 
-  - `data/` Data used in analysis
-  - `R/` Self-contained R scripts and functions used for the analyses
-    and in generating plots
+  - `data/` Data used in analyses
+  - `R/` Self-contained R scripts (can be run on their own) and
+    functions used for the analyses and in generating plots
 
 ## Prerequisites: R packages
 
@@ -28,7 +27,7 @@ Data clean up
   - `tidyverse`
   - `broom`, `broom.mixed`
 
-Analysis
+Analyses
 
   - `nlme`
   - `MuMIn`

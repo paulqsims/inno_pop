@@ -7,7 +7,7 @@ output: github_document
 
 ## Description
 
-Data and code associated with the study “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. (Insert publication information here). This repository is permanently archived at Zenodo (DOI).
+Data and code associated with the study “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. *In prep*. This repository will be permanently archived at Zenodo.
 
 ## Authors
 
