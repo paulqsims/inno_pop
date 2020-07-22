@@ -3,22 +3,22 @@ title: "Analysis Summary for Sims and Reader 2020"
 output:
   html_document:
     df_print: paged
+    toc: true
+    toc_float: true
+    toc_depth: 3
 ---
 
 ```{r, analysis summary setup, include = FALSE, echo = FALSE}
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
-                     eval = TRUE, echo = TRUE)
+                     eval = TRUE, echo = TRUE, message = FALSE,
+                     warning = FALSE)
+knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
+                     eval = TRUE, echo = TRUE, message = FALSE,
+                     warning = FALSE)
 ```
 
-```{r, pop-comp, child = 'analysis_pop-comp.Rmd'}
+```{r pop-comp, child = 'analysis_pop-comp.Rmd'}
 ```
 
-```{r temp}
-
-# code = readLines("R/analysis_pop-comp.R")
-# code = source("R/analysis_pop-comp.R")
-#library(here)
-#source("R/custom-functions.R")  
-# source("R/analysis_pop-comp.R", local = knitr::knit_global(),
-#       echo = TRUE)
+```{r inno-predict, child = 'analysis_inno-predict.Rmd'}
 ```
