@@ -8,7 +8,6 @@
 
 #### Housekeeping #### 
 
-library(here)
 library(tidyverse)  # for cleaning and modifying data
 library(nlme)  # for mixed models and generalized least squares
 library(broom)  # for tidying model output

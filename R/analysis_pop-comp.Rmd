@@ -1,0 +1,44 @@
+# Population comparisons
+- Author: Paul Q. Sims
+- Contact: paul.q.sims@gmail.com
+- Date: 2020
+- Purpose: Population comparison analyses for Sims and Reader 2020\
+
+### Setup
+
+```{r pop-comp setup, include=TRUE, eval=TRUE, echo=TRUE}
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
+                     eval = TRUE, echo = TRUE)
+
+# Load libraries
+library(tidyverse)  # for cleaning and modifying data
+library(nlme)  # for mixed models and generalized least squares
+library(broom)  # for tidying model output
+
+# Load personalized functions
+source("R/custom-functions.R")
+
+# Read in data
+data_analysis <-
+  read_mod_data("data_Sims-Reader_2020")
+```
+
+### Including Plots
+
+
+```{r pressure}
+
+# Load libraries
+library(tidyverse)  # for cleaning and modifying data
+library(nlme)  # for mixed models and generalized least squares
+library(broom)  # for tidying model output
+
+# Load personalized functions
+source("R/custom-functions.R")
+
+# Read in data
+data_analysis <-
+  read_mod_data("data_Sims-Reader_2020")
+
+data_analysis
+```
