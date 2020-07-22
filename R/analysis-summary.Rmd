@@ -1,25 +1,31 @@
 ---
 title: "Analysis Summary for Sims and Reader 2020"
 output:
-  github_document:
   html_document:
     df_print: paged
     toc: true
     toc_float: true
     toc_depth: 3
+  github_document:
+    toc: true
+    toc_depth: 3
 ---
 
-```{r, analysis summary setup, include = FALSE, echo = FALSE}
+```{r analy-sum-knitr-opts, include = FALSE, echo = FALSE}
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
                      eval = TRUE, echo = TRUE, message = FALSE,
                      warning = FALSE)
 knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
+                      fig.path = here::here("figs/"),
                      eval = TRUE, echo = TRUE, message = FALSE,
                      warning = FALSE)
 ```
 
-```{r pop-comp, child = 'analysis_pop-comp.Rmd'}
+```{r analy-sum-pop-comp, child = 'analysis_pop-comp.Rmd'}
 ```
 
-```{r inno-predict, child = 'analysis_inno-predict.Rmd'}
+```{r analy-sum-inno-predict, child = 'analysis_inno-predict.Rmd'}
+```
+
+```{r analy-sum-figures, child = 'figures.Rmd'}
 ```

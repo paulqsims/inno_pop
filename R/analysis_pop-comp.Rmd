@@ -1,4 +1,5 @@
 # Analysis: Population comparisons
+
 - Author: Paul Q. Sims
 - Contact: paul.q.sims@gmail.com
 - Date: 2020
@@ -28,7 +29,6 @@ source("R/custom-functions.R")
 data_analysis <-
   read_mod_data("data_Sims-Reader_2020")
 ```
-
 
 ## Population comparisons
 
@@ -176,6 +176,6 @@ m_pop_comp_final_tidy <-
             m_length_totz_popcomp_tidy) %>%
   rename(predictor = "term")
 
-print(m_pop_comp_final_tidy)  # See reduced inno predictor model for trial measure of learning
+m_pop_comp_final_tidy  # See reduced inno predictor model for trial measure of learning
 ```
 
