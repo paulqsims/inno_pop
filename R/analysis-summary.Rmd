@@ -1,12 +1,9 @@
 ---
 title: "Analysis Summary for Sims and Reader 2020"
 output:
+  github_document:
   html_document:
     df_print: paged
-    toc: true
-    toc_float: true
-    toc_depth: 3
-  github_document:
     toc: true
     toc_float: true
     toc_depth: 3
