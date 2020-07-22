@@ -577,9 +577,9 @@ knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
                      eval = TRUE, echo = TRUE, message = FALSE,
                      warning = FALSE)
 knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
-                      fig.path = here::here("figs/"),
+                      fig.path = "../figs/",
                      eval = TRUE, echo = TRUE, message = FALSE,
-                     warning = FALSE, dev = c("pdf"), dpi = 300)
+                     warning = FALSE, dev = c("png", "pdf"), dpi = 300)
 ```
 
 ## Setup
@@ -701,7 +701,7 @@ print(p)
 
     ## Error in isIncomplete(con) : invalid connection
 
-![](/Users/Paul/Google%20Drive/PhD/inno_pop/figs/pop-comp-inno-1.pdf)<!-- -->
+![](../figs/pop-comp-inno-1.png)<!-- -->
 
 ## Innovation predicted by total zones entered
 
@@ -793,4 +793,4 @@ print(p)
 
     ## Error in isIncomplete(con) : invalid connection
 
-![](/Users/Paul/Google%20Drive/PhD/inno_pop/figs/inno-predict-total-zones-1.pdf)<!-- -->
+![](../figs/inno-predict-total-zones-1.png)<!-- -->

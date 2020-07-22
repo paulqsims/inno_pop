@@ -1,10 +1,14 @@
-# Figures
-- Author: Paul Q. Sims
-- Contact: paul.q.sims@gmail.com
-- Date: 2020
-- Purpose: Plots for Sims and Reader 2020
 
-```{r figures-opts}
+# Figures
+
+  - Author: Paul Q. Sims
+  - Contact: <paul.q.sims@gmail.com>
+  - Date: 2020
+  - Purpose: Plots for Sims and Reader 2020
+
+<!-- end list -->
+
+``` r
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
                      eval = TRUE, echo = TRUE, message = FALSE,
                      warning = FALSE)
@@ -16,7 +20,7 @@ knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
 
 ## Setup
 
-```{r figures-setup}
+``` r
 # Load libraries
 library(tidyverse)  # for cleaning and modifying data
 library(nlme)  # formixed models and generalized least squares
@@ -66,7 +70,7 @@ data_inno_mean_plot <-
 
 ## Population comparison of innovation
 
-```{r pop-comp-inno, fig.dim=c(8,8)}
+``` r
 # Obtain predicted values for each population
 #   marginal means, mean of trial, and total zones entered
 
@@ -131,9 +135,13 @@ p <- ggplot(data_inno_mean_plot,
 print(p)
 ```
 
+    ## Error in isIncomplete(con) : invalid connection
+
+![](../figs/pop-comp-inno-1.png)<!-- -->
+
 ## Innovation predicted by total zones entered
 
-```{r inno-predict-total-zones, fig.dim=c(8,6)}
+``` r
 # Get min and max values for total zones entered for lower and upper aripo 
 #   populations, restrict line plot values by raw data
 
@@ -219,3 +227,6 @@ p <- ggplot(data_inno_mean_plot,
 print(p)
 ```
 
+    ## Error in isIncomplete(con) : invalid connection
+
+![](../figs/inno-predict-total-zones-1.png)<!-- -->
