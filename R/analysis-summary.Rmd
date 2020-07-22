@@ -1,0 +1,24 @@
+---
+title: "Analysis Summary for Sims and Reader 2020"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r, analysis summary setup, include = FALSE, echo = FALSE}
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
+                     eval = TRUE, echo = TRUE)
+```
+
+```{r, pop-comp, child = 'analysis_pop-comp.Rmd'}
+```
+
+```{r temp}
+
+# code = readLines("R/analysis_pop-comp.R")
+# code = source("R/analysis_pop-comp.R")
+#library(here)
+#source("R/custom-functions.R")  
+# source("R/analysis_pop-comp.R", local = knitr::knit_global(),
+#       echo = TRUE)
+```
