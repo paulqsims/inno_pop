@@ -384,34 +384,20 @@ summary {
 <li>Author: Paul Q. Sims</li>
 <li>Contact: <a href="mailto:paul.q.sims@gmail.com" class="email">paul.q.sims@gmail.com</a></li>
 <li>Date: 2020</li>
-<li>Purpose: Population comparison analyses for Sims and Reader 2020<br />
-</li>
+<li>Purpose: Population comparison analyses for Sims and Reader 2020</li>
 </ul>
 <pre class="r"><code>knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
                      eval = TRUE, echo = TRUE, message = FALSE,
                      warning = FALSE)
-# knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
-#                      eval = TRUE, echo = TRUE, message = FALSE,
-#                      warning = FALSE)</code></pre>
+knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
+                     eval = TRUE, echo = TRUE, message = FALSE,
+                     warning = FALSE)</code></pre>
 <div id="setup" class="section level2">
 <h2>Setup</h2>
 <pre class="r"><code># Load libraries
-library(tidyverse)  # for cleaning and modifying data</code></pre>
-<pre><code>## ── Attaching packages ───────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
-## ✓ tibble  3.0.3     ✓ dplyr   1.0.0
-## ✓ tidyr   1.1.0     ✓ stringr 1.4.0
-## ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
-<pre><code>## ── Conflicts ──────────────────────────────────────── tidyverse_conflicts() ──
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(nlme)  # for mixed models and generalized least squares</code></pre>
-<pre><code>## 
-## Attaching package: &#39;nlme&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     collapse</code></pre>
-<pre class="r"><code>library(broom)  # for tidying model output
+library(tidyverse)  # for cleaning and modifying data
+library(nlme)  # for mixed models and generalized least squares
+library(broom)  # for tidying model output
 
 # Load personalized functions
 source(&quot;R/custom-functions.R&quot;)
@@ -419,18 +405,6 @@ source(&quot;R/custom-functions.R&quot;)
 # Read in data
 data_analysis &lt;-
   read_mod_data(&quot;data_Sims-Reader_2020&quot;)</code></pre>
-<pre><code>## Parsed with column specification:
-## cols(
-##   pop = col_character(),
-##   site = col_double(),
-##   site_uni = col_character(),
-##   trial = col_double(),
-##   group = col_double(),
-##   goal_z_lat = col_double(),
-##   tot_z = col_double(),
-##   body_length = col_double(),
-##   learn_prop = col_double()
-## )</code></pre>
 </div>
 <div id="population-comparisons" class="section level2">
 <h2>Population comparisons</h2>
@@ -523,7 +497,6 @@ contrasts(data_analysis_NA_inno$trial) &lt;- c(-1,1)
 # contrasts(mydata$trial.F) # check
 
 # Fit reduced model
-
 m_inno_predict_final &lt;- 
   lme(goal_z_lat_LN ~ tot_z_sc * pop + 
         body_length_sc + trial,
@@ -533,7 +506,6 @@ m_inno_predict_final &lt;-
       method = &quot;REML&quot;)
 
 # Tidy innovation predictor model
-
 m_inno_predict_final_tidy &lt;-
   m_inno_predict_final %&gt;%
   broom.mixed::tidy() %&gt;%
@@ -543,9 +515,6 @@ m_inno_predict_final_tidy &lt;-
          across(.cols = c(estimate:statistic), ~round_est(.x)),
          p_value = round_pval(p.value)) %&gt;%
   select(&quot;response&quot;, &quot;term&quot;, &quot;estimate&quot;,&quot;std.error&quot;, &quot;statistic&quot;, &quot;p_value&quot;) </code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;broom.mixed&#39;:
-##   method      from 
-##   tidy.gamlss broom</code></pre>
 </div>
 <div id="learning-improvement-ratio" class="section level3">
 <h3>Learning: Improvement ratio</h3>
@@ -595,10 +564,9 @@ m_inno_predict_final_tidy &lt;-
 ## Residual standard error: 0.4428314 
 ## Degrees of freedom: 41 total; 39 residual</code></pre>
 <p>Reduced learning model (no population differences)</p>
-<pre class="r"><code>m_learn &lt;- update(m_learn_pop_comp, ~ 1)
+<pre class="r"><code>m_learn &lt;- update(m_learn_pop_comp, ~ 1)  # update model to intercept only
 
 # Model summary: learning overall
-
 summary(m_learn)</code></pre>
 <pre><code>## Generalized least squares fit by REML
 ##   Model: learn_prop_LN ~ 1 
@@ -626,7 +594,6 @@ summary(m_learn)</code></pre>
 ## Residual standard error: 0.4353539 
 ## Degrees of freedom: 41 total; 40 residual</code></pre>
 <pre class="r"><code># Tidy learning population comparison model
-
 m_learn_pop_comp_tidy &lt;-
   m_learn_pop_comp %&gt;%
   broom.mixed::tidy() %&gt;%
@@ -639,13 +606,12 @@ m_learn_pop_comp_tidy &lt;-
 <div id="cleanup-and-final-results" class="section level2">
 <h2>Cleanup and final results</h2>
 <pre class="r"><code># Bind all population comparisons together
-
 m_pop_comp_final_tidy &lt;-
   bind_rows(m_learn_pop_comp_tidy, m_inno_predict_final_tidy,
             m_length_totz_popcomp_tidy) %&gt;%
   rename(predictor = &quot;term&quot;)
 
-print(m_pop_comp_final_tidy)  # See reduced inno predictor model for trial measure of learning</code></pre>
+m_pop_comp_final_tidy  # See reduced inno predictor model for trial measure of learning</code></pre>
 <pre><code>## # A tibble: 8 x 6
 ##   response          predictor      estimate std.error statistic p_value
 ##   &lt;chr&gt;             &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;  

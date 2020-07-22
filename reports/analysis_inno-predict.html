@@ -378,8 +378,8 @@ summary {
 </div>
 
 
-<div id="function-analysis---predictors-of-innovation" class="section level1">
-<h1>Function: Analysis - Predictors of innovation</h1>
+<div id="analysis-predictors-of-innovation" class="section level1">
+<h1>Analysis: Predictors of innovation</h1>
 <ul>
 <li>Author: Paul Q. Sims</li>
 <li>Contact: <a href="mailto:paul.q.sims@gmail.com" class="email">paul.q.sims@gmail.com</a></li>
@@ -478,8 +478,8 @@ model_sel_temp2</code></pre>
 ## pop:trial       1 229.67  0.5513 0.4577859    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>m2_temp &lt;- update(m1_temp, ~ . -pop:trial)  
-model_sel_temp3 &lt;- drop1(m2_temp, test = &quot;Chi&quot;)
+<pre class="r"><code>m2_temp &lt;- update(m1_temp, ~ . -pop:trial)  # same as above
+model_sel_temp3 &lt;- drop1(m2_temp, test = &quot;Chi&quot;)  # same as above
 model_sel_temp3</code></pre>
 <pre><code>## Single term deletions
 ## 
@@ -571,7 +571,7 @@ MuMIn::r.squaredGLMM(m_inno_predict_reduc)</code></pre>
   filter(effect == &quot;fixed&quot;) %&gt;%
   mutate(across(.cols = c(estimate:statistic), ~round_est(.x)),
          p_value = round_pval(p.value)) %&gt;%
-  select(&quot;term&quot;, &quot;estimate&quot;,&quot;std.error&quot;, &quot;statistic&quot;, &quot;p_value&quot;) # deselect &quot;df&quot; since not included in tidy
+  select(&quot;term&quot;, &quot;estimate&quot;,&quot;std.error&quot;, &quot;statistic&quot;, &quot;p_value&quot;)
 
 m_inno_predict_final_tidy</code></pre>
 <pre><code>## # A tibble: 6 x 5
