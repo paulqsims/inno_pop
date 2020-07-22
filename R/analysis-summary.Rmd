@@ -6,7 +6,7 @@ output:
     toc: true
     toc_float: true
     toc_depth: 3
-    self_contained: no
+    self_contained: yes
   github_document:
     toc: true
     toc_depth: 3
@@ -19,7 +19,7 @@ knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
 knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
                       fig.path = here::here("figs/"),
                      eval = TRUE, echo = TRUE, message = FALSE,
-                     warning = FALSE, dev = c("png", "pdf"), dpi = 300, cache = FALSE)
+                     warning = FALSE, dev = c("pdf"), dpi = 300, cache = FALSE)
 ```
 
 ```{r analy-sum-pop-comp, child = 'analysis_pop-comp.Rmd'}
