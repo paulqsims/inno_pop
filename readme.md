@@ -8,7 +8,8 @@ variation in maze exploration and its predictors in wild Trinidadian
 guppies (*Poecilia reticulata*)”. *In prep*. This repository will be
 permanently archived at Zenodo.
 
-A report summary containing all the R script output can be found at
+A report summary containing all the R script output, including plots,
+can be found at
 [analysis-summary.md](https://github.com/paulqsims/inno_pop/blob/master/reports/analysis-summary.md)
 in `reports/`
 
