@@ -7,7 +7,11 @@ output: github_document
 
 ## Description
 
-Data and code associated with the study “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. *In prep*. This repository will be permanently archived at Zenodo.
+Data and code associated with the study “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. *In prep*. This repository will be permanently archived at Zenodo. 
+
+A report summary containing all the R script output can be found at [reports/analysis-summary.md](https://github.com/paulqsims/inno_pop/blob/master/reports/analysis-summary.md)
+
+R Markdown files can be rendered by sourcing [R/render-Rmd.R](https://github.com/paulqsims/inno_pop/blob/master/R/render-Rmd.R)
 
 ## Authors
 
@@ -18,13 +22,14 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
 ## Directory structure
 
 * `data/` Data used in analyses
-* `R/`    Self-contained R scripts (can be run on their own) and functions used for the analyses and in generating plots
+* `R/` Self-contained R markdown (*.Rmd) scripts (can be run on their own) and functions used for the analyses and in generating plots
+* `figs/` High quality figures generated for publication
+* `reports/` Markdown and html summaries of code output
 
 ## Prerequisites: R packages
 
 Data clean up
 
-* `rprojroot`, `here`
 * `tidyverse`
 * `broom`, `broom.mixed`
 
@@ -40,6 +45,11 @@ Plots
 * `scales`
 * `effects`
 
+Misc
+
+* `rprojroot`, `here`
+* `rmarkdown`, `knitr`
+
 ## Metadata
 
 Reference file: [data_Sims-Reader_2020.csv](https://github.com/paulqsims/inno_pop/blob/master/data/data_Sims-Reader_2020.csv)
@@ -53,14 +63,14 @@ data_analysis <-
 
 # Write out descriptions associated with each column header
 var_names <- names(data_analysis) %>%
-  append(., c("LN", "sc"))
+  append(., c("LN suffix", "sc suffix"))
 var_descrip <- c(
   "Population: Lower or upper Aripo",
   "Site sampled",
   "Unique site identifier",
   "Trial: 1 or 2",
   "Group id",
-  "Latency to reach the goal zone (zone 11)",
+  "Latency to reach the goal zone, zone 11, (sec)",
   "Total zones entered",
   "Body length (mm)",
   "Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1",
