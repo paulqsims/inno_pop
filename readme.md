@@ -24,6 +24,7 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
 
 Data clean up
 
+  - `rprojroot`, `here`
   - `tidyverse`
   - `broom`, `broom.mixed`
 
