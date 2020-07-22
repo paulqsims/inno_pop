@@ -1,6 +1,29 @@
 Analysis Summary for Sims and Reader 2020
 ================
 
+  - [Analysis: Population comparisons](#analysis-population-comparisons)
+      - [Setup](#setup)
+      - [Population comparisons](#population-comparisons)
+          - [Body length, total zones
+            entered](#body-length-total-zones-entered)
+          - [Innovation: Goal zone
+            latency](#innovation-goal-zone-latency)
+          - [Learning: Improvement ratio](#learning-improvement-ratio)
+      - [Cleanup and final results](#cleanup-and-final-results)
+  - [Analysis: Predictors of
+    innovation](#analysis-predictors-of-innovation)
+      - [Setup](#setup-1)
+      - [Random-effect testing](#random-effect-testing)
+      - [Fixed-effect selection](#fixed-effect-selection)
+      - [Final model of predictors of
+        innovation](#final-model-of-predictors-of-innovation)
+  - [Figures](#figures)
+      - [Setup](#setup-2)
+      - [Population comparison of
+        innovation](#population-comparison-of-innovation)
+      - [Innovation predicted by total zones
+        entered](#innovation-predicted-by-total-zones-entered)
+
 # Analysis: Population comparisons
 
   - Author: Paul Q. Sims
@@ -676,6 +699,8 @@ p <- ggplot(data_inno_mean_plot,
 print(p)
 ```
 
+    ## Error in isIncomplete(con) : invalid connection
+
 ![](/Users/Paul/Google%20Drive/PhD/inno_pop/figs/pop-comp-inno-1.pdf)<!-- -->
 
 ## Innovation predicted by total zones entered
@@ -765,5 +790,7 @@ p <- ggplot(data_inno_mean_plot,
 
 print(p)
 ```
+
+    ## Error in isIncomplete(con) : invalid connection
 
 ![](/Users/Paul/Google%20Drive/PhD/inno_pop/figs/inno-predict-total-zones-1.pdf)<!-- -->
