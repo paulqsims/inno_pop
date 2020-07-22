@@ -18,7 +18,7 @@ knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
 knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
                       fig.path = here::here("figs/"),
                      eval = TRUE, echo = TRUE, message = FALSE,
-                     warning = FALSE)
+                     warning = FALSE, dev = "pdf", dpi = 300)
 ```
 
 ```{r analy-sum-pop-comp, child = 'analysis_pop-comp.Rmd'}

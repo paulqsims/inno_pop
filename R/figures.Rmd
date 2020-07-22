@@ -65,7 +65,7 @@ data_inno_mean_plot <-
 
 ## Population comparison of innovation
 
-```{r}
+```{r pop-comp-inno, fig.dim=c(8,8)}
 # Obtain predicted values for each population
 #   marginal means, mean of trial, and total zones entered
 
@@ -132,7 +132,7 @@ print(p)
 
 ## Innovation predicted by total zones entered
 
-```{r}
+```{r inno-predict-total-zones, fig.dim=(8,6)}
 # Get min and max values for total zones entered for lower and upper aripo 
 #   populations, restrict line plot values by raw data
 
