@@ -132,7 +132,7 @@ print(p)
 
 ## Innovation predicted by total zones entered
 
-```{r inno-predict-total-zones, fig.dim=(8,6)}
+```{r inno-predict-total-zones, fig.dim=c(8,6)}
 # Get min and max values for total zones entered for lower and upper aripo 
 #   populations, restrict line plot values by raw data
 
