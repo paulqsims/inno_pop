@@ -9,10 +9,12 @@ guppies (*Poecilia reticulata*)”. *In prep*. This repository will be
 permanently archived at Zenodo.
 
 A report summary containing all the R script output can be found at
-[reports/analysis-summary.md](https://github.com/paulqsims/inno_pop/blob/master/reports/analysis-summary.md)
+[analysis-summary.md](https://github.com/paulqsims/inno_pop/blob/master/reports/analysis-summary.md)
+in `reports/`
 
 R Markdown files can be rendered by sourcing
-[R/render-Rmd.R](https://github.com/paulqsims/inno_pop/blob/master/R/render-Rmd.R)
+[render-Rmd.R](https://github.com/paulqsims/inno_pop/blob/master/R/render-Rmd.R)
+in `R/`
 
 ## Authors
 
