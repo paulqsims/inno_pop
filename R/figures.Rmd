@@ -9,8 +9,9 @@ knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
                      eval = TRUE, echo = TRUE, message = FALSE,
                      warning = FALSE)
 knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
+                      fig.path = here::here("figs/"),
                      eval = TRUE, echo = TRUE, message = FALSE,
-                     warning = FALSE)
+                     warning = FALSE, dev = c("pdf"), dpi = 300)
 ```
 
 ## Setup
