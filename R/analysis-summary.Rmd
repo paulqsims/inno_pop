@@ -6,6 +6,10 @@ output:
     toc: true
     toc_float: true
     toc_depth: 3
+  github_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
 ---
 
 ```{r, analysis summary setup, include = FALSE, echo = FALSE}
