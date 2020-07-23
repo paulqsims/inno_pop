@@ -79,8 +79,8 @@ Create a data set without NAs - `lme()` won't remove them
 ```{r}
 data_analysis_NA_inno <-
   data_analysis %>%
-  select(goal_z_lat_LN, tot_z_sc, pop, group,
-         site_uni, body_length_sc, trial) %>%
+  select(goal_z_lat_LN, pop, group,
+         site_uni, trial) %>%
   drop_na() 
 ```
 
@@ -101,8 +101,7 @@ contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
 
 # Fit reduced model
 m_inno_predict_final <- 
-  lme(goal_z_lat_LN ~ tot_z_sc * pop + 
-        body_length_sc + trial,
+  lme(goal_z_lat_LN ~ pop + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
       data = data_analysis_NA_inno,
@@ -128,8 +127,7 @@ Create dataset without NAs - `lme()` won't remove them
 data_analysis_NA_learn <-
   data_analysis %>%
   filter(trial == 1) %>%
-  select(learn_prop_LN, tot_z_sc, pop, group,
-         site_uni, body_length_sc) %>%
+  select(learn_prop_LN, pop, group, site_uni) %>%
   drop_na() 
 ```
 
