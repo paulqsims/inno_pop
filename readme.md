@@ -78,7 +78,7 @@ Reference file:
 
 This software is licensed under the MIT License and the data is licensed
 under CC0 - see the
-[LICENSE.md](https://github.com/paulqsims/inno_pop/blob/master/license.md)
+[license.md](https://github.com/paulqsims/inno_pop/blob/master/license.md)
 file for details.
 
 ## Funding information

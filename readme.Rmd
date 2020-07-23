@@ -85,7 +85,7 @@ knitr::kable(var_metadata)
 
 ## License
 
-This software is licensed under the MIT License and the data is licensed under CC0 - see the [LICENSE.md](https://github.com/paulqsims/inno_pop/blob/master/license.md) file for details.
+This software is licensed under the MIT License and the data is licensed under CC0 - see the [license.md](https://github.com/paulqsims/inno_pop/blob/master/license.md) file for details.
 
 ## Funding information
 
