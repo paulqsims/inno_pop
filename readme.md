@@ -52,7 +52,7 @@ Plots
 
 Misc
 
-  - `rprojroot`, `here`
+  - `rprojroot`
   - `rmarkdown`, `knitr`
 
 ## Metadata
@@ -74,10 +74,10 @@ Reference file:
 | LN suffix    | Natural log transformation                                                                     |
 | sc suffix    | Mean centered and standardized by 1 standard deviation                                         |
 
-## License
+## Licenses
 
-This software is licensed under the MIT License and the data is licensed
-under CC0 - see the
+Software and code is licensed under the MIT License, data is licensed
+under CC0, and media files are under CC-BY-4.0 - see the
 [license.md](https://github.com/paulqsims/inno_pop/blob/master/license.md)
 file for details.
 

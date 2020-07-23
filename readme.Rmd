@@ -47,7 +47,7 @@ Plots
 
 Misc
 
-* `rprojroot`, `here`
+* `rprojroot`
 * `rmarkdown`, `knitr`
 
 ## Metadata
@@ -83,9 +83,9 @@ var_metadata <- tibble(var_names,var_descrip) %>%
 knitr::kable(var_metadata)
 ```
 
-## License
+## Licenses
 
-This software is licensed under the MIT License and the data is licensed under CC0 - see the [license.md](https://github.com/paulqsims/inno_pop/blob/master/license.md) file for details.
+Software and code is licensed under the MIT License, data is licensed under CC0, and media files are under CC-BY-4.0 - see the [license.md](https://github.com/paulqsims/inno_pop/blob/master/license.md) file for details.
 
 ## Funding information
 
