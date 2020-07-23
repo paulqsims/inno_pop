@@ -6,6 +6,15 @@
 # Purpose: Custom functions for analyses and formatting
 ###############################################################################
 
+# Mean centers and standardizes (1 SD) vector with NA value removal option
+#
+# Note that the default is False so removal must be specified
+# scale() from base R does not allow this
+
+na_rm_scale <- function(x, na.rm = FALSE) {
+  (x - mean(x, na.rm = na.rm)) / sd(x, na.rm)
+}
+
 # Reads in data and converts characters to factors
 # Also mutates variables
 #
@@ -14,24 +23,15 @@
 
 read_mod_data <- function(data) {
   read_csv(paste0("data/", data, ".csv", sep = "")) %>%
-  mutate(across(where(is.character), ~ as_factor(.x)),
-         trial = as.factor(trial),
-         across(.cols = c(goal_z_lat, body_length,  # log transformations
+    mutate(across(where(is.character), ~ as_factor(.x)),
+           trial = as.factor(trial),
+           across(.cols = c(goal_z_lat, body_length,  # log transformations
                             learn_prop, tot_z),  
                   ~ log(.x),
                   .names = "{col}_LN"),
-         across(.cols = c(body_length, tot_z),  # mean center and scale variables by 1 SD
+           across(.cols = c(body_length, tot_z),  # mean center and scale variables by 1 SD
                   ~ na_rm_scale(.x, na.rm = T),
                   .names = "{col}_sc"))
-}
-
-# Mean centers and standardizes (1 SD) vector with NA value removal option
-#
-# Note that the default is False so removal must be specified
-# scale() from base R does not allow this
-
-na_rm_scale <- function(x, na.rm = FALSE) {
-  (x - mean(x, na.rm = na.rm)) / sd(x, na.rm)
 }
 
 # Rounding functions ----
