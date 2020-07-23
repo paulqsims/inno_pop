@@ -84,23 +84,15 @@ data_analysis_NA_inno <-
   drop_na() 
 ```
 
-Reduced innovation predictor model (see analysis_inno-predict.Rmd for how it was obtained)
+Fit innovation model
 
 ```{r}
-# Relevel population for testing the slope of total zones entered in other population
-# data_analysis_NA$pop <- relevel(data_analysis_NA$pop, "Upper Aripo")  # Upper Aripo baseline
-# data_analysis_NA$pop <- relevel(data_analysis_NA$pop, "Lower Aripo")  # Lower Aripo baseline, original baseline
-
 # Change trial contrasts in order to get marginal effects for average trial 
 contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
 # contrasts(data_analysis_NA_inno$trial) # check
 
-# For changing trial back to dummy coding
-# contrasts(mydata$trial.F) <- c(0,1)
-# contrasts(mydata$trial.F) # check
-
 # Fit reduced model
-m_inno_predict_final <- 
+m_inno_pop_comp <- 
   lme(goal_z_lat_LN ~ pop + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
@@ -108,8 +100,8 @@ m_inno_predict_final <-
       method = "REML")
 
 # Tidy innovation predictor model
-m_inno_predict_final_tidy <-
-  m_inno_predict_final %>%
+m_inno_pop_comp_tidy <-
+  m_inno_pop_comp %>%
   broom.mixed::tidy() %>%
   filter(effect == "fixed",
          term %in% c("(Intercept)", "popUpper Aripo")) %>%
@@ -145,15 +137,6 @@ Population differences in learning model summary
 
 ```{r}
 summary(m_learn_pop_comp)
-```
-
-Reduced learning model (no population differences)
-
-```{r}
-m_learn <- update(m_learn_pop_comp, ~ 1)  # update model to intercept only
-
-# Model summary: learning overall
-summary(m_learn)
 
 # Tidy learning population comparison model
 m_learn_pop_comp_tidy <-
@@ -165,12 +148,21 @@ m_learn_pop_comp_tidy <-
   select("response", "term", "estimate","std.error", "statistic", "p_value") 
 ```
 
+Reduced learning model (no population differences)
+
+```{r}
+m_learn <- update(m_learn_pop_comp, ~ 1)  # update model to intercept only
+
+# Model summary: learning overall
+summary(m_learn)
+```
+
 ## Cleanup and final results
 
 ```{r}
 # Bind all population comparisons together
 m_pop_comp_final_tidy <-
-  bind_rows(m_learn_pop_comp_tidy, m_inno_predict_final_tidy,
+  bind_rows(m_learn_pop_comp_tidy, m_inno_pop_comp_tidy,
             m_length_totz_popcomp_tidy) %>%
   rename(predictor = "term")
 
