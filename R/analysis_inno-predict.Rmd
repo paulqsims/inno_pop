@@ -93,8 +93,8 @@ Fit final model
 
 ```{r inno-predict-fit-final-mod}
 # Relevel population for testing total zones slope in other population
-# data_analysis_NA$pop <- relevel(data_analysis_NA$pop, "Upper Aripo")  # Upper Aripo baseline
-# data_analysis_NA$pop <- relevel(data_analysis_NA$pop, "Lower Aripo")  # Lower Aripo baseline, original 
+ data_analysis_NA_inno$pop <- relevel(data_analysis_NA_inno$pop, "Upper Aripo")  # Upper Aripo baseline
+# data_analysis_NA_inno$pop <- relevel(data_analysis_NA_inno$pop, "Lower Aripo")  # Lower Aripo baseline, original 
 
 # Change trial contrasts in order to get marginal effects for average trial 
 contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
