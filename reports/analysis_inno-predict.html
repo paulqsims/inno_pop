@@ -654,12 +654,9 @@ body {
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a>      <span class="dt">method =</span> <span class="st">&quot;REML&quot;</span>)</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a><span class="kw">anova</span>(m_inno_predict_full, m1_inno_predict_red_rand)  <span class="co"># Likelihood ratio test</span></span></code></pre></div>
-<pre><code>##                          Model df      AIC      BIC    logLik   Test L.Ratio
-## m_inno_predict_full          1 13 246.2637 276.7331 -110.1318               
-## m1_inno_predict_red_rand     2 12 246.9630 275.0886 -111.4815 1 vs 2 2.69932
-##                          p-value
-## m_inno_predict_full             
-## m1_inno_predict_red_rand  0.1004
+<pre><code>##                          Model df      AIC      BIC    logLik   Test L.Ratio p-value
+## m_inno_predict_full          1 13 246.2637 276.7331 -110.1318                       
+## m1_inno_predict_red_rand     2 12 246.9630 275.0886 -111.4815 1 vs 2 2.69932  0.1004
 </code></pre>
 <h2 id="fixed-effect-selection">Fixed-effect selection</h2>
 <p>Test significance of interactions</p>
@@ -720,8 +717,8 @@ body {
 <h2 id="final-model-of-predictors-of-innovation">Final model of predictors of innovation</h2>
 <p>Fit final model</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="co"># Relevel population for testing total zones slope in other population</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="co"># data_analysis_NA$pop &lt;- relevel(data_analysis_NA$pop, &quot;Upper Aripo&quot;)  # Upper Aripo baseline</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="co"># data_analysis_NA$pop &lt;- relevel(data_analysis_NA$pop, &quot;Lower Aripo&quot;)  # Lower Aripo baseline, original </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="co"># data_analysis_NA_inno$pop &lt;- relevel(data_analysis_NA_inno$pop, &quot;Upper Aripo&quot;)  # Upper Aripo baseline</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="co"># data_analysis_NA_inno$pop &lt;- relevel(data_analysis_NA_inno$pop, &quot;Lower Aripo&quot;)  # Lower Aripo baseline, original </span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="co"># Change trial contrasts in order to get marginal effects for average trial </span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="kw">contrasts</span>(data_analysis_NA_inno<span class="op">$</span>trial) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
@@ -754,10 +751,8 @@ body {
 ##  Structure: Different standard deviations per stratum
 ##  Formula: ~1 | site_uni * pop 
 ##  Parameter estimates:
-## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo 
-##                  1.000000                  2.096746                  3.033792 
-## Upper Aripo 3*Upper Aripo 
-##                  2.253602 
+## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo Upper Aripo 3*Upper Aripo 
+##                  1.000000                  2.096746                  3.033792                  2.253602 
 ## Fixed effects: list(inno_pred_reduc) 
 ##                             Value  Std.Error DF   t-value p-value
 ## (Intercept)              4.083566 0.23692451 40 17.235727  0.0000

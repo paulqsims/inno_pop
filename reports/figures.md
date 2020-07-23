@@ -46,14 +46,9 @@ data_analysis_NA_inno <-
 contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
 # contrasts(data_analysis_NA_inno$trial) # check
 
-# For changing trial back to dummy coding
-# contrasts(mydata$trial.F) <- c(0,1)
-# contrasts(mydata$trial.F) # check
-
 # Create reduced innovation model 
 m_inno_predict_reduc <- 
-  lme(goal_z_lat_LN ~ tot_z_sc * pop + body_length_sc + 
-        trial,
+  lme(goal_z_lat_LN ~ tot_z_sc * pop + body_length_sc + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
       data = data_analysis_NA_inno)
@@ -134,8 +129,6 @@ p <- ggplot(data_inno_mean_plot,
 
 print(p)
 ```
-
-    ## Error in isIncomplete(con) : invalid connection
 
 ![](../figs/pop-comp-inno-1.png)<!-- -->
 
@@ -226,7 +219,5 @@ p <- ggplot(data_inno_mean_plot,
 
 print(p)
 ```
-
-    ## Error in isIncomplete(con) : invalid connection
 
 ![](../figs/inno-predict-total-zones-1.png)<!-- -->

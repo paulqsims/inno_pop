@@ -147,39 +147,29 @@ Create a data set without NAs - `lme()` won’t remove them
 ``` r
 data_analysis_NA_inno <-
   data_analysis %>%
-  select(goal_z_lat_LN, tot_z_sc, pop, group,
-         site_uni, body_length_sc, trial) %>%
+  select(goal_z_lat_LN, pop, group,
+         site_uni, trial) %>%
   drop_na() 
 ```
 
-Reduced innovation predictor model (see analysis\_inno-predict.Rmd for
-how it was obtained)
+Fit innovation model
 
 ``` r
-# Relevel population for testing the slope of total zones entered in other population
-# data_analysis_NA$pop <- relevel(data_analysis_NA$pop, "Upper Aripo")  # Upper Aripo baseline
-# data_analysis_NA$pop <- relevel(data_analysis_NA$pop, "Lower Aripo")  # Lower Aripo baseline, original baseline
-
 # Change trial contrasts in order to get marginal effects for average trial 
 contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
 # contrasts(data_analysis_NA_inno$trial) # check
 
-# For changing trial back to dummy coding
-# contrasts(mydata$trial.F) <- c(0,1)
-# contrasts(mydata$trial.F) # check
-
 # Fit reduced model
-m_inno_predict_final <- 
-  lme(goal_z_lat_LN ~ tot_z_sc * pop + 
-        body_length_sc + trial,
+m_inno_pop_comp <- 
+  lme(goal_z_lat_LN ~ pop + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
       data = data_analysis_NA_inno,
       method = "REML")
 
 # Tidy innovation predictor model
-m_inno_predict_final_tidy <-
-  m_inno_predict_final %>%
+m_inno_pop_comp_tidy <-
+  m_inno_pop_comp %>%
   broom.mixed::tidy() %>%
   filter(effect == "fixed",
          term %in% c("(Intercept)", "popUpper Aripo")) %>%
@@ -197,8 +187,7 @@ Create dataset without NAs - `lme()` won’t remove them
 data_analysis_NA_learn <-
   data_analysis %>%
   filter(trial == 1) %>%
-  select(learn_prop_LN, tot_z_sc, pop, group,
-         site_uni, body_length_sc) %>%
+  select(learn_prop_LN, pop, group, site_uni) %>%
   drop_na() 
 ```
 
@@ -228,10 +217,8 @@ summary(m_learn_pop_comp)
     ##  Structure: Different standard deviations per stratum
     ##  Formula: ~1 | site_uni * pop 
     ##  Parameter estimates:
-    ## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo 
-    ##                  1.000000                  2.463715                  2.833290 
-    ## Upper Aripo 3*Upper Aripo 
-    ##                  2.570414 
+    ## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo Upper Aripo 3*Upper Aripo 
+    ##                  1.000000                  2.463715                  2.833290                  2.570414 
     ## 
     ## Coefficients:
     ##                      Value Std.Error    t-value p-value
@@ -248,6 +235,17 @@ summary(m_learn_pop_comp)
     ## 
     ## Residual standard error: 0.4428314 
     ## Degrees of freedom: 41 total; 39 residual
+
+``` r
+# Tidy learning population comparison model
+m_learn_pop_comp_tidy <-
+  m_learn_pop_comp %>%
+  broom.mixed::tidy() %>%
+  mutate(response = "improvement_ratio",
+         across(.cols = c(estimate:statistic), ~round_est(.x)),
+         p_value = round_pval(p.value)) %>%
+  select("response", "term", "estimate","std.error", "statistic", "p_value") 
+```
 
 Reduced learning model (no population differences)
 
@@ -268,10 +266,8 @@ summary(m_learn)
     ##  Structure: Different standard deviations per stratum
     ##  Formula: ~1 | site_uni * pop 
     ##  Parameter estimates:
-    ## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo 
-    ##                  1.000000                  2.427747                  2.877063 
-    ## Upper Aripo 3*Upper Aripo 
-    ##                  2.741791 
+    ## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo Upper Aripo 3*Upper Aripo 
+    ##                  1.000000                  2.427747                  2.877063                  2.741791 
     ## 
     ## Coefficients:
     ##                   Value Std.Error    t-value p-value
@@ -284,23 +280,12 @@ summary(m_learn)
     ## Residual standard error: 0.4353539 
     ## Degrees of freedom: 41 total; 40 residual
 
-``` r
-# Tidy learning population comparison model
-m_learn_pop_comp_tidy <-
-  m_learn_pop_comp %>%
-  broom.mixed::tidy() %>%
-  mutate(response = "improvement_ratio",
-         across(.cols = c(estimate:statistic), ~round_est(.x)),
-         p_value = round_pval(p.value)) %>%
-  select("response", "term", "estimate","std.error", "statistic", "p_value") 
-```
-
 ## Cleanup and final results
 
 ``` r
 # Bind all population comparisons together
 m_pop_comp_final_tidy <-
-  bind_rows(m_learn_pop_comp_tidy, m_inno_predict_final_tidy,
+  bind_rows(m_learn_pop_comp_tidy, m_inno_pop_comp_tidy,
             m_length_totz_popcomp_tidy) %>%
   rename(predictor = "term")
 
@@ -312,8 +297,8 @@ m_pop_comp_final_tidy  # See reduced inno predictor model for trial measure of l
     ##   <chr>             <chr>          <chr>    <chr>     <chr>     <chr>  
     ## 1 improvement_ratio (Intercept)    -0.01    0.18      -0.08     0.94   
     ## 2 improvement_ratio popUpper Aripo -0.23    0.28      -0.82     0.42   
-    ## 3 goal_z_lat_LN     (Intercept)    4.08     0.24      17.24     <0.001 
-    ## 4 goal_z_lat_LN     popUpper Aripo -0.73    0.28      -2.62     0.013  
+    ## 3 goal_z_lat_LN     (Intercept)    3.96     0.19      20.67     <0.001 
+    ## 4 goal_z_lat_LN     popUpper Aripo -0.56    0.22      -2.53     0.015  
     ## 5 body_length_LN    (Intercept)    3        0.03      101.11    <0.001 
     ## 6 body_length_LN    popUpper Aripo 0.07     0.04      1.84      0.073  
     ## 7 tot_z_LN          (Intercept)    4.27     0.08      53.56     <0.001 
@@ -385,12 +370,9 @@ m1_inno_predict_red_rand <-  # Fit model without group
 anova(m_inno_predict_full, m1_inno_predict_red_rand)  # Likelihood ratio test
 ```
 
-    ##                          Model df      AIC      BIC    logLik   Test L.Ratio
-    ## m_inno_predict_full          1 13 246.2637 276.7331 -110.1318               
-    ## m1_inno_predict_red_rand     2 12 246.9630 275.0886 -111.4815 1 vs 2 2.69932
-    ##                          p-value
-    ## m_inno_predict_full             
-    ## m1_inno_predict_red_rand  0.1004
+    ##                          Model df      AIC      BIC    logLik   Test L.Ratio p-value
+    ## m_inno_predict_full          1 13 246.2637 276.7331 -110.1318                       
+    ## m1_inno_predict_red_rand     2 12 246.9630 275.0886 -111.4815 1 vs 2 2.69932  0.1004
 
 ## Fixed-effect selection
 
@@ -468,8 +450,8 @@ Fit final model
 
 ``` r
 # Relevel population for testing total zones slope in other population
-# data_analysis_NA$pop <- relevel(data_analysis_NA$pop, "Upper Aripo")  # Upper Aripo baseline
-# data_analysis_NA$pop <- relevel(data_analysis_NA$pop, "Lower Aripo")  # Lower Aripo baseline, original 
+# data_analysis_NA_inno$pop <- relevel(data_analysis_NA_inno$pop, "Upper Aripo")  # Upper Aripo baseline
+# data_analysis_NA_inno$pop <- relevel(data_analysis_NA_inno$pop, "Lower Aripo")  # Lower Aripo baseline, original 
 
 # Change trial contrasts in order to get marginal effects for average trial 
 contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
@@ -504,10 +486,8 @@ summary(m_inno_predict_reduc)
     ##  Structure: Different standard deviations per stratum
     ##  Formula: ~1 | site_uni * pop 
     ##  Parameter estimates:
-    ## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo 
-    ##                  1.000000                  2.096746                  3.033792 
-    ## Upper Aripo 3*Upper Aripo 
-    ##                  2.253602 
+    ## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo Upper Aripo 3*Upper Aripo 
+    ##                  1.000000                  2.096746                  3.033792                  2.253602 
     ## Fixed effects: list(inno_pred_reduc) 
     ##                             Value  Std.Error DF   t-value p-value
     ## (Intercept)              4.083566 0.23692451 40 17.235727  0.0000
@@ -610,14 +590,9 @@ data_analysis_NA_inno <-
 contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
 # contrasts(data_analysis_NA_inno$trial) # check
 
-# For changing trial back to dummy coding
-# contrasts(mydata$trial.F) <- c(0,1)
-# contrasts(mydata$trial.F) # check
-
 # Create reduced innovation model 
 m_inno_predict_reduc <- 
-  lme(goal_z_lat_LN ~ tot_z_sc * pop + body_length_sc + 
-        trial,
+  lme(goal_z_lat_LN ~ tot_z_sc * pop + body_length_sc + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
       data = data_analysis_NA_inno)
@@ -698,8 +673,6 @@ p <- ggplot(data_inno_mean_plot,
 
 print(p)
 ```
-
-    ## Error in isIncomplete(con) : invalid connection
 
 ![](../figs/pop-comp-inno-1.png)<!-- -->
 
@@ -790,7 +763,5 @@ p <- ggplot(data_inno_mean_plot,
 
 print(p)
 ```
-
-    ## Error in isIncomplete(con) : invalid connection
 
 ![](../figs/inno-predict-total-zones-1.png)<!-- -->

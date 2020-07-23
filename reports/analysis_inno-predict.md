@@ -65,12 +65,9 @@ m1_inno_predict_red_rand <-  # Fit model without group
 anova(m_inno_predict_full, m1_inno_predict_red_rand)  # Likelihood ratio test
 ```
 
-    ##                          Model df      AIC      BIC    logLik   Test L.Ratio
-    ## m_inno_predict_full          1 13 246.2637 276.7331 -110.1318               
-    ## m1_inno_predict_red_rand     2 12 246.9630 275.0886 -111.4815 1 vs 2 2.69932
-    ##                          p-value
-    ## m_inno_predict_full             
-    ## m1_inno_predict_red_rand  0.1004
+    ##                          Model df      AIC      BIC    logLik   Test L.Ratio p-value
+    ## m_inno_predict_full          1 13 246.2637 276.7331 -110.1318                       
+    ## m1_inno_predict_red_rand     2 12 246.9630 275.0886 -111.4815 1 vs 2 2.69932  0.1004
 
 ## Fixed-effect selection
 
@@ -148,8 +145,8 @@ Fit final model
 
 ``` r
 # Relevel population for testing total zones slope in other population
-# data_analysis_NA$pop <- relevel(data_analysis_NA$pop, "Upper Aripo")  # Upper Aripo baseline
-# data_analysis_NA$pop <- relevel(data_analysis_NA$pop, "Lower Aripo")  # Lower Aripo baseline, original 
+# data_analysis_NA_inno$pop <- relevel(data_analysis_NA_inno$pop, "Upper Aripo")  # Upper Aripo baseline
+# data_analysis_NA_inno$pop <- relevel(data_analysis_NA_inno$pop, "Lower Aripo")  # Lower Aripo baseline, original 
 
 # Change trial contrasts in order to get marginal effects for average trial 
 contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
@@ -184,10 +181,8 @@ summary(m_inno_predict_reduc)
     ##  Structure: Different standard deviations per stratum
     ##  Formula: ~1 | site_uni * pop 
     ##  Parameter estimates:
-    ## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo 
-    ##                  1.000000                  2.096746                  3.033792 
-    ## Upper Aripo 3*Upper Aripo 
-    ##                  2.253602 
+    ## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo Upper Aripo 3*Upper Aripo 
+    ##                  1.000000                  2.096746                  3.033792                  2.253602 
     ## Fixed effects: list(inno_pred_reduc) 
     ##                             Value  Std.Error DF   t-value p-value
     ## (Intercept)              4.083566 0.23692451 40 17.235727  0.0000

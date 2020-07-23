@@ -699,49 +699,39 @@ body {
 <p>Create a data set without NAs - <code>lme()</code> won’t remove them</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>data_analysis_NA_inno &lt;-</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="st">  </span>data_analysis <span class="op">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(goal_z_lat_LN, tot_z_sc, pop, group,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>         site_uni, body_length_sc, trial) <span class="op">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(goal_z_lat_LN, pop, group,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a>         site_uni, trial) <span class="op">%&gt;%</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">drop_na</span>() </span></code></pre></div>
-<p>Reduced innovation predictor model (see analysis_inno-predict.Rmd for how it was obtained)</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="co"># Relevel population for testing the slope of total zones entered in other population</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="co"># data_analysis_NA$pop &lt;- relevel(data_analysis_NA$pop, &quot;Upper Aripo&quot;)  # Upper Aripo baseline</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="co"># data_analysis_NA$pop &lt;- relevel(data_analysis_NA$pop, &quot;Lower Aripo&quot;)  # Lower Aripo baseline, original baseline</span></span>
+<p>Fit innovation model</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="co"># Change trial contrasts in order to get marginal effects for average trial </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="kw">contrasts</span>(data_analysis_NA_inno<span class="op">$</span>trial) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="co"># contrasts(data_analysis_NA_inno$trial) # check</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="co"># Change trial contrasts in order to get marginal effects for average trial </span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="kw">contrasts</span>(data_analysis_NA_inno<span class="op">$</span>trial) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="co"># contrasts(data_analysis_NA_inno$trial) # check</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a><span class="co"># For changing trial back to dummy coding</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="co"># contrasts(mydata$trial.F) &lt;- c(0,1)</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a><span class="co"># contrasts(mydata$trial.F) # check</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="co"># Fit reduced model</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a>m_inno_pop_comp &lt;-<span class="st"> </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">lme</span>(goal_z_lat_LN <span class="op">~</span><span class="st"> </span>pop <span class="op">+</span><span class="st"> </span>trial,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a>      <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>group,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a>      <span class="dt">data =</span> data_analysis_NA_inno,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true"></a>      <span class="dt">method =</span> <span class="st">&quot;REML&quot;</span>)</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="co"># Fit reduced model</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a>m_inno_predict_final &lt;-<span class="st"> </span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="st">  </span><span class="kw">lme</span>(goal_z_lat_LN <span class="op">~</span><span class="st"> </span>tot_z_sc <span class="op">*</span><span class="st"> </span>pop <span class="op">+</span><span class="st"> </span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a><span class="st">        </span>body_length_sc <span class="op">+</span><span class="st"> </span>trial,</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a>      <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>group,</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a>      <span class="dt">data =</span> data_analysis_NA_inno,</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a>      <span class="dt">method =</span> <span class="st">&quot;REML&quot;</span>)</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a><span class="co"># Tidy innovation predictor model</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true"></a>m_inno_predict_final_tidy &lt;-</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true"></a><span class="st">  </span>m_inno_predict_final <span class="op">%&gt;%</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true"></a><span class="st">  </span>broom.mixed<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(effect <span class="op">==</span><span class="st"> &quot;fixed&quot;</span>,</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true"></a>         term <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;popUpper Aripo&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">response =</span> <span class="st">&quot;goal_z_lat_LN&quot;</span>,</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true"></a>         <span class="kw">across</span>(<span class="dt">.cols =</span> <span class="kw">c</span>(estimate<span class="op">:</span>statistic), <span class="op">~</span><span class="kw">round_est</span>(.x)),</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true"></a>         <span class="dt">p_value =</span> <span class="kw">round_pval</span>(p.value)) <span class="op">%&gt;%</span></span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="st">&quot;response&quot;</span>, <span class="st">&quot;term&quot;</span>, <span class="st">&quot;estimate&quot;</span>,<span class="st">&quot;std.error&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="st">&quot;p_value&quot;</span>) </span></code></pre></div>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true"></a><span class="co"># Tidy innovation predictor model</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true"></a>m_inno_pop_comp_tidy &lt;-</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true"></a><span class="st">  </span>m_inno_pop_comp <span class="op">%&gt;%</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true"></a><span class="st">  </span>broom.mixed<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(effect <span class="op">==</span><span class="st"> &quot;fixed&quot;</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true"></a>         term <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;popUpper Aripo&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">response =</span> <span class="st">&quot;goal_z_lat_LN&quot;</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true"></a>         <span class="kw">across</span>(<span class="dt">.cols =</span> <span class="kw">c</span>(estimate<span class="op">:</span>statistic), <span class="op">~</span><span class="kw">round_est</span>(.x)),</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true"></a>         <span class="dt">p_value =</span> <span class="kw">round_pval</span>(p.value)) <span class="op">%&gt;%</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="st">&quot;response&quot;</span>, <span class="st">&quot;term&quot;</span>, <span class="st">&quot;estimate&quot;</span>,<span class="st">&quot;std.error&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="st">&quot;p_value&quot;</span>) </span></code></pre></div>
 <h3 id="learning-improvement-ratio">Learning: Improvement ratio</h3>
 <p>Create dataset without NAs - <code>lme()</code> won’t remove them</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>data_analysis_NA_learn &lt;-</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="st">  </span>data_analysis <span class="op">%&gt;%</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(learn_prop_LN, tot_z_sc, pop, group,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>         site_uni, body_length_sc) <span class="op">%&gt;%</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">drop_na</span>() </span></code></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(learn_prop_LN, pop, group, site_uni) <span class="op">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">drop_na</span>() </span></code></pre></div>
 <p>Build full model</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>m_learn_pop_comp &lt;-<span class="st"> </span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">gls</span>(learn_prop_LN <span class="op">~</span><span class="st"> </span>pop,</span>
@@ -760,10 +750,8 @@ body {
 ##  Structure: Different standard deviations per stratum
 ##  Formula: ~1 | site_uni * pop 
 ##  Parameter estimates:
-## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo 
-##                  1.000000                  2.463715                  2.833290 
-## Upper Aripo 3*Upper Aripo 
-##                  2.570414 
+## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo Upper Aripo 3*Upper Aripo 
+##                  1.000000                  2.463715                  2.833290                  2.570414 
 ## 
 ## Coefficients:
 ##                      Value Std.Error    t-value p-value
@@ -781,11 +769,19 @@ body {
 ## Residual standard error: 0.4428314 
 ## Degrees of freedom: 41 total; 39 residual
 </code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="co"># Tidy learning population comparison model</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>m_learn_pop_comp_tidy &lt;-</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a><span class="st">  </span>m_learn_pop_comp <span class="op">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a><span class="st">  </span>broom.mixed<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">response =</span> <span class="st">&quot;improvement_ratio&quot;</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true"></a>         <span class="kw">across</span>(<span class="dt">.cols =</span> <span class="kw">c</span>(estimate<span class="op">:</span>statistic), <span class="op">~</span><span class="kw">round_est</span>(.x)),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true"></a>         <span class="dt">p_value =</span> <span class="kw">round_pval</span>(p.value)) <span class="op">%&gt;%</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="st">&quot;response&quot;</span>, <span class="st">&quot;term&quot;</span>, <span class="st">&quot;estimate&quot;</span>,<span class="st">&quot;std.error&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="st">&quot;p_value&quot;</span>) </span></code></pre></div>
 <p>Reduced learning model (no population differences)</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>m_learn &lt;-<span class="st"> </span><span class="kw">update</span>(m_learn_pop_comp, <span class="op">~</span><span class="st"> </span><span class="dv">1</span>)  <span class="co"># update model to intercept only</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a><span class="co"># Model summary: learning overall</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a><span class="kw">summary</span>(m_learn)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a>m_learn &lt;-<span class="st"> </span><span class="kw">update</span>(m_learn_pop_comp, <span class="op">~</span><span class="st"> </span><span class="dv">1</span>)  <span class="co"># update model to intercept only</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a><span class="co"># Model summary: learning overall</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a><span class="kw">summary</span>(m_learn)</span></code></pre></div>
 <pre><code>## Generalized least squares fit by REML
 ##   Model: learn_prop_LN ~ 1 
 ##   Data: data_analysis_NA_learn 
@@ -796,10 +792,8 @@ body {
 ##  Structure: Different standard deviations per stratum
 ##  Formula: ~1 | site_uni * pop 
 ##  Parameter estimates:
-## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo 
-##                  1.000000                  2.427747                  2.877063 
-## Upper Aripo 3*Upper Aripo 
-##                  2.741791 
+## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo Lower Aripo 2*Lower Aripo Upper Aripo 3*Upper Aripo 
+##                  1.000000                  2.427747                  2.877063                  2.741791 
 ## 
 ## Coefficients:
 ##                   Value Std.Error    t-value p-value
@@ -812,18 +806,10 @@ body {
 ## Residual standard error: 0.4353539 
 ## Degrees of freedom: 41 total; 40 residual
 </code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="co"># Tidy learning population comparison model</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a>m_learn_pop_comp_tidy &lt;-</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a><span class="st">  </span>m_learn_pop_comp <span class="op">%&gt;%</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a><span class="st">  </span>broom.mixed<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">response =</span> <span class="st">&quot;improvement_ratio&quot;</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a>         <span class="kw">across</span>(<span class="dt">.cols =</span> <span class="kw">c</span>(estimate<span class="op">:</span>statistic), <span class="op">~</span><span class="kw">round_est</span>(.x)),</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a>         <span class="dt">p_value =</span> <span class="kw">round_pval</span>(p.value)) <span class="op">%&gt;%</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="st">&quot;response&quot;</span>, <span class="st">&quot;term&quot;</span>, <span class="st">&quot;estimate&quot;</span>,<span class="st">&quot;std.error&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="st">&quot;p_value&quot;</span>) </span></code></pre></div>
 <h2 id="cleanup-and-final-results">Cleanup and final results</h2>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="co"># Bind all population comparisons together</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a>m_pop_comp_final_tidy &lt;-</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">bind_rows</span>(m_learn_pop_comp_tidy, m_inno_predict_final_tidy,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">bind_rows</span>(m_learn_pop_comp_tidy, m_inno_pop_comp_tidy,</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a>            m_length_totz_popcomp_tidy) <span class="op">%&gt;%</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">predictor =</span> <span class="st">&quot;term&quot;</span>)</span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true"></a></span>
@@ -833,8 +819,8 @@ body {
 ##   &lt;chr&gt;             &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;  
 ## 1 improvement_ratio (Intercept)    -0.01    0.18      -0.08     0.94   
 ## 2 improvement_ratio popUpper Aripo -0.23    0.28      -0.82     0.42   
-## 3 goal_z_lat_LN     (Intercept)    4.08     0.24      17.24     &lt;0.001 
-## 4 goal_z_lat_LN     popUpper Aripo -0.73    0.28      -2.62     0.013  
+## 3 goal_z_lat_LN     (Intercept)    3.96     0.19      20.67     &lt;0.001 
+## 4 goal_z_lat_LN     popUpper Aripo -0.56    0.22      -2.53     0.015  
 ## 5 body_length_LN    (Intercept)    3        0.03      101.11    &lt;0.001 
 ## 6 body_length_LN    popUpper Aripo 0.07     0.04      1.84      0.073  
 ## 7 tot_z_LN          (Intercept)    4.27     0.08      53.56     &lt;0.001 
