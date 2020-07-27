@@ -32,7 +32,8 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
 
   - `data/` Data used in analyses
   - `R/` Self-contained R markdown (\*.Rmd) scripts (can be run on their
-    own) and functions used for the analyses and in generating plots
+    own) and custom functions used for modifying the data, running
+    analyses, and generating plots
   - `figs/` High quality figures generated for publication
   - `reports/` Markdown and html summaries of code output
 
