@@ -23,7 +23,7 @@ knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
 ``` r
 # Load libraries
 library(tidyverse)  # for cleaning and modifying data
-library(nlme)  # formixed models and generalized least squares
+library(nlme)  # for mixed models and generalized least squares
 library(ggplot2)  # for plots
 library(ggsignif)  # for sig stars
 library(effects)  # for marginal effects
