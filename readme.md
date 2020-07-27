@@ -1,8 +1,6 @@
 readme
 ================
 
-  - Last update: 2020-07-27
-
 ## Description
 
 Data and code associated with the study “An investigation of population
@@ -21,6 +19,8 @@ in `reports/`
 R Markdown files can be rendered by sourcing
 [render-Rmd.R](https://github.com/paulqsims/inno_pop/blob/master/R/render-Rmd.R)
 in `R/`
+
+**Last update**: 2020-07-27
 
 ## Authors
 
