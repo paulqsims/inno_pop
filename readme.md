@@ -1,7 +1,7 @@
 readme
 ================
 
-  - Last update: 2020-07-27
+**Last update**: 2020-07-27
 
 ## Description
 

@@ -6,7 +6,7 @@ output:
   github_document
 ---
 
-- Last update: `r Sys.Date()`
+**Last update**: `r Sys.Date()`
 
 ## Description
 
