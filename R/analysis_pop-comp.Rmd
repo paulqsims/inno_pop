@@ -1,5 +1,4 @@
 # Analysis: Population comparisons
-
 - Author: Paul Q. Sims
 - Contact: paul.q.sims@gmail.com
 - Date: 2020

@@ -1,9 +1,8 @@
 ################################################################################
-# Function: Custom functions
+# Purpose: Custom functions for analyses and formatting
 # Author: Paul Q. Sims
 # Contact: paul.q.sims@gmail.com
 # Date: 2020
-# Purpose: Custom functions for analyses and formatting
 ###############################################################################
 
 # Mean centers and standardizes (1 SD) vector with NA value removal option
