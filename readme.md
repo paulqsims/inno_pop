@@ -1,11 +1,6 @@
 readme
 ================
 
-<<<<<<< HEAD
-=======
-**Last update**: 2020-07-27
-
->>>>>>> 2ee2ac95b1b2a9f6de2f9e6f68d4df313a1e7102
 ## Description
 
 Data and code associated with the study “An investigation of population

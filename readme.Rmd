@@ -6,11 +6,6 @@ output:
   github_document
 ---
 
-<<<<<<< HEAD
-=======
-**Last update**: `r Sys.Date()`
-
->>>>>>> 2ee2ac95b1b2a9f6de2f9e6f68d4df313a1e7102
 ## Description
 
 Data and code associated with the study “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. *In prep*. Please see the publication for further details on data collection, the experimental apparatus, procedure, and statistical analyses.
