@@ -1,12 +1,17 @@
 readme
 ================
 
+  - Last update: 2020-07-27
+
 ## Description
 
 Data and code associated with the study “An investigation of population
 variation in maze exploration and its predictors in wild Trinidadian
-guppies (*Poecilia reticulata*)”. *In prep*. This repository will be
-permanently archived at Zenodo.
+guppies (*Poecilia reticulata*)”. *In prep*. Please see the publication
+for further details on data collection, the experimental apparatus,
+procedure, and statistical analyses.
+
+This repository will be permanently archived at Zenodo.
 
 A report summary containing all the R script output, including plots,
 can be found at
@@ -31,29 +36,24 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
   - `figs/` High quality figures generated for publication
   - `reports/` Markdown and html summaries of code output
 
-## Prerequisites: R packages
+## Prerequisites: R version and R packages
 
-Data clean up
+R version 3.6.3 (2020-02-29)
 
-  - `tidyverse`
-  - `broom`, `broom.mixed`
-
-Analyses
-
-  - `nlme`
-  - `MuMIn`
-
-Plots
-
-  - `ggplot2`
-  - `ggsignif`
-  - `scales`
-  - `effects`
-
-Misc
-
-  - `rprojroot`
-  - `rmarkdown`, `knitr`
+| Package\_Name | Version | Function      |
+| :------------ | :------ | :------------ |
+| tidyverse     | 1.3.0   | Data clean up |
+| broom         | 0.7.0   | Data clean up |
+| broom.mixed   | 0.2.6   | Data clean up |
+| nlme          | 3.1.148 | Analyses      |
+| MuMIn         | 1.43.17 | Analyses      |
+| ggplot2       | 3.3.2   | Plots         |
+| ggsignif      | 0.6.0   | Plots         |
+| scales        | 1.1.1   | Plots         |
+| effects       | 4.1.4   | Plots         |
+| rprojroot     | 1.3.2   | Miscellaneous |
+| rmarkdown     | 2.3     | Miscellaneous |
+| knitr         | 1.29    | Miscellaneous |
 
 ## Metadata
 
@@ -71,8 +71,8 @@ Reference file:
 | tot\_z       | Total zones entered                                                                            |
 | body\_length | Body length (mm)                                                                               |
 | learn\_prop  | Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1 |
-| LN suffix    | Natural log transformation                                                                     |
-| sc suffix    | Mean centered and standardized by 1 standard deviation                                         |
+
+  - Missing values are input as `NA` text
 
 ## Licenses
 

@@ -2,12 +2,17 @@
 title: "readme"
 #author: "Paul Q. Sims"
 #date: "7/13/2020"
-output: github_document
+output: 
+  github_document
 ---
+
+- Last update: `r Sys.Date()`
 
 ## Description
 
-Data and code associated with the study “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. *In prep*. This repository will be permanently archived at Zenodo. 
+Data and code associated with the study “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. *In prep*. Please see the publication for further details on data collection, the experimental apparatus, procedure, and statistical analyses.
+
+This repository will be permanently archived at Zenodo. 
 
 A report summary containing all the R script output, including plots, can be found at [analysis-summary.md](https://github.com/paulqsims/inno_pop/blob/master/reports/analysis-summary.md) in `reports/`
 
@@ -26,29 +31,30 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
 * `figs/` High quality figures generated for publication
 * `reports/` Markdown and html summaries of code output
 
-## Prerequisites: R packages
+## Prerequisites: R version and R packages
 
-Data clean up
+`r R.Version()$version.string`
 
-* `tidyverse`
-* `broom`, `broom.mixed`
-
-Analyses
-
-* `nlme`
-* `MuMIn`
-
-Plots
-
-* `ggplot2`
-* `ggsignif`
-* `scales`
-* `effects`
-
-Misc
-
-* `rprojroot`
-* `rmarkdown`, `knitr`
+```{r package names, echo=FALSE,warning=FALSE,eval=TRUE,message=FALSE}
+# Package dataframe
+dat_packages <- setNames(data.frame(matrix(ncol = 3, nrow = 12)),
+                        c("Package_Name", "Version", "Function"))
+# Package name
+dat_packages$Package_Name <- 
+  c("tidyverse", "broom", "broom.mixed", "nlme", "MuMIn", "ggplot2",
+  "ggsignif", "scales", "effects", "rprojroot", "rmarkdown", "knitr")
+# Package function
+dat_packages$Function <- 
+  c(rep("Data clean up", times = 3), 
+    rep("Analyses", time = 2),
+    rep("Plots", times = 4),
+    rep("Miscellaneous", times = 3))
+# Package version
+for (i in 1:nrow(dat_packages)) {
+   dat_packages$Version[i] <- as.character(packageVersion(dat_packages$Package_Name[i]))
+}
+knitr::kable(dat_packages)
+```
 
 ## Metadata
 
@@ -62,8 +68,7 @@ data_analysis <-
   read_csv("data/data_Sims-Reader_2020.csv")
 
 # Write out descriptions associated with each column header
-var_names <- names(data_analysis) %>%
-  append(., c("LN suffix", "sc suffix"))
+var_names <- names(data_analysis)
 var_descrip <- c(
   "Population: Lower or upper Aripo",
   "Site sampled",
@@ -73,15 +78,15 @@ var_descrip <- c(
   "Latency to reach the goal zone, zone 11, (sec)",
   "Total zones entered",
   "Body length (mm)",
-  "Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1",
-  "Natural log transformation",
-  "Mean centered and standardized by 1 standard deviation")
+  "Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1")
 
 var_metadata <- tibble(var_names,var_descrip) %>%
                   rename(Column = "var_names", Description = "var_descrip")
 
 knitr::kable(var_metadata)
 ```
+
+- Missing values are input as `NA` text
 
 ## Licenses
 
