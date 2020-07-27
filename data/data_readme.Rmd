@@ -1,0 +1,47 @@
+---
+title: "data_readme"
+author: "Paul Sims"
+date: "2020"
+output: 
+  html_document
+  github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Description
+
+Data associated with the study “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. *In prep*. Please see the publication for further details on data collection, the experimental apparatus, procedure, and statistical analyses.
+
+# Metadata
+
+Reference file: [data_Sims-Reader_2020.csv](https://github.com/paulqsims/inno_pop/blob/master/data/data_Sims-Reader_2020.csv)
+
+```{r, echo = FALSE, results = TRUE, message = FALSE}
+library(tidyverse)
+
+data_analysis <- 
+  read_csv("./data_Sims-Reader_2020.csv")
+
+# Write out descriptions associated with each column header
+var_names <- names(data_analysis)
+var_descrip <- c(
+  "Population: Lower or upper Aripo",
+  "Site sampled",
+  "Unique site identifier",
+  "Trial: 1 or 2",
+  "Group id",
+  "Latency to reach the goal zone, zone 11, (sec)",
+  "Total zones entered",
+  "Body length (mm)",
+  "Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1")
+
+var_metadata <- tibble(var_names,var_descrip) %>%
+                  rename(Column = "var_names", Description = "var_descrip")
+
+knitr::kable(var_metadata)
+```
+
+- Missing values are input as `NA` text
