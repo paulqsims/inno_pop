@@ -1,10 +1,8 @@
 ---
 title: "data_readme"
-author: "Paul Sims"
-date: "2020"
-output: 
-  html_document
-  github_document
+output:
+  html_document: default
+  github_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -12,6 +10,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Description
+
+Author: Paul Q. Sims (<paul.q.sims@gmail.com>)
 
 Data associated with the study “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. *In prep*. Please see the publication for further details on data collection, the experimental apparatus, procedure, and statistical analyses.
 

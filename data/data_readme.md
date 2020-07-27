@@ -1,9 +1,9 @@
 data\_readme
 ================
-Paul Sims
-2020
 
 # Description
+
+Author: Paul Q. Sims (<paul.q.sims@gmail.com>)
 
 Data associated with the study “An investigation of population variation
 in maze exploration and its predictors in wild Trinidadian guppies
