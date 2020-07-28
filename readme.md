@@ -9,7 +9,8 @@ guppies (*Poecilia reticulata*)”. *In prep*. Please see the publication
 for further details on data collection, the experimental apparatus,
 procedure, and statistical analyses.
 
-This repository will be permanently archived at Zenodo.
+This repository is permanently archived at Zenodo
+[![DOI](https://zenodo.org/badge/279408355.svg)](https://zenodo.org/badge/latestdoi/279408355).
 
 A report summary containing all the R script output, including plots,
 can be found at
@@ -20,7 +21,7 @@ R Markdown files can be rendered by sourcing
 [render-Rmd.R](https://github.com/paulqsims/inno_pop/blob/master/R/render-Rmd.R)
 in `R/`
 
-**Last update**: 2020-07-27
+**Last update**: 2020-07-28
 
 ## Authors
 

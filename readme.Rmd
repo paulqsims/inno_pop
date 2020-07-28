@@ -10,7 +10,7 @@ output:
 
 Data and code associated with the study “An investigation of population variation in maze exploration and its predictors in wild Trinidadian guppies (*Poecilia reticulata*)”. *In prep*. Please see the publication for further details on data collection, the experimental apparatus, procedure, and statistical analyses.
 
-This repository will be permanently archived at Zenodo. 
+This repository is permanently archived at Zenodo  [![DOI](https://zenodo.org/badge/279408355.svg)](https://zenodo.org/badge/latestdoi/279408355). 
 
 A report summary containing all the R script output, including plots, can be found at [analysis-summary.md](https://github.com/paulqsims/inno_pop/blob/master/reports/analysis-summary.md) in `reports/`
 
