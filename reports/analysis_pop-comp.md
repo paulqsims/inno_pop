@@ -75,15 +75,11 @@ summary(.)
     ## -0.23062 -0.07586  0.00599  0.03655  0.32960 
     ## 
     ## Coefficients:
-    ##                Estimate Std. Error t value Pr(>|t|)
-    ## (Intercept)     3.00321    0.02970 101.107   <2e-16
-    ## popUpper Aripo  0.06838    0.03724   1.837   0.0734
-    ##                   
-    ## (Intercept)    ***
-    ## popUpper Aripo .  
+    ##                Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)     3.00321    0.02970 101.107   <2e-16 ***
+    ## popUpper Aripo  0.06838    0.03724   1.837   0.0734 .  
     ## ---
-    ## Signif. codes:  
-    ## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Residual standard error: 0.1188 on 42 degrees of freedom
     ##   (1 observation deleted due to missingness)
@@ -108,15 +104,11 @@ summary(.)
     ## -0.73944 -0.16210  0.04391  0.24886  0.49637 
     ## 
     ## Coefficients:
-    ##                Estimate Std. Error t value Pr(>|t|)
-    ## (Intercept)     4.26580    0.07965  53.560  < 2e-16
-    ## popUpper Aripo  0.27520    0.09984   2.756  0.00861
-    ##                   
-    ## (Intercept)    ***
-    ## popUpper Aripo ** 
+    ##                Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)     4.26580    0.07965  53.560  < 2e-16 ***
+    ## popUpper Aripo  0.27520    0.09984   2.756  0.00861 ** 
     ## ---
-    ## Signif. codes:  
-    ## 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
     ## Residual standard error: 0.3186 on 42 degrees of freedom
     ##   (1 observation deleted due to missingness)
@@ -206,22 +198,17 @@ summary(m_learn_pop_comp)
     ##                  2.833290                  2.570414 
     ## 
     ## Coefficients:
-    ##                      Value Std.Error    t-value
-    ## (Intercept)    -0.01330064 0.1771933 -0.0750629
-    ## popUpper Aripo -0.22889969 0.2801857 -0.8169571
-    ##                p-value
-    ## (Intercept)     0.9405
-    ## popUpper Aripo  0.4189
+    ##                      Value Std.Error    t-value p-value
+    ## (Intercept)    -0.01330064 0.1771933 -0.0750629  0.9405
+    ## popUpper Aripo -0.22889969 0.2801857 -0.8169571  0.4189
     ## 
     ##  Correlation: 
     ##                (Intr)
     ## popUpper Aripo -0.632
     ## 
     ## Standardized residuals:
-    ##          Min           Q1          Med           Q3 
-    ## -2.236285624 -0.660417333 -0.005223549  0.801020364 
-    ##          Max 
-    ##  2.743517375 
+    ##          Min           Q1          Med           Q3          Max 
+    ## -2.236285624 -0.660417333 -0.005223549  0.801020364  2.743517375 
     ## 
     ## Residual standard error: 0.4428314 
     ## Degrees of freedom: 41 total; 39 residual
@@ -266,10 +253,8 @@ summary(m_learn)
     ## (Intercept) -0.09488451 0.1357196 -0.6991215  0.4885
     ## 
     ## Standardized residuals:
-    ##        Min         Q1        Med         Q3 
-    ## -2.2559302 -0.7385783 -0.1283975  0.7661007 
-    ##        Max 
-    ##  2.6926018 
+    ##        Min         Q1        Med         Q3        Max 
+    ## -2.2559302 -0.7385783 -0.1283975  0.7661007  2.6926018 
     ## 
     ## Residual standard error: 0.4353539 
     ## Degrees of freedom: 41 total; 40 residual
@@ -287,14 +272,13 @@ m_pop_comp_final_tidy  # See reduced inno predictor model for trial measure of l
 ```
 
     ## # A tibble: 8 x 6
-    ##   response predictor estimate std.error statistic
-    ##   <chr>    <chr>     <chr>    <chr>     <chr>    
-    ## 1 improve… (Interce… -0.01    0.18      -0.08    
-    ## 2 improve… popUpper… -0.23    0.28      -0.82    
-    ## 3 goal_z_… (Interce… 3.96     0.19      20.67    
-    ## 4 goal_z_… popUpper… -0.56    0.22      -2.53    
-    ## 5 body_le… (Interce… 3        0.03      101.11   
-    ## 6 body_le… popUpper… 0.07     0.04      1.84     
-    ## 7 tot_z_LN (Interce… 4.27     0.08      53.56    
-    ## 8 tot_z_LN popUpper… 0.28     0.1       2.76     
-    ## # … with 1 more variable: p_value <chr>
+    ##   response          predictor      estimate std.error statistic p_value
+    ##   <chr>             <chr>          <chr>    <chr>     <chr>     <chr>  
+    ## 1 improvement_ratio (Intercept)    -0.01    0.18      -0.08     0.94   
+    ## 2 improvement_ratio popUpper Aripo -0.23    0.28      -0.82     0.42   
+    ## 3 goal_z_lat_LN     (Intercept)    3.96     0.19      20.67     <0.001 
+    ## 4 goal_z_lat_LN     popUpper Aripo -0.56    0.22      -2.53     0.015  
+    ## 5 body_length_LN    (Intercept)    3        0.03      101.11    <0.001 
+    ## 6 body_length_LN    popUpper Aripo 0.07     0.04      1.84      0.073  
+    ## 7 tot_z_LN          (Intercept)    4.27     0.08      53.56     <0.001 
+    ## 8 tot_z_LN          popUpper Aripo 0.28     0.1       2.76      0.009
