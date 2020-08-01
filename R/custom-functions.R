@@ -48,7 +48,7 @@ round_pval <- function(p_value) {
   p_value <- as.character(p_value)  # change to character to make compatible w/ df that have P <0.001
   }
 
-# Rounds a continous vector statistic
+# Rounds a continuous vector statistic
 # 
 # Distinguishes between 0 and < 0.01
 # Output is character vector!
@@ -61,3 +61,20 @@ round_est <- function(estimate) {
   estimate <- as.character(estimate) # change to character to make compatible w/ df that have estimates < 0.01
 }
 
+# Print pretty kable tables
+
+pretty_kable <- function(kableOutput) {
+  kableOutput %>%
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                              position = "left")
+}
+
+pretty_PredictTab <- function(modelOutput, tableCaption) {
+  broom.mixed::tidy(modelOutput,
+                    effects = "fixed") %>%
+    mutate(across(.cols = c(estimate:statistic), ~round_est(.x)),
+           p.value = round_pval(p.value)) %>%
+    knitr::kable(., align = "l",
+          caption = paste(tableCaption)) %>%
+    pretty_kable(.)
+}
