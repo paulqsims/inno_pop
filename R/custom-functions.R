@@ -62,19 +62,42 @@ round_est <- function(estimate) {
 }
 
 # Print pretty kable tables
-
 pretty_kable <- function(kableOutput) {
   kableOutput %>%
-    kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover",
+                                                    "condensed"),
                               position = "left")
 }
 
-pretty_PredictTab <- function(modelOutput, tableCaption) {
-  broom.mixed::tidy(modelOutput,
-                    effects = "fixed") %>%
-    mutate(across(.cols = c(estimate:statistic), ~round_est(.x)),
+# Tidy predictor tables
+pretty_PredictTab <- function(modelOutput, title = NULL,
+                              mixedModel = FALSE, kable = TRUE) {
+  # kable = whether or not a kable should be printed
+  if (mixedModel == TRUE) {
+      broom.mixed::tidy(modelOutput,
+                        effects = "fixed") %>%
+      mutate(across(.cols = c(estimate:statistic), ~round_est(.x)), 
+             p.value = round_pval(p.value)) %>%
+      {if (kable == TRUE) {
+        knitr::kable(., align = "l",
+                     caption = if (!is.null(title)) {
+                       paste(title)
+                     } else { paste("") }
+        ) %>%
+          pretty_kable(.)
+      } else { print(.) }}
+  } else {
+    broom::tidy(modelOutput) %>%
+    mutate(across(.cols = c(estimate:statistic), ~round_est(.x)), 
            p.value = round_pval(p.value)) %>%
-    knitr::kable(., align = "l",
-          caption = paste(tableCaption)) %>%
-    pretty_kable(.)
+      {if (kable == TRUE) {
+        knitr::kable(., align = "l",
+                     caption = if (!is.null(title)) {
+                       paste(title)
+                     } else { paste("") }
+        ) %>%
+          pretty_kable(.)
+      } else { print(.) }}
+  }
 }
+
