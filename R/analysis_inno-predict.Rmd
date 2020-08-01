@@ -58,7 +58,11 @@ m1_inno_predict_red_rand <-  # Fit model without group
       data = data_analysis_NA_inno,
       method = "REML")
 
-anova(m_inno_predict_full, m1_inno_predict_red_rand)  # Likelihood ratio test
+# Likelihood ratio test
+knitr::kable(anova(m_inno_predict_full, m1_inno_predict_red_rand),
+             digits = 2, align = "l",
+             caption = "Likielihood ratio test for group random effect") %>%
+  pretty_kable(.)
 ```
 
 ## Fixed-effect selection
@@ -111,24 +115,21 @@ m_inno_predict_reduc <-
       random = ~ 1 | group,
       data = data_analysis_NA_inno)
 
-# Model summary
-summary(m_inno_predict_reduc)
-
-# R2
-MuMIn::r.squaredGLMM(m_inno_predict_reduc)
+# Tidy model output
+pretty_PredictTab(m_inno_predict_reduc, "Predictors of goal zone latency")
+  
+# R squared (delta)
+knitr::kable(t(MuMIn::r.squaredGLMM(m_inno_predict_reduc)),
+      digits = 2, align = "l",
+      caption = "Marginal and conditional R^2") %>%
+pretty_kable(.)
 ```
 
-Tidy final model summary
+Final model summary
 
 ```{r inno-predict-finalmod-tidy}
-m_inno_predict_final_tidy <-
-  m_inno_predict_reduc %>%
-  broom.mixed::tidy() %>%
-  filter(effect == "fixed") %>%
-  mutate(across(.cols = c(estimate:statistic), ~round_est(.x)),
-         p_value = round_pval(p.value)) %>%
-  select("term", "estimate","std.error", "statistic", "p_value")
-
-m_inno_predict_final_tidy
+# Tidy model output
+pretty_PredictTab(m_inno_predict_reduc,
+                  "Predictors of goal zone latency")
 ```
 
