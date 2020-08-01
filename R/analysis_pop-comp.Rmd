@@ -49,8 +49,8 @@ m_length_totz_popcomp_tidy <-
          tidy_model = map(model, tidy)) %>%  # tidy output
   unnest(tidy_model) %>%
   mutate(across(.cols = c(estimate:statistic), ~ round_est(.x)),  # round values
-         p_value = round_pval(p.value)) %>%  
-  select(-c(data, model, p.value))  # extract relevant columns
+         p.value = round_pval(p.value)) %>%  
+  select(-c(data, model))  # extract relevant columns 
 ```
 
 Body length population comparison model summary
@@ -59,7 +59,7 @@ Body length population comparison model summary
 data_analysis %>%
 filter(trial == 1) %>%
 lm(body_length_LN ~ pop, data = .) %>%
-summary(.)
+pretty_PredictTab(.)
 ```
 
 Total zones entered population comparison model summary
@@ -68,7 +68,7 @@ Total zones entered population comparison model summary
 data_analysis %>%
 filter(trial == 1) %>%
 lm(tot_z_LN ~ pop, data = .) %>%
-summary(.)
+pretty_PredictTab(.)
 ```
 
 ### Innovation: Goal zone latency
@@ -101,13 +101,9 @@ m_inno_pop_comp <-
 # Tidy innovation predictor model
 m_inno_pop_comp_tidy <-
   m_inno_pop_comp %>%
-  broom.mixed::tidy() %>%
-  filter(effect == "fixed",
-         term %in% c("(Intercept)", "popUpper Aripo")) %>%
-  mutate(response = "goal_z_lat_LN",
-         across(.cols = c(estimate:statistic), ~round_est(.x)),
-         p_value = round_pval(p.value)) %>%
-  select("response", "term", "estimate","std.error", "statistic", "p_value") 
+  pretty_PredictTab(., mixedModel = TRUE, kable = FALSE) %>%
+  mutate(response = "goal_zone_lat_LN") %>%
+  relocate(response)
 ```
 
 ### Learning: Improvement ratio
@@ -140,11 +136,9 @@ summary(m_learn_pop_comp)
 # Tidy learning population comparison model
 m_learn_pop_comp_tidy <-
   m_learn_pop_comp %>%
-  broom.mixed::tidy() %>%
-  mutate(response = "improvement_ratio",
-         across(.cols = c(estimate:statistic), ~round_est(.x)),
-         p_value = round_pval(p.value)) %>%
-  select("response", "term", "estimate","std.error", "statistic", "p_value") 
+  pretty_PredictTab(., mixedModel = TRUE, kable = FALSE) %>%
+  mutate(response = "improvement_ratio") %>%
+  relocate(response)
 ```
 
 Reduced learning model (no population differences)
@@ -153,7 +147,7 @@ Reduced learning model (no population differences)
 m_learn <- update(m_learn_pop_comp, ~ 1)  # update model to intercept only
 
 # Model summary: learning overall
-summary(m_learn)
+pretty_PredictTab(m_learn)
 ```
 
 ## Cleanup and final results
