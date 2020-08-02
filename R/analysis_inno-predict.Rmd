@@ -59,9 +59,11 @@ m1_inno_predict_red_rand <-  # Fit model without group
       method = "REML")
 
 # Likelihood ratio test
-knitr::kable(anova(m_inno_predict_full, m1_inno_predict_red_rand),
-             digits = 2, align = "l",
-             caption = "Likielihood ratio test for group random effect") %>%
+anova(m_inno_predict_full, m1_inno_predict_red_rand) %>%
+  as_tibble(.) %>%
+  mutate(call = str_trunc(as.character(.$call), width = 10)) %>%  # condense call
+  knitr::kable(., digits = 2, align = "l",
+               caption = "Likielihood ratio test for group random effect") %>%
   pretty_kable(.)
 ```
 
@@ -76,6 +78,7 @@ m1_inno_predict_red_fix <-  # Fit full model with ML
 # Find largest non-significant p-value for interaction
 model_sel_temp1 <- drop1(m1_inno_predict_red_fix, test = "Chi")
 model_sel_temp1 %>%
+  rd_stepwise_out(.) %>%
   knitr::kable(.) %>%
   pretty_kable(.)
 
@@ -83,12 +86,14 @@ model_sel_temp1 %>%
 m1_temp <- update(m1_inno_predict_red_fix, ~ . -pop:body_length_sc)  # Remove most non-sig interactions
 model_sel_temp2 <- drop1(m1_temp, test = "Chi")  # Update model and check remaining sig interactions
 model_sel_temp2 %>%
+  rd_stepwise_out(.) %>%
   knitr::kable(.) %>%
   pretty_kable(.)
 
 m2_temp <- update(m1_temp, ~ . -pop:trial)  # same as above
 model_sel_temp3 <- drop1(m2_temp, test = "Chi")  # same as above
 model_sel_temp3 %>%
+  rd_stepwise_out(.) %>%
   knitr::kable(.) %>%
   pretty_kable(.)
 

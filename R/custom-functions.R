@@ -70,6 +70,15 @@ rd_tidy_out <- function(tidyOutput) {
     return(.)
 }
 
+# Round stepwise selection output  
+#  - Rounds estimates to 2, p-values to 3
+rd_stepwise_out <- function(stepwiseOutput) {
+  stepwiseOutput %>%
+    rownames_to_column(., var = "Variable") %>%
+    mutate(across(.cols = Df:`Pr(>Chi)`, ~ round_est(.x))) %>%
+    return(.)
+}
+
 #### Kable and Tidy functions ####
 
 # Print pretty kable tables
