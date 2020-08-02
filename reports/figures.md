@@ -42,15 +42,12 @@ data_analysis_NA_inno <-
          site_uni, body_length_sc, trial) %>%
   drop_na() 
 
-# Change trial contrasts in order to get marginal effects for average trial 
-contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
-# contrasts(data_analysis_NA_inno$trial) # check
-
 # Create reduced innovation model 
 m_inno_predict_reduc <- 
   lme(goal_z_lat_LN ~ tot_z_sc * pop + body_length_sc + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
+      contrasts = list(trial = c(-1,1)),  # Change trial contrasts in order to get marginal effects for average trial 
       data = data_analysis_NA_inno)
 
 # Obtain raw values for innovation, averaged between trial 1 and trial 2

@@ -45,7 +45,7 @@ Check if there are significant among-group differences
 
 ``` r
 # Model formula for fixed-effects
-inno_full_pred <- formula(goal_z_lat_LN ~ tot_z_sc * pop +  # fixed effect formula
+inno_full_pred <- formula(goal_z_lat_LN ~ tot_z_sc * pop + 
                             body_length_sc * pop +
                             trial * pop)
 
