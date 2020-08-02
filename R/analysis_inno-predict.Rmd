@@ -125,8 +125,8 @@ pretty_PredictTab(m_inno_predict_reduc,
                   mixedModel = TRUE) 
 
 # R squared (delta)
-knitr::kable(t(MuMIn::r.squaredGLMM(m_inno_predict_reduc)),
+knitr::kable(MuMIn::r.squaredGLMM(m_inno_predict_reduc),
       digits = 2, align = "l",
-      caption = "Marginal and conditional R^2")
+      caption = "Marginal and conditional R2")
 ```
 
