@@ -75,7 +75,7 @@ pretty_PredictTab(.)
 
 Create a data set without NAs - `lme()` won't remove them
 
-```{r}
+```{r inno-dat}
 data_analysis_NA_inno <-
   data_analysis %>%
   select(goal_z_lat_LN, pop, group,
@@ -85,16 +85,13 @@ data_analysis_NA_inno <-
 
 Fit innovation model
 
-```{r}
-# Change trial contrasts in order to get marginal effects for average trial 
-contrasts(data_analysis_NA_inno$trial) <- c(-1,1)
-# contrasts(data_analysis_NA_inno$trial) # check
-
+```{r inno-fit}
 # Fit reduced model
 m_inno_pop_comp <- 
   lme(goal_z_lat_LN ~ pop + trial,
-      weights = varIdent(form = ~ 1|site_uni * pop),
+      weights = varIdent(form = ~ 1|site_uni * pop),  # control for heteroscedasticity
       random = ~ 1 | group,
+      contrasts = list(trial = c(-1,1)),  # Change trial contrasts in order to get marginal effects for average trial 
       data = data_analysis_NA_inno,
       method = "REML")
 
@@ -103,14 +100,21 @@ m_inno_pop_comp_tidy <-
   m_inno_pop_comp %>%
   pretty_PredictTab(., mixedModel = TRUE, kable = FALSE) %>%
   mutate(response = "goal_zone_lat_LN") %>%
-  relocate(response)
+  relocate(response) %>%
+  select(-df)
+```
+
+Innovation population comparison model summary
+
+```{r pop-comp_inno-sum}
+m_inno_pop_comp_tidy
 ```
 
 ### Learning: Improvement ratio
 
 Create dataset without NAs - `lme()` won't remove them
 
-```{r}
+```{r learn-dat}
 data_analysis_NA_learn <-
   data_analysis %>%
   filter(trial == 1) %>%
@@ -120,7 +124,7 @@ data_analysis_NA_learn <-
 
 Build full model
 
-```{r}
+```{r learn-fit}
 m_learn_pop_comp <- 
   gls(learn_prop_LN ~ pop,
       weights = varIdent(form = ~ 1|site_uni * pop),
@@ -130,21 +134,23 @@ m_learn_pop_comp <-
 
 Population differences in learning model summary
 
-```{r}
-summary(m_learn_pop_comp)
-
+```{r pop-comp-learn}
 # Tidy learning population comparison model
 m_learn_pop_comp_tidy <-
   m_learn_pop_comp %>%
   pretty_PredictTab(., mixedModel = TRUE, kable = FALSE) %>%
   mutate(response = "improvement_ratio") %>%
   relocate(response)
+
+# Model summary
+m_learn_pop_comp_tidy
 ```
 
 Reduced learning model (no population differences)
 
-```{r}
-m_learn <- update(m_learn_pop_comp, ~ 1)  # update model to intercept only
+```{r learn-no-pop}
+# update model to intercept only
+m_learn <- update(m_learn_pop_comp, ~ 1)  
 
 # Model summary: learning overall
 pretty_PredictTab(m_learn)
@@ -159,6 +165,8 @@ m_pop_comp_final_tidy <-
             m_length_totz_popcomp_tidy) %>%
   rename(predictor = "term")
 
-m_pop_comp_final_tidy  # See reduced inno predictor model for trial measure of learning
+m_pop_comp_final_tidy %>% # See reduced inno predictor model for trial measure of learning
+  knitr::kable(.) %>%
+  pretty_kable(.)
 ```
 
