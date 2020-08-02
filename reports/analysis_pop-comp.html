@@ -642,14 +642,13 @@ body {
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">model =</span> <span class="kw">map</span>(data, <span class="op">~</span><span class="kw">lm</span>(value <span class="op">~</span><span class="st"> </span>pop, <span class="dt">data =</span> .)),  <span class="co"># run models for each</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>         <span class="dt">tidy_model =</span> <span class="kw">map</span>(model, tidy)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># tidy output</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">unnest</span>(tidy_model) <span class="op">%&gt;%</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="kw">across</span>(<span class="dt">.cols =</span> <span class="kw">c</span>(estimate<span class="op">:</span>statistic), <span class="op">~</span><span class="st"> </span><span class="kw">round_est</span>(.x)),  <span class="co"># round values</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a>         <span class="dt">p.value =</span> <span class="kw">round_pval</span>(p.value)) <span class="op">%&gt;%</span><span class="st">  </span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(data, model))  <span class="co"># extract relevant columns </span></span></code></pre></div>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a><span class="st">  </span><span class="kw">rd_tidy_out</span>(.) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># round variables</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(data, model))  <span class="co"># extract relevant columns </span></span></code></pre></div>
 <p>Body length population comparison model summary</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>data_analysis <span class="op">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="kw">lm</span>(body_length_LN <span class="op">~</span><span class="st"> </span>pop, <span class="dt">data =</span> .) <span class="op">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="kw">pretty_PredictTab</span>(.)</span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">lm</span>(body_length_LN <span class="op">~</span><span class="st"> </span>pop, <span class="dt">data =</span> .) <span class="op">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pretty_PredictTab</span>(.)</span></code></pre></div>
 <table>
 
 <caption>
@@ -755,9 +754,9 @@ body {
 
 <p>Total zones entered population comparison model summary</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>data_analysis <span class="op">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="kw">lm</span>(tot_z_LN <span class="op">~</span><span class="st"> </span>pop, <span class="dt">data =</span> .) <span class="op">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="kw">pretty_PredictTab</span>(.)</span></code></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">lm</span>(tot_z_LN <span class="op">~</span><span class="st"> </span>pop, <span class="dt">data =</span> .) <span class="op">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pretty_PredictTab</span>(.)</span></code></pre></div>
 <table>
 
 <caption>
@@ -862,33 +861,34 @@ body {
 </table>
 
 <h3 id="innovation-goal-zone-latency">Innovation: Goal zone latency</h3>
-<p>Create a data set without NAs - <code>lme()</code> won’t remove them</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>data_analysis_NA_inno &lt;-</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="st">  </span>data_analysis <span class="op">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(goal_z_lat_LN, pop, group,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>         site_uni, trial) <span class="op">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">drop_na</span>() </span></code></pre></div>
 <p>Fit innovation model</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co"># Fit reduced model, see predictors of innovation section for how this model was obtained</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>m_inno_pop_comp &lt;-<span class="st"> </span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">lme</span>(goal_z_lat_LN <span class="op">~</span><span class="st"> </span>pop <span class="op">+</span><span class="st"> </span>trial,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),  <span class="co"># control for heteroscedasticity</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>      <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>group,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>      <span class="dt">contrasts =</span> <span class="kw">list</span>(<span class="dt">trial =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)),  <span class="co"># Change trial contrasts for marginal effects for average trial </span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>      <span class="dt">data =</span> data_analysis_NA_inno,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>      <span class="dt">method =</span> <span class="st">&quot;REML&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co"># Create a data set without NAs - `lme()` won&#39;t remove them</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>data_analysis_NA_inno &lt;-</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="st">  </span>data_analysis <span class="op">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(goal_z_lat_LN, pop, group,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>         site_uni, trial) <span class="op">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">drop_na</span>() </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="co"># Fit reduced model, see predictors of innovation section for how this model was obtained</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>m_inno_pop_comp &lt;-<span class="st"> </span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">lme</span>(goal_z_lat_LN <span class="op">~</span><span class="st"> </span>pop <span class="op">+</span><span class="st"> </span>trial,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),  <span class="co"># control for heteroscedasticity</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true"></a>      <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>group,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true"></a>      <span class="dt">contrasts =</span> <span class="kw">list</span>(<span class="dt">trial =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)),  <span class="co"># Change trial contrasts for marginal effects for average trial </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true"></a>      <span class="dt">data =</span> data_analysis_NA_inno,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true"></a>      <span class="dt">method =</span> <span class="st">&quot;REML&quot;</span>)</span></code></pre></div>
 <p>Innovation population comparison model summary</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="co"># Tidy innovation predictor model</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>m_inno_pop_comp_tidy &lt;-</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="st">  </span>m_inno_pop_comp <span class="op">%&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pretty_PredictTab</span>(., <span class="dt">mixedModel =</span> <span class="ot">TRUE</span>, <span class="dt">kable =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">response =</span> <span class="st">&quot;goal_zone_lat_LN&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">relocate</span>(response) <span class="op">%&gt;%</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(term <span class="op">!=</span><span class="st"> &quot;trial1&quot;</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># remove trial output as it is not of interest here</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>df)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>m_inno_pop_comp_tidy <span class="op">%&gt;%</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co"># Tidy innovation predictor model</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>m_inno_pop_comp_tidy &lt;-</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="st">  </span>m_inno_pop_comp <span class="op">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pretty_PredictTab</span>(., <span class="dt">mixedModel =</span> <span class="ot">TRUE</span>, <span class="dt">kable =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">response =</span> <span class="st">&quot;goal_zone_lat_LN&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">relocate</span>(response) <span class="op">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(term <span class="op">!=</span><span class="st"> &quot;trial1&quot;</span>) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># remove trial output as it is not of interest here</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>df)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>m_inno_pop_comp_tidy <span class="op">%&gt;%</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
 <table>
 
 <thead>
@@ -1004,29 +1004,30 @@ body {
 </table>
 
 <h3 id="learning-improvement-ratio">Learning: Improvement ratio</h3>
-<p>Create dataset without NAs - <code>lme()</code> won’t remove them</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>data_analysis_NA_learn &lt;-</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="st">  </span>data_analysis <span class="op">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(learn_prop_LN, pop, group, site_uni) <span class="op">%&gt;%</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">drop_na</span>() </span></code></pre></div>
 <p>Fit learning population comparison model</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>m_learn_pop_comp &lt;-<span class="st"> </span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">gls</span>(learn_prop_LN <span class="op">~</span><span class="st"> </span>pop,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>      <span class="dt">data =</span> data_analysis_NA_learn,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a>      <span class="dt">method =</span> <span class="st">&quot;REML&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="co"># Create dataset without NAs - `lme()` won&#39;t remove them</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a>data_analysis_NA_learn &lt;-</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="st">  </span>data_analysis <span class="op">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(learn_prop_LN, pop, group, site_uni) <span class="op">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">drop_na</span>() </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>m_learn_pop_comp &lt;-<span class="st"> </span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">gls</span>(learn_prop_LN <span class="op">~</span><span class="st"> </span>pop,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>      <span class="dt">data =</span> data_analysis_NA_learn,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true"></a>      <span class="dt">method =</span> <span class="st">&quot;REML&quot;</span>)</span></code></pre></div>
 <p>Population differences in learning model summary</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="co"># Tidy learning population comparison model</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>m_learn_pop_comp_tidy &lt;-</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="st">  </span>m_learn_pop_comp <span class="op">%&gt;%</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pretty_PredictTab</span>(., <span class="dt">mixedModel =</span> <span class="ot">TRUE</span>, <span class="dt">kable =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">response =</span> <span class="st">&quot;improvement_ratio&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">relocate</span>(response)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a><span class="co"># Model summary</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true"></a>m_learn_pop_comp_tidy <span class="op">%&gt;%</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="co"># Tidy learning population comparison model</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>m_learn_pop_comp_tidy &lt;-</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="st">  </span>m_learn_pop_comp <span class="op">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pretty_PredictTab</span>(., <span class="dt">mixedModel =</span> <span class="ot">TRUE</span>, <span class="dt">kable =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">response =</span> <span class="st">&quot;improvement_ratio&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">relocate</span>(response)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true"></a><span class="co"># Model summary</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a>m_learn_pop_comp_tidy <span class="op">%&gt;%</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
 <table>
 
 <thead>
@@ -1147,11 +1148,11 @@ body {
 </ul>
 <!-- end list -->
 
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="co"># update model to intercept only</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>m_learn &lt;-<span class="st"> </span><span class="kw">update</span>(m_learn_pop_comp, <span class="op">~</span><span class="st"> </span><span class="dv">1</span>)  </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a><span class="co"># Model summary: learning overall</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="kw">pretty_PredictTab</span>(m_learn)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="co"># update model to intercept only</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>m_learn &lt;-<span class="st"> </span><span class="kw">update</span>(m_learn_pop_comp, <span class="op">~</span><span class="st"> </span><span class="dv">1</span>)  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="co"># Model summary: learning overall</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="kw">pretty_PredictTab</span>(m_learn)</span></code></pre></div>
 <table>
 
 <caption>
@@ -1227,14 +1228,14 @@ body {
 </table>
 
 <h2 id="all-population-comparison-model-summaries">All population comparison model summaries</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="co"># Bind all population comparisons together</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>m_pop_comp_final_tidy &lt;-</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">bind_rows</span>(m_learn_pop_comp_tidy, m_inno_pop_comp_tidy,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>            m_length_totz_popcomp_tidy) <span class="op">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">predictor =</span> <span class="st">&quot;term&quot;</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true"></a>m_pop_comp_final_tidy <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># See reduced inno predictor model for trial measure of learning</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="co"># Bind all population comparisons together</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>m_pop_comp_final_tidy &lt;-</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">bind_rows</span>(m_learn_pop_comp_tidy, m_inno_pop_comp_tidy,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true"></a>            m_length_totz_popcomp_tidy) <span class="op">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">rename</span>(<span class="dt">predictor =</span> <span class="st">&quot;term&quot;</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a>m_pop_comp_final_tidy <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># See reduced inno predictor model for trial measure of learning</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
 <table>
 
 <thead>

@@ -78,8 +78,7 @@ m_length_totz_popcomp_tidy <-
   mutate(model = map(data, ~lm(value ~ pop, data = .)),  # run models for each
          tidy_model = map(model, tidy)) %>%  # tidy output
   unnest(tidy_model) %>%
-  mutate(across(.cols = c(estimate:statistic), ~ round_est(.x)),  # round values
-         p.value = round_pval(p.value)) %>%  
+  rd_tidy_out(.) %>%  # round variables
   select(-c(data, model))  # extract relevant columns 
 ```
 
@@ -87,9 +86,9 @@ Body length population comparison model summary
 
 ``` r
 data_analysis %>%
-filter(trial == 1) %>%
-lm(body_length_LN ~ pop, data = .) %>%
-pretty_PredictTab(.)
+  filter(trial == 1) %>%
+  lm(body_length_LN ~ pop, data = .) %>%
+  pretty_PredictTab(.)
 ```
 
 <table>
@@ -214,9 +213,9 @@ Total zones entered population comparison model summary
 
 ``` r
 data_analysis %>%
-filter(trial == 1) %>%
-lm(tot_z_LN ~ pop, data = .) %>%
-pretty_PredictTab(.)
+  filter(trial == 1) %>%
+  lm(tot_z_LN ~ pop, data = .) %>%
+  pretty_PredictTab(.)
 ```
 
 <table>
@@ -339,19 +338,16 @@ popUpper Aripo
 
 ### Innovation: Goal zone latency
 
-Create a data set without NAs - `lme()` won’t remove them
+Fit innovation model
 
 ``` r
+# Create a data set without NAs - `lme()` won't remove them
 data_analysis_NA_inno <-
   data_analysis %>%
   select(goal_z_lat_LN, pop, group,
          site_uni, trial) %>%
   drop_na() 
-```
 
-Fit innovation model
-
-``` r
 # Fit reduced model, see predictors of innovation section for how this model was obtained
 m_inno_pop_comp <- 
   lme(goal_z_lat_LN ~ pop + trial,
@@ -512,19 +508,16 @@ popUpper Aripo
 
 ### Learning: Improvement ratio
 
-Create dataset without NAs - `lme()` won’t remove them
+Fit learning population comparison model
 
 ``` r
+# Create dataset without NAs - `lme()` won't remove them
 data_analysis_NA_learn <-
   data_analysis %>%
   filter(trial == 1) %>%
   select(learn_prop_LN, pop, group, site_uni) %>%
   drop_na() 
-```
 
-Fit learning population comparison model
-
-``` r
 m_learn_pop_comp <- 
   gls(learn_prop_LN ~ pop,
       weights = varIdent(form = ~ 1|site_uni * pop),
