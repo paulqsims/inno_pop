@@ -27,10 +27,10 @@ read_mod_data <- function(data) {
            across(.cols = c(goal_z_lat, body_length,  # log transformations
                             learn_prop, tot_z),  
                   ~ log(.x),
-                  .names = "{col}_LN"),
-           across(.cols = c(body_length, tot_z),  # mean center and scale variables by 1 SD
-                  ~ na_rm_scale(.x, na.rm = T),
-                  .names = "{col}_sc"))
+                  .names = "{col}_LN"),  # add log suffix
+           across(.cols = c(body_length, tot_z),  
+                  ~ na_rm_scale(.x, na.rm = T), # mean center and scale variables by 1 SD
+                  .names = "{col}_sc"))  # add scale suffix
 }
 
 #### Rounding functions ####
@@ -64,8 +64,8 @@ round_est <- function(estimate) {
 #  - Rounds estimates to 2, p-values to 3
 rd_tidy_out <- function(tidyOutput) {
   tidyOutput %>%
-    mutate(across(.cols = c(estimate:statistic), ~ round_est(.x)), 
-           p.value = round_pval(p.value)) %>%
+    mutate(across(.cols = c(estimate:statistic), ~ round_est(.x)),  # round est
+           p.value = round_pval(p.value)) %>%  # round p-value
     return(.)
 }
 
@@ -73,8 +73,10 @@ rd_tidy_out <- function(tidyOutput) {
 #  - Rounds estimates to 2, p-values to 3
 rd_stepwise_out <- function(stepwiseOutput) {
   stepwiseOutput %>%
-    rownames_to_column(., var = "Variable") %>%
-    mutate(across(.cols = Df:`Pr(>Chi)`, ~ round_est(.x))) %>%
+    rownames_to_column(., var = "Variable") %>%  # col of variable names
+    mutate(across(.cols = Df:LRT, ~ round_est(.x)),  # round est
+           p.value = round_pval(`Pr(>Chi)`)) %>%  # round p-value
+    select(-`Pr(>Chi)`) %>%
     return(.)
 }
 
@@ -83,10 +85,10 @@ rd_stepwise_out <- function(stepwiseOutput) {
 # Kable title and alignment
 #  - Creates title and aligns table location on page
 kable_title <- function(kableTable, title) {
-  knitr::kable(kableTable, align = "l",
-               caption = if (!is.null(title)) {
+  knitr::kable(kableTable, align = "l",  # align to the left
+               caption = if (!is.null(title)) { 
                  paste(title)
-               } else { paste("") }) %>%
+               } else { paste("") }) %>%  # paste blank if no title specified
   return(.)
 }
 
@@ -102,15 +104,13 @@ pretty_PredictTab <- function(modelOutput, title = NULL,
                       effects = "fixed") %>%
     rd_tidy_out(.) %>%  # round tidy output
       {if (kable == TRUE) {  # return kable
-        kable_title(., title) %>%  # modify kable title and alignment
-          pretty_kable(.)  # pretty kable
+        kable_title(., title)  # modify kable title and alignment
       } else { return(.) }}  # return dataframe, not kable
   } else {  # if not a mixed model
     broom::tidy(modelOutput) %>%
       rd_tidy_out(.) %>%  # round tidy output
         {if (kable == TRUE) {
-          kable_title(., title) %>%  # modify kable title and alignment
-            pretty_kable(.)  # pretty kable
+          kable_title(., title)  # modify kable title and alignment
         } else { return(.) }}  # return dataframe, not kable
   }
 }
