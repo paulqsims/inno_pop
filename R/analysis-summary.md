@@ -102,34 +102,14 @@ lm(tot_z_LN ~ pop, data = .) %>%
 pretty_PredictTab(.)
 ```
 
-<table class="table table-striped table-hover table-condensed" style="">
-<caption></caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:left;"> estimate </th>
-   <th style="text-align:left;"> std.error </th>
-   <th style="text-align:left;"> statistic </th>
-   <th style="text-align:left;"> p.value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:left;"> 4.27 </td>
-   <td style="text-align:left;"> 0.08 </td>
-   <td style="text-align:left;"> 53.56 </td>
-   <td style="text-align:left;"> &lt;0.001 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> popUpper Aripo </td>
-   <td style="text-align:left;"> 0.28 </td>
-   <td style="text-align:left;"> 0.1 </td>
-   <td style="text-align:left;"> 2.76 </td>
-   <td style="text-align:left;"> 0.009 </td>
-  </tr>
-</tbody>
-</table>
+
+
+Table: 
+
+|term           |estimate |std.error |statistic |p.value |
+|:--------------|:--------|:---------|:---------|:-------|
+|(Intercept)    |4.27     |0.08      |53.56     |<0.001  |
+|popUpper Aripo |0.28     |0.1       |2.76      |0.009   |
 
 ### Innovation: Goal zone latency
 
@@ -172,40 +152,15 @@ m_inno_pop_comp_tidy <-
   select(-df)
 
 m_inno_pop_comp_tidy %>%
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.) 
 ```
 
-<table class="table table-striped table-hover table-condensed" style="">
- <thead>
-  <tr>
-   <th style="text-align:left;"> response </th>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:left;"> estimate </th>
-   <th style="text-align:left;"> std.error </th>
-   <th style="text-align:left;"> statistic </th>
-   <th style="text-align:left;"> p.value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> goal_zone_lat_LN </td>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:left;"> 3.96 </td>
-   <td style="text-align:left;"> 0.19 </td>
-   <td style="text-align:left;"> 20.67 </td>
-   <td style="text-align:left;"> &lt;0.001 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> goal_zone_lat_LN </td>
-   <td style="text-align:left;"> popUpper Aripo </td>
-   <td style="text-align:left;"> -0.56 </td>
-   <td style="text-align:left;"> 0.22 </td>
-   <td style="text-align:left;"> -2.53 </td>
-   <td style="text-align:left;"> 0.015 </td>
-  </tr>
-</tbody>
-</table>
+
+
+|response         |term           |estimate |std.error |statistic |p.value |
+|:----------------|:--------------|:--------|:---------|:---------|:-------|
+|goal_zone_lat_LN |(Intercept)    |3.96     |0.19      |20.67     |<0.001  |
+|goal_zone_lat_LN |popUpper Aripo |-0.56    |0.22      |-2.53     |0.015   |
 
 ### Learning: Improvement ratio
 
@@ -244,40 +199,15 @@ m_learn_pop_comp_tidy <-
 
 # Model summary
 m_learn_pop_comp_tidy %>%
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.) 
 ```
 
-<table class="table table-striped table-hover table-condensed" style="">
- <thead>
-  <tr>
-   <th style="text-align:left;"> response </th>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:left;"> estimate </th>
-   <th style="text-align:left;"> std.error </th>
-   <th style="text-align:left;"> statistic </th>
-   <th style="text-align:left;"> p.value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> improvement_ratio </td>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:left;"> -0.01 </td>
-   <td style="text-align:left;"> 0.18 </td>
-   <td style="text-align:left;"> -0.08 </td>
-   <td style="text-align:left;"> 0.94 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> improvement_ratio </td>
-   <td style="text-align:left;"> popUpper Aripo </td>
-   <td style="text-align:left;"> -0.23 </td>
-   <td style="text-align:left;"> 0.28 </td>
-   <td style="text-align:left;"> -0.82 </td>
-   <td style="text-align:left;"> 0.42 </td>
-  </tr>
-</tbody>
-</table>
+
+
+|response          |term           |estimate |std.error |statistic |p.value |
+|:-----------------|:--------------|:--------|:---------|:---------|:-------|
+|improvement_ratio |(Intercept)    |-0.01    |0.18      |-0.08     |0.94    |
+|improvement_ratio |popUpper Aripo |-0.23    |0.28      |-0.82     |0.42    |
 
 Reduced learning model (no population differences)
 
@@ -287,31 +217,16 @@ Reduced learning model (no population differences)
 m_learn <- update(m_learn_pop_comp, ~ 1)  
 
 # Model summary: learning overall
-pretty_PredictTab(m_learn) %>%
-  pretty_kable(.)
+pretty_PredictTab(m_learn)
 ```
 
-<table class="table table-striped table-hover table-condensed table table-striped table-hover table-condensed" style=" ">
-<caption></caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:left;"> estimate </th>
-   <th style="text-align:left;"> std.error </th>
-   <th style="text-align:left;"> statistic </th>
-   <th style="text-align:left;"> p.value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:left;"> -0.09 </td>
-   <td style="text-align:left;"> 0.14 </td>
-   <td style="text-align:left;"> -0.7 </td>
-   <td style="text-align:left;"> 0.49 </td>
-  </tr>
-</tbody>
-</table>
+
+
+Table: 
+
+|term        |estimate |std.error |statistic |p.value |
+|:-----------|:--------|:---------|:---------|:-------|
+|(Intercept) |-0.09    |0.14      |-0.7      |0.49    |
 
 ## Cleanup and final results
 
@@ -324,88 +239,21 @@ m_pop_comp_final_tidy <-
   rename(predictor = "term")
 
 m_pop_comp_final_tidy %>% # See reduced inno predictor model for trial measure of learning
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.) 
 ```
 
-<table class="table table-striped table-hover table-condensed" style="">
- <thead>
-  <tr>
-   <th style="text-align:left;"> response </th>
-   <th style="text-align:left;"> predictor </th>
-   <th style="text-align:left;"> estimate </th>
-   <th style="text-align:left;"> std.error </th>
-   <th style="text-align:left;"> statistic </th>
-   <th style="text-align:left;"> p.value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> improvement_ratio </td>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:left;"> -0.01 </td>
-   <td style="text-align:left;"> 0.18 </td>
-   <td style="text-align:left;"> -0.08 </td>
-   <td style="text-align:left;"> 0.94 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> improvement_ratio </td>
-   <td style="text-align:left;"> popUpper Aripo </td>
-   <td style="text-align:left;"> -0.23 </td>
-   <td style="text-align:left;"> 0.28 </td>
-   <td style="text-align:left;"> -0.82 </td>
-   <td style="text-align:left;"> 0.42 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> goal_zone_lat_LN </td>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:left;"> 3.96 </td>
-   <td style="text-align:left;"> 0.19 </td>
-   <td style="text-align:left;"> 20.67 </td>
-   <td style="text-align:left;"> &lt;0.001 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> goal_zone_lat_LN </td>
-   <td style="text-align:left;"> popUpper Aripo </td>
-   <td style="text-align:left;"> -0.56 </td>
-   <td style="text-align:left;"> 0.22 </td>
-   <td style="text-align:left;"> -2.53 </td>
-   <td style="text-align:left;"> 0.015 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> body_length_LN </td>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:left;"> 3 </td>
-   <td style="text-align:left;"> 0.03 </td>
-   <td style="text-align:left;"> 101.11 </td>
-   <td style="text-align:left;"> &lt;0.001 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> body_length_LN </td>
-   <td style="text-align:left;"> popUpper Aripo </td>
-   <td style="text-align:left;"> 0.07 </td>
-   <td style="text-align:left;"> 0.04 </td>
-   <td style="text-align:left;"> 1.84 </td>
-   <td style="text-align:left;"> 0.073 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> tot_z_LN </td>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:left;"> 4.27 </td>
-   <td style="text-align:left;"> 0.08 </td>
-   <td style="text-align:left;"> 53.56 </td>
-   <td style="text-align:left;"> &lt;0.001 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> tot_z_LN </td>
-   <td style="text-align:left;"> popUpper Aripo </td>
-   <td style="text-align:left;"> 0.28 </td>
-   <td style="text-align:left;"> 0.1 </td>
-   <td style="text-align:left;"> 2.76 </td>
-   <td style="text-align:left;"> 0.009 </td>
-  </tr>
-</tbody>
-</table>
+
+
+|response          |predictor      |estimate |std.error |statistic |p.value |
+|:-----------------|:--------------|:--------|:---------|:---------|:-------|
+|improvement_ratio |(Intercept)    |-0.01    |0.18      |-0.08     |0.94    |
+|improvement_ratio |popUpper Aripo |-0.23    |0.28      |-0.82     |0.42    |
+|goal_zone_lat_LN  |(Intercept)    |3.96     |0.19      |20.67     |<0.001  |
+|goal_zone_lat_LN  |popUpper Aripo |-0.56    |0.22      |-2.53     |0.015   |
+|body_length_LN    |(Intercept)    |3        |0.03      |101.11    |<0.001  |
+|body_length_LN    |popUpper Aripo |0.07     |0.04      |1.84      |0.073   |
+|tot_z_LN          |(Intercept)    |4.27     |0.08      |53.56     |<0.001  |
+|tot_z_LN          |popUpper Aripo |0.28     |0.1       |2.76      |0.009   |
 
 
 
@@ -477,50 +325,17 @@ anova(m_inno_predict_full, m1_inno_predict_red_rand) %>%
   as_tibble(.) %>%
   mutate(call = str_trunc(as.character(.$call), width = 10)) %>%  # condense call
   knitr::kable(., digits = 2, align = "l",
-               caption = "Likielihood ratio test for group random effect") %>%
-  pretty_kable(.)
+               caption = "Likielihood ratio test for group random effect") 
 ```
 
-<table class="table table-striped table-hover table-condensed" style="">
-<caption>Likielihood ratio test for group random effect</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> call </th>
-   <th style="text-align:left;"> Model </th>
-   <th style="text-align:left;"> df </th>
-   <th style="text-align:left;"> AIC </th>
-   <th style="text-align:left;"> BIC </th>
-   <th style="text-align:left;"> logLik </th>
-   <th style="text-align:left;"> Test </th>
-   <th style="text-align:left;"> L.Ratio </th>
-   <th style="text-align:left;"> p-value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> lme.for... </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 13 </td>
-   <td style="text-align:left;"> 246.26 </td>
-   <td style="text-align:left;"> 276.73 </td>
-   <td style="text-align:left;"> -110.13 </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> gls(mod... </td>
-   <td style="text-align:left;"> 2 </td>
-   <td style="text-align:left;"> 12 </td>
-   <td style="text-align:left;"> 246.96 </td>
-   <td style="text-align:left;"> 275.09 </td>
-   <td style="text-align:left;"> -111.48 </td>
-   <td style="text-align:left;"> 1 vs 2 </td>
-   <td style="text-align:left;"> 2.7 </td>
-   <td style="text-align:left;"> 0.1 </td>
-  </tr>
-</tbody>
-</table>
+
+
+Table: Likielihood ratio test for group random effect
+
+|call       |Model |df |AIC    |BIC    |logLik  |Test   |L.Ratio |p-value |
+|:----------|:-----|:--|:------|:------|:-------|:------|:-------|:-------|
+|lme.for... |1     |13 |246.26 |276.73 |-110.13 |       |NA      |NA      |
+|gls(mod... |2     |12 |246.96 |275.09 |-111.48 |1 vs 2 |2.7     |0.1     |
 
 ## Fixed-effect selection
 
@@ -535,51 +350,17 @@ m1_inno_predict_red_fix <-  # Fit full model with ML
 model_sel_temp1 <- drop1(m1_inno_predict_red_fix, test = "Chi")
 model_sel_temp1 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.) 
 ```
 
-<table class="table table-striped table-hover table-condensed" style="">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Variable </th>
-   <th style="text-align:left;"> Df </th>
-   <th style="text-align:left;"> AIC </th>
-   <th style="text-align:left;"> LRT </th>
-   <th style="text-align:left;"> Pr(&gt;Chi) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> &lt;none&gt; </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:left;"> 233.03 </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> tot_z_sc:pop </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 240.94 </td>
-   <td style="text-align:left;"> 9.92 </td>
-   <td style="text-align:left;"> &lt;0.01 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> pop:body_length_sc </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 231.12 </td>
-   <td style="text-align:left;"> 0.09 </td>
-   <td style="text-align:left;"> 0.76 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> pop:trial </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 231.58 </td>
-   <td style="text-align:left;"> 0.55 </td>
-   <td style="text-align:left;"> 0.46 </td>
-  </tr>
-</tbody>
-</table>
+
+
+|Variable           |Df |AIC    |LRT  |p.value |
+|:------------------|:--|:------|:----|:-------|
+|<none>             |NA |233.03 |NA   |NA      |
+|tot_z_sc:pop       |1  |240.94 |9.92 |0.002   |
+|pop:body_length_sc |1  |231.12 |0.09 |0.76    |
+|pop:trial          |1  |231.58 |0.55 |0.46    |
 
 ```r
 # Remove largest non-significant p-value for interaction and update model and continue process
@@ -587,102 +368,34 @@ m1_temp <- update(m1_inno_predict_red_fix, ~ . -pop:body_length_sc)  # Remove mo
 model_sel_temp2 <- drop1(m1_temp, test = "Chi")  # Update model and check remaining sig interactions
 model_sel_temp2 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.)
 ```
 
-<table class="table table-striped table-hover table-condensed" style="">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Variable </th>
-   <th style="text-align:left;"> Df </th>
-   <th style="text-align:left;"> AIC </th>
-   <th style="text-align:left;"> LRT </th>
-   <th style="text-align:left;"> Pr(&gt;Chi) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> &lt;none&gt; </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:left;"> 231.12 </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> body_length_sc </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 229.47 </td>
-   <td style="text-align:left;"> 0.35 </td>
-   <td style="text-align:left;"> 0.55 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> tot_z_sc:pop </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 240.27 </td>
-   <td style="text-align:left;"> 11.15 </td>
-   <td style="text-align:left;"> &lt;0.01 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> pop:trial </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 229.67 </td>
-   <td style="text-align:left;"> 0.55 </td>
-   <td style="text-align:left;"> 0.46 </td>
-  </tr>
-</tbody>
-</table>
+
+
+|Variable       |Df |AIC    |LRT   |p.value |
+|:--------------|:--|:------|:-----|:-------|
+|<none>         |NA |231.12 |NA    |NA      |
+|body_length_sc |1  |229.47 |0.35  |0.55    |
+|tot_z_sc:pop   |1  |240.27 |11.15 |<0.001  |
+|pop:trial      |1  |229.67 |0.55  |0.46    |
 
 ```r
 m2_temp <- update(m1_temp, ~ . -pop:trial)  # same as above
 model_sel_temp3 <- drop1(m2_temp, test = "Chi")  # same as above
 model_sel_temp3 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.)
 ```
 
-<table class="table table-striped table-hover table-condensed" style="">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Variable </th>
-   <th style="text-align:left;"> Df </th>
-   <th style="text-align:left;"> AIC </th>
-   <th style="text-align:left;"> LRT </th>
-   <th style="text-align:left;"> Pr(&gt;Chi) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> &lt;none&gt; </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:left;"> 229.67 </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:left;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> body_length_sc </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 228.09 </td>
-   <td style="text-align:left;"> 0.42 </td>
-   <td style="text-align:left;"> 0.52 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> trial </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 228.08 </td>
-   <td style="text-align:left;"> 0.41 </td>
-   <td style="text-align:left;"> 0.52 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> tot_z_sc:pop </td>
-   <td style="text-align:left;"> 1 </td>
-   <td style="text-align:left;"> 238.44 </td>
-   <td style="text-align:left;"> 10.77 </td>
-   <td style="text-align:left;"> &lt;0.01 </td>
-  </tr>
-</tbody>
-</table>
+
+
+|Variable       |Df |AIC    |LRT   |p.value |
+|:--------------|:--|:------|:-----|:-------|
+|<none>         |NA |229.67 |NA    |NA      |
+|body_length_sc |1  |228.09 |0.42  |0.52    |
+|trial          |1  |228.08 |0.41  |0.52    |
+|tot_z_sc:pop   |1  |238.44 |10.77 |0.001   |
 
 ```r
 # Final model of innovation predictors
@@ -716,95 +429,36 @@ Final model summary
 # Tidy model output
 pretty_PredictTab(m_inno_predict_reduc,
                   title = "Predictors of goal zone latency",
-                  mixedModel = TRUE) %>%
-  pretty_kable(.)
+                  mixedModel = TRUE) 
 ```
 
-<table class="table table-striped table-hover table-condensed table table-striped table-hover table-condensed" style=" ">
-<caption>Predictors of goal zone latency</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> term </th>
-   <th style="text-align:left;"> estimate </th>
-   <th style="text-align:left;"> std.error </th>
-   <th style="text-align:left;"> df </th>
-   <th style="text-align:left;"> statistic </th>
-   <th style="text-align:left;"> p.value </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:left;"> 4.08 </td>
-   <td style="text-align:left;"> 0.24 </td>
-   <td style="text-align:left;"> 40 </td>
-   <td style="text-align:left;"> 17.24 </td>
-   <td style="text-align:left;"> &lt;0.001 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> tot_z_sc </td>
-   <td style="text-align:left;"> -0.75 </td>
-   <td style="text-align:left;"> 0.19 </td>
-   <td style="text-align:left;"> 39 </td>
-   <td style="text-align:left;"> -3.88 </td>
-   <td style="text-align:left;"> &lt;0.001 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> popUpper Aripo </td>
-   <td style="text-align:left;"> -0.73 </td>
-   <td style="text-align:left;"> 0.28 </td>
-   <td style="text-align:left;"> 39 </td>
-   <td style="text-align:left;"> -2.62 </td>
-   <td style="text-align:left;"> 0.013 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> body_length_sc </td>
-   <td style="text-align:left;"> -0.08 </td>
-   <td style="text-align:left;"> 0.12 </td>
-   <td style="text-align:left;"> 39 </td>
-   <td style="text-align:left;"> -0.64 </td>
-   <td style="text-align:left;"> 0.52 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> trial1 </td>
-   <td style="text-align:left;"> -0.04 </td>
-   <td style="text-align:left;"> 0.07 </td>
-   <td style="text-align:left;"> 40 </td>
-   <td style="text-align:left;"> -0.65 </td>
-   <td style="text-align:left;"> 0.52 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> tot_z_sc:popUpper Aripo </td>
-   <td style="text-align:left;"> 0.92 </td>
-   <td style="text-align:left;"> 0.25 </td>
-   <td style="text-align:left;"> 39 </td>
-   <td style="text-align:left;"> 3.74 </td>
-   <td style="text-align:left;"> &lt;0.001 </td>
-  </tr>
-</tbody>
-</table>
+
+
+Table: Predictors of goal zone latency
+
+|term                    |estimate |std.error |df |statistic |p.value |
+|:-----------------------|:--------|:---------|:--|:---------|:-------|
+|(Intercept)             |4.08     |0.24      |40 |17.24     |<0.001  |
+|tot_z_sc                |-0.75    |0.19      |39 |-3.88     |<0.001  |
+|popUpper Aripo          |-0.73    |0.28      |39 |-2.62     |0.013   |
+|body_length_sc          |-0.08    |0.12      |39 |-0.64     |0.52    |
+|trial1                  |-0.04    |0.07      |40 |-0.65     |0.52    |
+|tot_z_sc:popUpper Aripo |0.92     |0.25      |39 |3.74      |<0.001  |
 
 ```r
 # R squared (delta)
-knitr::kable(t(MuMIn::r.squaredGLMM(m_inno_predict_reduc)),
+knitr::kable(MuMIn::r.squaredGLMM(m_inno_predict_reduc),
       digits = 2, align = "l",
-      caption = "Marginal and conditional R^2") %>%
-pretty_kable(.)
+      caption = "Marginal and conditional R2")
 ```
 
-<table class="table table-striped table-hover table-condensed" style="">
-<caption>Marginal and conditional R^2</caption>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> R2m </td>
-   <td style="text-align:left;"> 0.59 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> R2c </td>
-   <td style="text-align:left;"> 0.87 </td>
-  </tr>
-</tbody>
-</table>
+
+
+Table: Marginal and conditional R2
+
+|R2m  |R2c  |
+|:----|:----|
+|0.59 |0.87 |
 
 
 
