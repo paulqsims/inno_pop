@@ -1212,14 +1212,16 @@ inno_full_pred <- formula(goal_z_lat_LN ~ tot_z_sc * pop +  # fixed effect formu
                             body_length_sc * pop +
                             trial * pop)
 
-m_inno_predict_full <-  # Fit model with group
+# Fit model with group
+m_inno_predict_full <-  
   lme(inno_full_pred,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
       data = data_analysis_NA_inno,
       method = "REML")
 
-m1_inno_predict_red_rand <-  # Fit model without group
+# Fit model without group
+m1_inno_predict_red_rand <-  
   gls(inno_full_pred,
       weights = varIdent(form = ~ 1|site_uni * pop),
       data = data_analysis_NA_inno,
@@ -1626,10 +1628,17 @@ m1_temp <- update(m1_inno_predict_red_fix, ~ . -pop:body_length_sc)  # Remove mo
 model_sel_temp2 <- drop1(m1_temp, test = "Chi")  # Update model and check remaining sig interactions
 model_sel_temp2 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(.)
+  knitr::kable(., caption = "No evidence for learning (i.e. trial) differences between populations (pop:trial)")
 ```
 
 <table>
+
+<caption>
+
+No evidence for learning (i.e. trial) differences between populations
+(<pop:trial>)
+
+</caption>
 
 <thead>
 
@@ -1816,17 +1825,10 @@ m2_temp <- update(m1_temp, ~ . -pop:trial)  # same as above
 model_sel_temp3 <- drop1(m2_temp, test = "Chi")  # same as above
 model_sel_temp3 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(., caption = "No evidence for learning (i.e. trial) differences between populations (pop:trial)")
+  knitr::kable(.)
 ```
 
 <table>
-
-<caption>
-
-No evidence for learning (i.e. trial) differences between populations
-(<pop:trial>)
-
-</caption>
 
 <thead>
 
@@ -2029,7 +2031,8 @@ m_inno_predict_reduc <-
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
       contrasts = list(trial = c(-1,1)),  # Change trial contrasts in order to get marginal effects for average trial 
-      data = data_analysis_NA_inno)
+      data = data_analysis_NA_inno,
+      method = "REML")
 ```
 
 Final model summary
