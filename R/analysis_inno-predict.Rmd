@@ -45,14 +45,16 @@ inno_full_pred <- formula(goal_z_lat_LN ~ tot_z_sc * pop +  # fixed effect formu
                             body_length_sc * pop +
                             trial * pop)
 
-m_inno_predict_full <-  # Fit model with group
+# Fit model with group
+m_inno_predict_full <-  
   lme(inno_full_pred,
       weights = varIdent(form = ~ 1|site_uni * pop),
       random = ~ 1 | group,
       data = data_analysis_NA_inno,
       method = "REML")
 
-m1_inno_predict_red_rand <-  # Fit model without group
+# Fit model without group
+m1_inno_predict_red_rand <-  
   gls(inno_full_pred,
       weights = varIdent(form = ~ 1|site_uni * pop),
       data = data_analysis_NA_inno,
