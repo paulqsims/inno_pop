@@ -307,7 +307,7 @@ LRT
 
 <th style="text-align:left;">
 
-Pr(\>Chi)
+p.value
 
 </th>
 
@@ -379,7 +379,7 @@ tot\_z\_sc:pop
 
 <td style="text-align:left;">
 
-\<0.01
+0.002
 
 </td>
 
@@ -498,7 +498,7 @@ LRT
 
 <th style="text-align:left;">
 
-Pr(\>Chi)
+p.value
 
 </th>
 
@@ -604,7 +604,7 @@ tot\_z\_sc:pop
 
 <td style="text-align:left;">
 
-\<0.01
+\<0.001
 
 </td>
 
@@ -653,10 +653,17 @@ m2_temp <- update(m1_temp, ~ . -pop:trial)  # same as above
 model_sel_temp3 <- drop1(m2_temp, test = "Chi")  # same as above
 model_sel_temp3 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(.)
+  knitr::kable(., caption = "No evidence for learning (i.e. trial) differences between populations (pop:trial)")
 ```
 
 <table>
+
+<caption>
+
+No evidence for learning (i.e. trial) differences between populations
+(<pop:trial>)
+
+</caption>
 
 <thead>
 
@@ -688,7 +695,7 @@ LRT
 
 <th style="text-align:left;">
 
-Pr(\>Chi)
+p.value
 
 </th>
 
@@ -828,7 +835,7 @@ tot\_z\_sc:pop
 
 <td style="text-align:left;">
 
-\<0.01
+0.001
 
 </td>
 
@@ -1171,18 +1178,38 @@ tot\_z\_sc:popUpper Aripo
 
 ``` r
 # R squared (delta)
-knitr::kable(t(MuMIn::r.squaredGLMM(m_inno_predict_reduc)),
+knitr::kable(MuMIn::r.squaredGLMM(m_inno_predict_reduc),
       digits = 2, align = "l",
-      caption = "Marginal and conditional R^2")
+      caption = "Marginal and conditional R2")
 ```
 
 <table>
 
 <caption>
 
-Marginal and conditional R^2
+Marginal and conditional R2
 
 </caption>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+R2m
+
+</th>
+
+<th style="text-align:left;">
+
+R2c
+
+</th>
+
+</tr>
+
+</thead>
 
 <tbody>
 
@@ -1190,23 +1217,7 @@ Marginal and conditional R^2
 
 <td style="text-align:left;">
 
-R2m
-
-</td>
-
-<td style="text-align:left;">
-
 0.59
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-R2c
 
 </td>
 

@@ -869,12 +869,12 @@ body {
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a>         site_uni, trial) <span class="op">%&gt;%</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">drop_na</span>() </span></code></pre></div>
 <p>Fit innovation model</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co"># Fit reduced model</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co"># Fit reduced model, see predictors of innovation section for how this model was obtained</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>m_inno_pop_comp &lt;-<span class="st"> </span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">lme</span>(goal_z_lat_LN <span class="op">~</span><span class="st"> </span>pop <span class="op">+</span><span class="st"> </span>trial,</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),  <span class="co"># control for heteroscedasticity</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a>      <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>group,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>      <span class="dt">contrasts =</span> <span class="kw">list</span>(<span class="dt">trial =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)),  <span class="co"># Change trial contrasts in order to get marginal effects for average trial </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a>      <span class="dt">contrasts =</span> <span class="kw">list</span>(<span class="dt">trial =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)),  <span class="co"># Change trial contrasts for marginal effects for average trial </span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a>      <span class="dt">data =</span> data_analysis_NA_inno,</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a>      <span class="dt">method =</span> <span class="st">&quot;REML&quot;</span>)</span></code></pre></div>
 <p>Innovation population comparison model summary</p>
@@ -1010,7 +1010,7 @@ body {
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(learn_prop_LN, pop, group, site_uni) <span class="op">%&gt;%</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">drop_na</span>() </span></code></pre></div>
-<p>Build full model</p>
+<p>Fit learning population comparison model</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>m_learn_pop_comp &lt;-<span class="st"> </span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">gls</span>(learn_prop_LN <span class="op">~</span><span class="st"> </span>pop,</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),</span>
@@ -1141,7 +1141,12 @@ body {
 
 </table>
 
-<p>Reduced learning model (no population differences)</p>
+<p>Reduced learning model</p>
+<ul>
+<li>Remove population to see if there was learning overall</li>
+</ul>
+<!-- end list -->
+
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="co"># update model to intercept only</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a>m_learn &lt;-<span class="st"> </span><span class="kw">update</span>(m_learn_pop_comp, <span class="op">~</span><span class="st"> </span><span class="dv">1</span>)  </span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a></span>
@@ -1221,7 +1226,7 @@ body {
 
 </table>
 
-<h2 id="cleanup-and-final-results">Cleanup and final results</h2>
+<h2 id="all-population-comparison-model-summaries">All population comparison model summaries</h2>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="co"># Bind all population comparisons together</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a>m_pop_comp_final_tidy &lt;-</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">bind_rows</span>(m_learn_pop_comp_tidy, m_inno_pop_comp_tidy,</span>

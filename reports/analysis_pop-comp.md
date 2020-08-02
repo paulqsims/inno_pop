@@ -326,12 +326,12 @@ data_analysis_NA_inno <-
 Fit innovation model
 
 ``` r
-# Fit reduced model
+# Fit reduced model, see predictors of innovation section for how this model was obtained
 m_inno_pop_comp <- 
   lme(goal_z_lat_LN ~ pop + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),  # control for heteroscedasticity
       random = ~ 1 | group,
-      contrasts = list(trial = c(-1,1)),  # Change trial contrasts in order to get marginal effects for average trial 
+      contrasts = list(trial = c(-1,1)),  # Change trial contrasts for marginal effects for average trial 
       data = data_analysis_NA_inno,
       method = "REML")
 ```
@@ -496,7 +496,7 @@ data_analysis_NA_learn <-
   drop_na() 
 ```
 
-Build full model
+Fit learning population comparison model
 
 ``` r
 m_learn_pop_comp <- 
@@ -653,7 +653,11 @@ popUpper Aripo
 
 </table>
 
-Reduced learning model (no population differences)
+Reduced learning model
+
+  - Remove population to see if there was learning overall
+
+<!-- end list -->
 
 ``` r
 # update model to intercept only
@@ -747,7 +751,7 @@ p.value
 
 </table>
 
-## Cleanup and final results
+## All population comparison model summaries
 
 ``` r
 # Bind all population comparisons together

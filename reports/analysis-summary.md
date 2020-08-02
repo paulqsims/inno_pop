@@ -9,7 +9,8 @@ Analysis Summary for Sims and Reader 2020
           - [Innovation: Goal zone
             latency](#innovation-goal-zone-latency)
           - [Learning: Improvement ratio](#learning-improvement-ratio)
-      - [Cleanup and final results](#cleanup-and-final-results)
+      - [All population comparison model
+        summaries](#all-population-comparison-model-summaries)
   - [Analysis: Predictors of
     innovation](#analysis-predictors-of-innovation)
       - [Setup](#setup-1)
@@ -351,12 +352,12 @@ data_analysis_NA_inno <-
 Fit innovation model
 
 ``` r
-# Fit reduced model
+# Fit reduced model, see predictors of innovation section for how this model was obtained
 m_inno_pop_comp <- 
   lme(goal_z_lat_LN ~ pop + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),  # control for heteroscedasticity
       random = ~ 1 | group,
-      contrasts = list(trial = c(-1,1)),  # Change trial contrasts in order to get marginal effects for average trial 
+      contrasts = list(trial = c(-1,1)),  # Change trial contrasts for marginal effects for average trial 
       data = data_analysis_NA_inno,
       method = "REML")
 ```
@@ -521,7 +522,7 @@ data_analysis_NA_learn <-
   drop_na() 
 ```
 
-Build full model
+Fit learning population comparison model
 
 ``` r
 m_learn_pop_comp <- 
@@ -678,7 +679,11 @@ popUpper Aripo
 
 </table>
 
-Reduced learning model (no population differences)
+Reduced learning model
+
+  - Remove population to see if there was learning overall
+
+<!-- end list -->
 
 ``` r
 # update model to intercept only
@@ -772,7 +777,7 @@ p.value
 
 </table>
 
-## Cleanup and final results
+## All population comparison model summaries
 
 ``` r
 # Bind all population comparisons together
@@ -1465,7 +1470,7 @@ LRT
 
 <th style="text-align:left;">
 
-Pr(\>Chi)
+p.value
 
 </th>
 
@@ -1537,7 +1542,7 @@ tot\_z\_sc:pop
 
 <td style="text-align:left;">
 
-\<0.01
+0.002
 
 </td>
 
@@ -1656,7 +1661,7 @@ LRT
 
 <th style="text-align:left;">
 
-Pr(\>Chi)
+p.value
 
 </th>
 
@@ -1762,7 +1767,7 @@ tot\_z\_sc:pop
 
 <td style="text-align:left;">
 
-\<0.01
+\<0.001
 
 </td>
 
@@ -1811,10 +1816,17 @@ m2_temp <- update(m1_temp, ~ . -pop:trial)  # same as above
 model_sel_temp3 <- drop1(m2_temp, test = "Chi")  # same as above
 model_sel_temp3 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(.)
+  knitr::kable(., caption = "No evidence for learning (i.e. trial) differences between populations (pop:trial)")
 ```
 
 <table>
+
+<caption>
+
+No evidence for learning (i.e. trial) differences between populations
+(<pop:trial>)
+
+</caption>
 
 <thead>
 
@@ -1846,7 +1858,7 @@ LRT
 
 <th style="text-align:left;">
 
-Pr(\>Chi)
+p.value
 
 </th>
 
@@ -1986,7 +1998,7 @@ tot\_z\_sc:pop
 
 <td style="text-align:left;">
 
-\<0.01
+0.001
 
 </td>
 
@@ -2329,18 +2341,38 @@ tot\_z\_sc:popUpper Aripo
 
 ``` r
 # R squared (delta)
-knitr::kable(t(MuMIn::r.squaredGLMM(m_inno_predict_reduc)),
+knitr::kable(MuMIn::r.squaredGLMM(m_inno_predict_reduc),
       digits = 2, align = "l",
-      caption = "Marginal and conditional R^2")
+      caption = "Marginal and conditional R2")
 ```
 
 <table>
 
 <caption>
 
-Marginal and conditional R^2
+Marginal and conditional R2
 
 </caption>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+R2m
+
+</th>
+
+<th style="text-align:left;">
+
+R2c
+
+</th>
+
+</tr>
+
+</thead>
 
 <tbody>
 
@@ -2348,23 +2380,7 @@ Marginal and conditional R^2
 
 <td style="text-align:left;">
 
-R2m
-
-</td>
-
-<td style="text-align:left;">
-
 0.59
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-R2c
 
 </td>
 

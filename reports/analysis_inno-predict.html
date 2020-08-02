@@ -860,7 +860,7 @@ body {
 
 <th style="text-align:left;">
 
-<p>Pr(&gt;Chi)</p>
+<p>p.value</p>
 </th>
 
 </tr>
@@ -922,7 +922,7 @@ body {
 
 <td style="text-align:left;">
 
-<p>&lt;0.01</p>
+<p>0.002</p>
 </td>
 
 </tr>
@@ -1023,7 +1023,7 @@ body {
 
 <th style="text-align:left;">
 
-<p>Pr(&gt;Chi)</p>
+<p>p.value</p>
 </th>
 
 </tr>
@@ -1114,7 +1114,7 @@ body {
 
 <td style="text-align:left;">
 
-<p>&lt;0.01</p>
+<p>&lt;0.001</p>
 </td>
 
 </tr>
@@ -1156,8 +1156,13 @@ body {
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>model_sel_temp3 &lt;-<span class="st"> </span><span class="kw">drop1</span>(m2_temp, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)  <span class="co"># same as above</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>model_sel_temp3 <span class="op">%&gt;%</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">rd_stepwise_out</span>(.) <span class="op">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.)</span></code></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(., <span class="dt">caption =</span> <span class="st">&quot;No evidence for learning (i.e. trial) differences between populations (pop:trial)&quot;</span>)</span></code></pre></div>
 <table>
+
+<caption>
+
+<p>No evidence for learning (i.e. trial) differences between populations (<a href="pop:trial">pop:trial</a>)</p>
+</caption>
 
 <thead>
 
@@ -1185,7 +1190,7 @@ body {
 
 <th style="text-align:left;">
 
-<p>Pr(&gt;Chi)</p>
+<p>p.value</p>
 </th>
 
 </tr>
@@ -1305,7 +1310,7 @@ body {
 
 <td style="text-align:left;">
 
-<p>&lt;0.01</p>
+<p>0.001</p>
 </td>
 
 </tr>
@@ -1591,15 +1596,33 @@ body {
 </table>
 
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="co"># R squared (delta)</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">t</span>(MuMIn<span class="op">::</span><span class="kw">r.squaredGLMM</span>(m_inno_predict_reduc)),</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>knitr<span class="op">::</span><span class="kw">kable</span>(MuMIn<span class="op">::</span><span class="kw">r.squaredGLMM</span>(m_inno_predict_reduc),</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>      <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">align =</span> <span class="st">&quot;l&quot;</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>      <span class="dt">caption =</span> <span class="st">&quot;Marginal and conditional R^2&quot;</span>)</span></code></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>      <span class="dt">caption =</span> <span class="st">&quot;Marginal and conditional R2&quot;</span>)</span></code></pre></div>
 <table>
 
 <caption>
 
-<p>Marginal and conditional R^2</p>
+<p>Marginal and conditional R2</p>
 </caption>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+<p>R2m</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>R2c</p>
+</th>
+
+</tr>
+
+</thead>
 
 <tbody>
 
@@ -1607,21 +1630,7 @@ body {
 
 <td style="text-align:left;">
 
-<p>R2m</p>
-</td>
-
-<td style="text-align:left;">
-
 <p>0.59</p>
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>R2c</p>
 </td>
 
 <td style="text-align:left;">
