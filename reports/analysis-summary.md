@@ -1423,7 +1423,8 @@ gls(mod…
 Test significance of interactions
 
 ``` r
-m1_inno_predict_red_fix <-  # Fit full model with ML 
+# Fit full model with ML 
+m1_inno_predict_red_fix <-  
   update(m_inno_predict_full, method = "ML")
 
 # Find largest non-significant p-value for interaction
@@ -2005,7 +2006,7 @@ tot\_z\_sc:pop
 
 ``` r
 # Final model of innovation predictors
-inno_pred_reduc <- update(inno_full_pred, ~ .  # Update model formula
+inno_pred_reduc <- update(inno_full_pred, ~ .  # Update fixef model formula
                             -pop:body_length_sc -pop:trial)
 ```
 

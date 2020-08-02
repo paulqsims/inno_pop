@@ -826,14 +826,15 @@ body {
 
 <h2 id="fixed-effect-selection">Fixed-effect selection</h2>
 <p>Test significance of interactions</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>m1_inno_predict_red_fix &lt;-<span class="st">  </span><span class="co"># Fit full model with ML </span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">update</span>(m_inno_predict_full, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co"># Find largest non-significant p-value for interaction</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>model_sel_temp1 &lt;-<span class="st"> </span><span class="kw">drop1</span>(m1_inno_predict_red_fix, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>model_sel_temp1 <span class="op">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">rd_stepwise_out</span>(.) <span class="op">%&gt;%</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="co"># Fit full model with ML </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>m1_inno_predict_red_fix &lt;-<span class="st">  </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">update</span>(m_inno_predict_full, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="co"># Find largest non-significant p-value for interaction</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>model_sel_temp1 &lt;-<span class="st"> </span><span class="kw">drop1</span>(m1_inno_predict_red_fix, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a>model_sel_temp1 <span class="op">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">rd_stepwise_out</span>(.) <span class="op">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
 <table>
 
 <thead>
@@ -1322,7 +1323,7 @@ body {
 </table>
 
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co"># Final model of innovation predictors</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>inno_pred_reduc &lt;-<span class="st"> </span><span class="kw">update</span>(inno_full_pred, <span class="op">~</span><span class="st"> </span>.  <span class="co"># Update model formula</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>inno_pred_reduc &lt;-<span class="st"> </span><span class="kw">update</span>(inno_full_pred, <span class="op">~</span><span class="st"> </span>.  <span class="co"># Update fixef model formula</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>                            <span class="op">-</span>pop<span class="op">:</span>body_length_sc <span class="op">-</span>pop<span class="op">:</span>trial)</span></code></pre></div>
 <h2 id="final-model-of-predictors-of-innovation">Final model of predictors of innovation</h2>
 <p>Fit final model</p>
