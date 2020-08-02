@@ -91,7 +91,7 @@ m2_temp <- update(m1_temp, ~ . -pop:trial)  # same as above
 model_sel_temp3 <- drop1(m2_temp, test = "Chi")  # same as above
 model_sel_temp3 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(.)
+  knitr::kable(., caption = "No evidence for learning (i.e. trial) differences between populations (pop:trial)")
 
 # Final model of innovation predictors
 inno_pred_reduc <- update(inno_full_pred, ~ .  # Update model formula
