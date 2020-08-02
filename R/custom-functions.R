@@ -5,7 +5,6 @@
 # Date: 2020
 ###############################################################################
 
-
 #### Data manipulation ####
 
 # Mean centers and standardizes (1 SD) vector with NA value removal option
@@ -125,39 +124,3 @@ pretty_PredictTab <- function(modelOutput, title = NULL,
         } else { return(.) }}  # return dataframe, not kable
   }
 }
-
-
-
-
-# Tidy predictor tables
-# pretty_PredictTab <- function(modelOutput, title = NULL,
-#                               mixedModel = FALSE, kable = TRUE) {
-#   # kable = whether or not a kable should be printed
-#   if (mixedModel == TRUE) {
-#       broom.mixed::tidy(modelOutput,
-#                         effects = "fixed") %>%
-#       mutate(across(.cols = c(estimate:statistic), ~round_est(.x)), 
-#              p.value = round_pval(p.value)) %>%
-#       {if (kable == TRUE) {
-#         knitr::kable(., align = "l",
-#                      caption = if (!is.null(title)) {
-#                        paste(title)
-#                      } else { paste("") }
-#         ) %>%
-#           pretty_kable(.)
-#       } else { return(.) }}
-#   } else {
-#     broom::tidy(modelOutput) %>%
-#     mutate(across(.cols = c(estimate:statistic), ~round_est(.x)), 
-#            p.value = round_pval(p.value)) %>%
-#       {if (kable == TRUE) {
-#         knitr::kable(., align = "l",
-#                      caption = if (!is.null(title)) {
-#                        paste(title)
-#                      } else { paste("") }
-#         ) %>%
-#           pretty_kable(.)
-#       } else { return(.) }}
-#   }
-# }
-
