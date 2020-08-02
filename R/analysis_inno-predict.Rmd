@@ -73,7 +73,8 @@ anova(m_inno_predict_full, m1_inno_predict_red_rand) %>%
 Test significance of interactions
 
 ```{r inno-predict-fixef-select}
-m1_inno_predict_red_fix <-  # Fit full model with ML 
+# Fit full model with ML 
+m1_inno_predict_red_fix <-  
   update(m_inno_predict_full, method = "ML")
 
 # Find largest non-significant p-value for interaction
@@ -96,7 +97,7 @@ model_sel_temp3 %>%
   knitr::kable(.)
 
 # Final model of innovation predictors
-inno_pred_reduc <- update(inno_full_pred, ~ .  # Update model formula
+inno_pred_reduc <- update(inno_full_pred, ~ .  # Update fixef model formula
                             -pop:body_length_sc -pop:trial)
 ```
 
