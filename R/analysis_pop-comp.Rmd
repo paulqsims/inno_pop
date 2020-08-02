@@ -105,6 +105,7 @@ m_inno_pop_comp_tidy <-
   pretty_PredictTab(., mixedModel = TRUE, kable = FALSE) %>%
   mutate(response = "goal_zone_lat_LN") %>%
   relocate(response) %>%
+  filter(term != "trial1") %>%  # remove trial output as it is not of interest here
   select(-df)
 
 m_inno_pop_comp_tidy %>%
