@@ -5,6 +5,10 @@
 # Date: 2020
 ################################################################################
 
+# Readme - shows that the repository has been updated
+rmarkdown::render("readme.Rmd", 
+                  output_format = c("html_document", "github_document"))
+
 # Data readme 
 rmarkdown::render("data/data_readme.Rmd", output_dir = "data/",
                   output_format = c("html_document", "github_document"))

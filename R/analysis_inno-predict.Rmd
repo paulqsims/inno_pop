@@ -63,8 +63,7 @@ anova(m_inno_predict_full, m1_inno_predict_red_rand) %>%
   as_tibble(.) %>%
   mutate(call = str_trunc(as.character(.$call), width = 10)) %>%  # condense call
   knitr::kable(., digits = 2, align = "l",
-               caption = "Likielihood ratio test for group random effect") %>%
-  pretty_kable(.)
+               caption = "Likielihood ratio test for group random effect") 
 ```
 
 ## Fixed-effect selection
@@ -79,23 +78,20 @@ m1_inno_predict_red_fix <-  # Fit full model with ML
 model_sel_temp1 <- drop1(m1_inno_predict_red_fix, test = "Chi")
 model_sel_temp1 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.) 
 
 # Remove largest non-significant p-value for interaction and update model and continue process
 m1_temp <- update(m1_inno_predict_red_fix, ~ . -pop:body_length_sc)  # Remove most non-sig interactions
 model_sel_temp2 <- drop1(m1_temp, test = "Chi")  # Update model and check remaining sig interactions
 model_sel_temp2 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.)
 
 m2_temp <- update(m1_temp, ~ . -pop:trial)  # same as above
 model_sel_temp3 <- drop1(m2_temp, test = "Chi")  # same as above
 model_sel_temp3 %>%
   rd_stepwise_out(.) %>%
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.)
 
 # Final model of innovation predictors
 inno_pred_reduc <- update(inno_full_pred, ~ .  # Update model formula
@@ -126,13 +122,11 @@ Final model summary
 # Tidy model output
 pretty_PredictTab(m_inno_predict_reduc,
                   title = "Predictors of goal zone latency",
-                  mixedModel = TRUE) %>%
-  pretty_kable(.)
+                  mixedModel = TRUE) 
 
 # R squared (delta)
 knitr::kable(t(MuMIn::r.squaredGLMM(m_inno_predict_reduc)),
       digits = 2, align = "l",
-      caption = "Marginal and conditional R^2") %>%
-pretty_kable(.)
+      caption = "Marginal and conditional R^2")
 ```
 

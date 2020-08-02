@@ -21,7 +21,7 @@ R Markdown files can be rendered by sourcing
 [render-Rmd.R](https://github.com/paulqsims/inno_pop/blob/master/R/render-Rmd.R)
 in `R/`
 
-**Last update**: 2020-07-28
+**Last update**: 2020-08-02
 
 ## Authors
 
@@ -42,37 +42,481 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
 
 R version 3.6.3 (2020-02-29)
 
-| Package\_Name | Version | Function      |
-| :------------ | :------ | :------------ |
-| tidyverse     | 1.3.0   | Data clean up |
-| broom         | 0.7.0   | Data clean up |
-| broom.mixed   | 0.2.6   | Data clean up |
-| nlme          | 3.1.148 | Analyses      |
-| MuMIn         | 1.43.17 | Analyses      |
-| ggplot2       | 3.3.2   | Plots         |
-| ggsignif      | 0.6.0   | Plots         |
-| scales        | 1.1.1   | Plots         |
-| effects       | 4.1.4   | Plots         |
-| rprojroot     | 1.3.2   | Miscellaneous |
-| rmarkdown     | 2.3     | Miscellaneous |
-| knitr         | 1.29    | Miscellaneous |
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Package\_Name
+
+</th>
+
+<th style="text-align:left;">
+
+Version
+
+</th>
+
+<th style="text-align:left;">
+
+Function
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+tidyverse
+
+</td>
+
+<td style="text-align:left;">
+
+1.3.0
+
+</td>
+
+<td style="text-align:left;">
+
+Data clean up
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+broom
+
+</td>
+
+<td style="text-align:left;">
+
+0.7.0
+
+</td>
+
+<td style="text-align:left;">
+
+Data clean up
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+broom.mixed
+
+</td>
+
+<td style="text-align:left;">
+
+0.2.6
+
+</td>
+
+<td style="text-align:left;">
+
+Data clean up
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+nlme
+
+</td>
+
+<td style="text-align:left;">
+
+3.1.148
+
+</td>
+
+<td style="text-align:left;">
+
+Analyses
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+MuMIn
+
+</td>
+
+<td style="text-align:left;">
+
+1.43.17
+
+</td>
+
+<td style="text-align:left;">
+
+Analyses
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+ggplot2
+
+</td>
+
+<td style="text-align:left;">
+
+3.3.2
+
+</td>
+
+<td style="text-align:left;">
+
+Plots
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+ggsignif
+
+</td>
+
+<td style="text-align:left;">
+
+0.6.0
+
+</td>
+
+<td style="text-align:left;">
+
+Plots
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+scales
+
+</td>
+
+<td style="text-align:left;">
+
+1.1.1
+
+</td>
+
+<td style="text-align:left;">
+
+Plots
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+effects
+
+</td>
+
+<td style="text-align:left;">
+
+4.1.4
+
+</td>
+
+<td style="text-align:left;">
+
+Plots
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+rprojroot
+
+</td>
+
+<td style="text-align:left;">
+
+1.3.2
+
+</td>
+
+<td style="text-align:left;">
+
+Miscellaneous
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+rmarkdown
+
+</td>
+
+<td style="text-align:left;">
+
+2.3
+
+</td>
+
+<td style="text-align:left;">
+
+Miscellaneous
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+knitr
+
+</td>
+
+<td style="text-align:left;">
+
+1.29
+
+</td>
+
+<td style="text-align:left;">
+
+Miscellaneous
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 ## Metadata
 
 Reference file:
 [data\_Sims-Reader\_2020.csv](https://github.com/paulqsims/inno_pop/blob/master/data/data_Sims-Reader_2020.csv)
 
-| Column       | Description                                                                                    |
-| :----------- | :--------------------------------------------------------------------------------------------- |
-| pop          | Population: Lower or upper Aripo                                                               |
-| site         | Site sampled                                                                                   |
-| site\_uni    | Unique site identifier                                                                         |
-| trial        | Trial: 1 or 2                                                                                  |
-| group        | Group id                                                                                       |
-| goal\_z\_lat | Latency to reach the goal zone, zone 11, (sec)                                                 |
-| tot\_z       | Total zones entered                                                                            |
-| body\_length | Body length (mm)                                                                               |
-| learn\_prop  | Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1 |
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+Column
+
+</th>
+
+<th style="text-align:left;">
+
+Description
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+pop
+
+</td>
+
+<td style="text-align:left;">
+
+Population: Lower or upper Aripo
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+site
+
+</td>
+
+<td style="text-align:left;">
+
+Site sampled
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+site\_uni
+
+</td>
+
+<td style="text-align:left;">
+
+Unique site identifier
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+trial
+
+</td>
+
+<td style="text-align:left;">
+
+Trial: 1 or 2
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+group
+
+</td>
+
+<td style="text-align:left;">
+
+Group id
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+goal\_z\_lat
+
+</td>
+
+<td style="text-align:left;">
+
+Latency to reach the goal zone, zone 11, (sec)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+tot\_z
+
+</td>
+
+<td style="text-align:left;">
+
+Total zones entered
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+body\_length
+
+</td>
+
+<td style="text-align:left;">
+
+Body length (mm)
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+learn\_prop
+
+</td>
+
+<td style="text-align:left;">
+
+Improvement ratio learning measure = goal zone latency on trial 2/goal
+zone latency on trial 1
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
   - Missing values are input as `NA` text
 

@@ -23,7 +23,7 @@ Reference file: [data_Sims-Reader_2020.csv](https://github.com/paulqsims/inno_po
 library(tidyverse)
 
 data_analysis <- 
-  read_csv("./data_Sims-Reader_2020.csv")
+  read_csv("data/data_Sims-Reader_2020.csv")
 
 # Write out descriptions associated with each column header
 var_names <- names(data_analysis)

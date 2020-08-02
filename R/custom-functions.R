@@ -80,16 +80,6 @@ rd_stepwise_out <- function(stepwiseOutput) {
 
 #### Kable and Tidy functions ####
 
-# Print pretty kable tables
-#  - Colors every other row
-#  - Aligns cell text to the left within the table
-pretty_kable <- function(kableOutput) {
-  kableOutput %>%
-    kableExtra::kable_styling(bootstrap_options = c("striped", "hover",
-                                                    "condensed"),
-                              position = "left")
-}
-
 # Kable title and alignment
 #  - Creates title and aligns table location on page
 kable_title <- function(kableTable, title) {

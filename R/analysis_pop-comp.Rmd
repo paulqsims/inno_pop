@@ -109,8 +109,7 @@ m_inno_pop_comp_tidy <-
   select(-df)
 
 m_inno_pop_comp_tidy %>%
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.) 
 ```
 
 ### Learning: Improvement ratio
@@ -147,8 +146,7 @@ m_learn_pop_comp_tidy <-
 
 # Model summary
 m_learn_pop_comp_tidy %>%
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.) 
 ```
 
 Reduced learning model (no population differences)
@@ -158,8 +156,7 @@ Reduced learning model (no population differences)
 m_learn <- update(m_learn_pop_comp, ~ 1)  
 
 # Model summary: learning overall
-pretty_PredictTab(m_learn) %>%
-  pretty_kable(.)
+pretty_PredictTab(m_learn)
 ```
 
 ## Cleanup and final results
@@ -172,7 +169,6 @@ m_pop_comp_final_tidy <-
   rename(predictor = "term")
 
 m_pop_comp_final_tidy %>% # See reduced inno predictor model for trial measure of learning
-  knitr::kable(.) %>%
-  pretty_kable(.)
+  knitr::kable(.) 
 ```
 
