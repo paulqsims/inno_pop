@@ -653,159 +653,987 @@ body {
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a>      <span class="dt">data =</span> data_analysis_NA_inno,</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a>      <span class="dt">method =</span> <span class="st">&quot;REML&quot;</span>)</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a><span class="kw">anova</span>(m_inno_predict_full, m1_inno_predict_red_rand)  <span class="co"># Likelihood ratio test</span></span></code></pre></div>
-<pre><code>##                          Model df      AIC      BIC    logLik   Test
-## m_inno_predict_full          1 13 246.2637 276.7331 -110.1318       
-## m1_inno_predict_red_rand     2 12 246.9630 275.0886 -111.4815 1 vs 2
-##                          L.Ratio p-value
-## m_inno_predict_full                     
-## m1_inno_predict_red_rand 2.69932  0.1004
-</code></pre>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a><span class="co"># Likelihood ratio test</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a><span class="kw">anova</span>(m_inno_predict_full, m1_inno_predict_red_rand) <span class="op">%&gt;%</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a><span class="st">  </span><span class="kw">as_tibble</span>(.) <span class="op">%&gt;%</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">call =</span> <span class="kw">str_trunc</span>(<span class="kw">as.character</span>(.<span class="op">$</span>call), <span class="dt">width =</span> <span class="dv">10</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># condense call</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(., <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">align =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true"></a>               <span class="dt">caption =</span> <span class="st">&quot;Likielihood ratio test for group random effect&quot;</span>) </span></code></pre></div>
+<table>
+
+<caption>
+
+<p>Likielihood ratio test for group random effect</p>
+</caption>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+<p>call</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>Model</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>df</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>AIC</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>BIC</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>logLik</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>Test</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>L.Ratio</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>p-value</p>
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>lme.for…</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>13</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>246.26</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>276.73</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>-110.13</p>
+</td>
+
+<td style="text-align:left;">
+
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>gls(mod…</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>2</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>12</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>246.96</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>275.09</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>-111.48</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1 vs 2</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>2.7</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.1</p>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
 <h2 id="fixed-effect-selection">Fixed-effect selection</h2>
 <p>Test significance of interactions</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>m1_inno_predict_red_fix &lt;-<span class="st">  </span><span class="co"># Fit full model with ML </span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">update</span>(m_inno_predict_full, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="co"># Find largest non-significant p-value for interaction</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>model_sel_temp1 &lt;-<span class="st"> </span><span class="kw">drop1</span>(m1_inno_predict_red_fix, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a>model_sel_temp1</span></code></pre></div>
-<pre><code>## Single term deletions
-## 
-## Model:
-## goal_z_lat_LN ~ tot_z_sc * pop + body_length_sc * pop + trial * 
-##     pop
-##                    Df    AIC    LRT Pr(&gt;Chi)   
-## &lt;none&gt;                233.03                   
-## tot_z_sc:pop        1 240.94 9.9154 0.001639 **
-## pop:body_length_sc  1 231.12 0.0909 0.763003   
-## pop:trial           1 231.58 0.5545 0.456505   
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co"># Remove largest non-significant p-value for interaction and update model and continue process</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>m1_temp &lt;-<span class="st"> </span><span class="kw">update</span>(m1_inno_predict_red_fix, <span class="op">~</span><span class="st"> </span>. <span class="op">-</span>pop<span class="op">:</span>body_length_sc)  <span class="co"># Remove most non-sig interactions</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>model_sel_temp2 &lt;-<span class="st"> </span><span class="kw">drop1</span>(m1_temp, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)  <span class="co"># Update model and check remaining sig interactions</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a>model_sel_temp2</span></code></pre></div>
-<pre><code>## Single term deletions
-## 
-## Model:
-## goal_z_lat_LN ~ tot_z_sc + pop + body_length_sc + trial + tot_z_sc:pop + 
-##     pop:trial
-##                Df    AIC     LRT  Pr(&gt;Chi)    
-## &lt;none&gt;            231.12                      
-## body_length_sc  1 229.47  0.3503 0.5539512    
-## tot_z_sc:pop    1 240.27 11.1526 0.0008391 ***
-## pop:trial       1 229.67  0.5513 0.4577859    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a>m2_temp &lt;-<span class="st"> </span><span class="kw">update</span>(m1_temp, <span class="op">~</span><span class="st"> </span>. <span class="op">-</span>pop<span class="op">:</span>trial)  <span class="co"># same as above</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a>model_sel_temp3 &lt;-<span class="st"> </span><span class="kw">drop1</span>(m2_temp, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)  <span class="co"># same as above</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>model_sel_temp3</span></code></pre></div>
-<pre><code>## Single term deletions
-## 
-## Model:
-## goal_z_lat_LN ~ tot_z_sc + pop + body_length_sc + trial + tot_z_sc:pop
-##                Df    AIC     LRT Pr(&gt;Chi)   
-## &lt;none&gt;            229.67                    
-## body_length_sc  1 228.09  0.4196 0.517130   
-## trial           1 228.08  0.4095 0.522243   
-## tot_z_sc:pop    1 238.44 10.7692 0.001032 **
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="co"># Final model of innovation predictors</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>inno_pred_reduc &lt;-<span class="st"> </span><span class="kw">update</span>(inno_full_pred, <span class="op">~</span><span class="st"> </span>.  <span class="co"># Update model formula</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a>                            <span class="op">-</span>pop<span class="op">:</span>body_length_sc <span class="op">-</span>pop<span class="op">:</span>trial)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>m1_inno_predict_red_fix &lt;-<span class="st">  </span><span class="co"># Fit full model with ML </span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">update</span>(m_inno_predict_full, <span class="dt">method =</span> <span class="st">&quot;ML&quot;</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="co"># Find largest non-significant p-value for interaction</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>model_sel_temp1 &lt;-<span class="st"> </span><span class="kw">drop1</span>(m1_inno_predict_red_fix, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>model_sel_temp1 <span class="op">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">rd_stepwise_out</span>(.) <span class="op">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+<p>Variable</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>Df</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>AIC</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>LRT</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>Pr(&gt;Chi)</p>
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>&lt;none&gt;</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>233.03</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>tot_z_sc:pop</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>240.94</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>9.92</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>&lt;0.01</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p><a href="pop:body_length_sc">pop:body_length_sc</a></p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>231.12</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.09</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.76</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p><a href="pop:trial">pop:trial</a></p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>231.58</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.55</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.46</p>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="co"># Remove largest non-significant p-value for interaction and update model and continue process</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>m1_temp &lt;-<span class="st"> </span><span class="kw">update</span>(m1_inno_predict_red_fix, <span class="op">~</span><span class="st"> </span>. <span class="op">-</span>pop<span class="op">:</span>body_length_sc)  <span class="co"># Remove most non-sig interactions</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a>model_sel_temp2 &lt;-<span class="st"> </span><span class="kw">drop1</span>(m1_temp, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)  <span class="co"># Update model and check remaining sig interactions</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>model_sel_temp2 <span class="op">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">rd_stepwise_out</span>(.) <span class="op">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.)</span></code></pre></div>
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+<p>Variable</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>Df</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>AIC</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>LRT</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>Pr(&gt;Chi)</p>
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>&lt;none&gt;</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>231.12</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>body_length_sc</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>229.47</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.35</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.55</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>tot_z_sc:pop</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>240.27</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>11.15</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>&lt;0.01</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p><a href="pop:trial">pop:trial</a></p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>229.67</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.55</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.46</p>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>m2_temp &lt;-<span class="st"> </span><span class="kw">update</span>(m1_temp, <span class="op">~</span><span class="st"> </span>. <span class="op">-</span>pop<span class="op">:</span>trial)  <span class="co"># same as above</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>model_sel_temp3 &lt;-<span class="st"> </span><span class="kw">drop1</span>(m2_temp, <span class="dt">test =</span> <span class="st">&quot;Chi&quot;</span>)  <span class="co"># same as above</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>model_sel_temp3 <span class="op">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">rd_stepwise_out</span>(.) <span class="op">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.)</span></code></pre></div>
+<table>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+<p>Variable</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>Df</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>AIC</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>LRT</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>Pr(&gt;Chi)</p>
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>&lt;none&gt;</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>229.67</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>NA</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>body_length_sc</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>228.09</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.42</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.52</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>trial</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>228.08</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.41</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.52</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>tot_z_sc:pop</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>238.44</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>10.77</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>&lt;0.01</p>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="co"># Final model of innovation predictors</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a>inno_pred_reduc &lt;-<span class="st"> </span><span class="kw">update</span>(inno_full_pred, <span class="op">~</span><span class="st"> </span>.  <span class="co"># Update model formula</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a>                            <span class="op">-</span>pop<span class="op">:</span>body_length_sc <span class="op">-</span>pop<span class="op">:</span>trial)</span></code></pre></div>
 <h2 id="final-model-of-predictors-of-innovation">Final model of predictors of innovation</h2>
 <p>Fit final model</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="co"># Relevel population for testing total zones slope in other population</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="co"># data_analysis_NA_inno$pop &lt;- relevel(data_analysis_NA_inno$pop, &quot;Upper Aripo&quot;)  # Upper Aripo baseline</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="co"># data_analysis_NA_inno$pop &lt;- relevel(data_analysis_NA_inno$pop, &quot;Lower Aripo&quot;)  # Lower Aripo baseline, original </span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true"></a><span class="co"># Change trial contrasts in order to get marginal effects for average trial </span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true"></a><span class="kw">contrasts</span>(data_analysis_NA_inno<span class="op">$</span>trial) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true"></a><span class="co">#contrasts(data_analysis_NA_inno$trial) # check</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true"></a><span class="co"># For changing trial back to dummy coding</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true"></a><span class="co"># contrasts(data_analysis_NA_inno$trial) &lt;- c(0,1)</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true"></a><span class="co"># contrasts(data_analysis_NA_inno$trial) # check</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true"></a><span class="co"># Fit final reduced model</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true"></a>m_inno_predict_reduc &lt;-<span class="st"> </span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true"></a><span class="st">  </span><span class="kw">lme</span>(inno_pred_reduc,</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true"></a>      <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>group,</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true"></a>      <span class="dt">data =</span> data_analysis_NA_inno)</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true"></a></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true"></a><span class="co"># Model summary</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true"></a><span class="kw">summary</span>(m_inno_predict_reduc)</span></code></pre></div>
-<pre><code>## Linear mixed-effects model fit by REML
-##  Data: data_analysis_NA_inno 
-##        AIC     BIC    logLik
-##   243.2391 269.303 -110.6196
-## 
-## Random effects:
-##  Formula: ~1 | group
-##         (Intercept)  Residual
-## StdDev:   0.4860656 0.3338968
-## 
-## Variance function:
-##  Structure: Different standard deviations per stratum
-##  Formula: ~1 | site_uni * pop 
-##  Parameter estimates:
-## Lower Aripo 1*Lower Aripo Upper Aripo 2*Upper Aripo 
-##                  1.000000                  2.096746 
-## Lower Aripo 2*Lower Aripo Upper Aripo 3*Upper Aripo 
-##                  3.033792                  2.253602 
-## Fixed effects: list(inno_pred_reduc) 
-##                             Value  Std.Error DF   t-value p-value
-## (Intercept)              4.083566 0.23692451 40 17.235727  0.0000
-## tot_z_sc                -0.747702 0.19251774 39 -3.883808  0.0004
-## popUpper Aripo          -0.734853 0.28064841 39 -2.618412  0.0125
-## body_length_sc          -0.075530 0.11729392 39 -0.643940  0.5234
-## trial1                  -0.044648 0.06844658 40 -0.652308  0.5179
-## tot_z_sc:popUpper Aripo  0.917738 0.24549205 39  3.738360  0.0006
-##  Correlation: 
-##                         (Intr) tt_z_s ppUppA bdy_l_ trial1
-## tot_z_sc                 0.608                            
-## popUpper Aripo          -0.856 -0.494                     
-## body_length_sc           0.125 -0.192 -0.204              
-## trial1                   0.006 -0.003  0.011  0.002       
-## tot_z_sc:popUpper Aripo -0.470 -0.795  0.277  0.207 -0.015
-## 
-## Standardized Within-Group Residuals:
-##        Min         Q1        Med         Q3        Max 
-## -2.4189402 -0.8045606  0.1283831  0.6176297  2.2319472 
-## 
-## Number of Observations: 85
-## Number of Groups: 44
-</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="co"># R2</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a>MuMIn<span class="op">::</span><span class="kw">r.squaredGLMM</span>(m_inno_predict_reduc)</span></code></pre></div>
-<pre><code>##            R2m       R2c
-## [1,] 0.5882877 0.8680057
-</code></pre>
-<p>Tidy final model summary</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>m_inno_predict_final_tidy &lt;-</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a><span class="st">  </span>m_inno_predict_reduc <span class="op">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a><span class="st">  </span>broom.mixed<span class="op">::</span><span class="kw">tidy</span>() <span class="op">%&gt;%</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(effect <span class="op">==</span><span class="st"> &quot;fixed&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="kw">across</span>(<span class="dt">.cols =</span> <span class="kw">c</span>(estimate<span class="op">:</span>statistic), <span class="op">~</span><span class="kw">round_est</span>(.x)),</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a>         <span class="dt">p_value =</span> <span class="kw">round_pval</span>(p.value)) <span class="op">%&gt;%</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(<span class="st">&quot;term&quot;</span>, <span class="st">&quot;estimate&quot;</span>,<span class="st">&quot;std.error&quot;</span>, <span class="st">&quot;statistic&quot;</span>, <span class="st">&quot;p_value&quot;</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a>m_inno_predict_final_tidy</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 5
-##   term                    estimate std.error statistic p_value
-##   &lt;chr&gt;                   &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;  
-## 1 (Intercept)             4.08     0.24      17.24     &lt;0.001 
-## 2 tot_z_sc                -0.75    0.19      -3.88     &lt;0.001 
-## 3 popUpper Aripo          -0.73    0.28      -2.62     0.013  
-## 4 body_length_sc          -0.08    0.12      -0.64     0.52   
-## 5 trial1                  -0.04    0.07      -0.65     0.52   
-## 6 tot_z_sc:popUpper Aripo 0.92     0.25      3.74      &lt;0.001
-</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="co"># Relevel population for testing total zones slope in other population</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="co"># data_analysis_NA_inno$pop &lt;- relevel(data_analysis_NA_inno$pop, &quot;Upper Aripo&quot;)  # Upper Aripo baseline</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="co"># data_analysis_NA_inno$pop &lt;- relevel(data_analysis_NA_inno$pop, &quot;Lower Aripo&quot;)  # Lower Aripo baseline, original </span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="co"># Fit final reduced model</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true"></a>m_inno_predict_reduc &lt;-<span class="st"> </span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">lme</span>(inno_pred_reduc,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true"></a>      <span class="dt">random =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span> <span class="op">|</span><span class="st"> </span>group,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true"></a>      <span class="dt">contrasts =</span> <span class="kw">list</span>(<span class="dt">trial =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)),  <span class="co"># Change trial contrasts in order to get marginal effects for average trial </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true"></a>      <span class="dt">data =</span> data_analysis_NA_inno)</span></code></pre></div>
+<p>Final model summary</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="co"># Tidy model output</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="kw">pretty_PredictTab</span>(m_inno_predict_reduc,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a>                  <span class="dt">title =</span> <span class="st">&quot;Predictors of goal zone latency&quot;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true"></a>                  <span class="dt">mixedModel =</span> <span class="ot">TRUE</span>) </span></code></pre></div>
+<table>
+
+<caption>
+
+<p>Predictors of goal zone latency</p>
+</caption>
+
+<thead>
+
+<tr>
+
+<th style="text-align:left;">
+
+<p>term</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>estimate</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>std.error</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>df</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>statistic</p>
+</th>
+
+<th style="text-align:left;">
+
+<p>p.value</p>
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>(Intercept)</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>4.08</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.24</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>40</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>17.24</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>&lt;0.001</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>tot_z_sc</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>-0.75</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.19</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>39</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>-3.88</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>&lt;0.001</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>popUpper Aripo</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>-0.73</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.28</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>39</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>-2.62</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.013</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>body_length_sc</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>-0.08</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.12</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>39</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>-0.64</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.52</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>trial1</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>-0.04</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.07</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>40</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>-0.65</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.52</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>tot_z_sc:popUpper Aripo</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.92</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.25</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>39</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>3.74</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>&lt;0.001</p>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="co"># R squared (delta)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">t</span>(MuMIn<span class="op">::</span><span class="kw">r.squaredGLMM</span>(m_inno_predict_reduc)),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>      <span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">align =</span> <span class="st">&quot;l&quot;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>      <span class="dt">caption =</span> <span class="st">&quot;Marginal and conditional R^2&quot;</span>)</span></code></pre></div>
+<table>
+
+<caption>
+
+<p>Marginal and conditional R^2</p>
+</caption>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>R2m</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.59</p>
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+<p>R2c</p>
+</td>
+
+<td style="text-align:left;">
+
+<p>0.87</p>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
 
 </body>
 </html>
