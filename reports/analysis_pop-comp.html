@@ -650,216 +650,64 @@ body {
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">lm</span>(body_length_LN <span class="op">~</span><span class="st"> </span>pop, <span class="dt">data =</span> .) <span class="op">%&gt;%</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pretty_PredictTab</span>(.)</span></code></pre></div>
 <table>
-
-<caption>
-
-</caption>
-
 <thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-<p>term</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>estimate</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>std.error</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>statistic</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>p.value</p>
-</th>
-
+<tr class="header">
+<th align="left">term</th>
+<th align="left">estimate</th>
+<th align="left">std.error</th>
+<th align="left">statistic</th>
+<th align="left">p.value</th>
 </tr>
-
 </thead>
-
 <tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>(Intercept)</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>3</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.03</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>101.11</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>&lt;0.001</p>
-</td>
-
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="left">3</td>
+<td align="left">0.03</td>
+<td align="left">101.11</td>
+<td align="left">&lt;0.001</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>popUpper Aripo</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.07</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.04</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>1.84</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.073</p>
-</td>
-
+<tr class="even">
+<td align="left">popUpper Aripo</td>
+<td align="left">0.07</td>
+<td align="left">0.04</td>
+<td align="left">1.84</td>
+<td align="left">0.073</td>
 </tr>
-
 </tbody>
-
 </table>
-
 <p>Total zones entered population comparison model summary</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>data_analysis <span class="op">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(trial <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">lm</span>(tot_z_LN <span class="op">~</span><span class="st"> </span>pop, <span class="dt">data =</span> .) <span class="op">%&gt;%</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">pretty_PredictTab</span>(.)</span></code></pre></div>
 <table>
-
-<caption>
-
-</caption>
-
 <thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-<p>term</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>estimate</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>std.error</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>statistic</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>p.value</p>
-</th>
-
+<tr class="header">
+<th align="left">term</th>
+<th align="left">estimate</th>
+<th align="left">std.error</th>
+<th align="left">statistic</th>
+<th align="left">p.value</th>
 </tr>
-
 </thead>
-
 <tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>(Intercept)</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>4.27</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.08</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>53.56</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>&lt;0.001</p>
-</td>
-
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="left">4.27</td>
+<td align="left">0.08</td>
+<td align="left">53.56</td>
+<td align="left">&lt;0.001</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>popUpper Aripo</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.28</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.1</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>2.76</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.009</p>
-</td>
-
+<tr class="even">
+<td align="left">popUpper Aripo</td>
+<td align="left">0.28</td>
+<td align="left">0.1</td>
+<td align="left">2.76</td>
+<td align="left">0.009</td>
 </tr>
-
 </tbody>
-
 </table>
-
 <h3 id="innovation-goal-zone-latency">Innovation: Goal zone latency</h3>
 <p>Fit innovation model</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="co"># Create a data set without NAs - `lme()` won&#39;t remove them</span></span>
@@ -869,7 +717,7 @@ body {
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>         site_uni, trial) <span class="op">%&gt;%</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">drop_na</span>() </span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="co"># Fit reduced model, see predictors of innovation section for how this model was obtained</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a><span class="co"># Fit population comparison model</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>m_inno_pop_comp &lt;-<span class="st"> </span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">lme</span>(goal_z_lat_LN <span class="op">~</span><span class="st"> </span>pop <span class="op">+</span><span class="st"> </span>trial,</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>      <span class="dt">weights =</span> <span class="kw">varIdent</span>(<span class="dt">form =</span> <span class="op">~</span><span class="st"> </span><span class="dv">1</span><span class="op">|</span>site_uni <span class="op">*</span><span class="st"> </span>pop),  <span class="co"># control for heteroscedasticity</span></span>
@@ -890,119 +738,35 @@ body {
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a>m_inno_pop_comp_tidy <span class="op">%&gt;%</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
 <table>
-
 <thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-<p>response</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>term</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>estimate</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>std.error</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>statistic</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>p.value</p>
-</th>
-
+<tr class="header">
+<th align="left">response</th>
+<th align="left">term</th>
+<th align="left">estimate</th>
+<th align="left">std.error</th>
+<th align="left">statistic</th>
+<th align="left">p.value</th>
 </tr>
-
 </thead>
-
 <tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>goal_zone_lat_LN</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>(Intercept)</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>3.96</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.19</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>20.67</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>&lt;0.001</p>
-</td>
-
+<tr class="odd">
+<td align="left">goal_zone_lat_LN</td>
+<td align="left">(Intercept)</td>
+<td align="left">3.96</td>
+<td align="left">0.19</td>
+<td align="left">20.67</td>
+<td align="left">&lt;0.001</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>goal_zone_lat_LN</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>popUpper Aripo</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.56</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.22</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-2.53</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.015</p>
-</td>
-
+<tr class="even">
+<td align="left">goal_zone_lat_LN</td>
+<td align="left">popUpper Aripo</td>
+<td align="left">-0.56</td>
+<td align="left">0.22</td>
+<td align="left">-2.53</td>
+<td align="left">0.015</td>
 </tr>
-
 </tbody>
-
 </table>
-
 <h3 id="learning-improvement-ratio">Learning: Improvement ratio</h3>
 <p>Fit learning population comparison model</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="co"># Create dataset without NAs - `lme()` won&#39;t remove them</span></span>
@@ -1029,119 +793,35 @@ body {
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true"></a>m_learn_pop_comp_tidy <span class="op">%&gt;%</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
 <table>
-
 <thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-<p>response</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>term</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>estimate</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>std.error</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>statistic</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>p.value</p>
-</th>
-
+<tr class="header">
+<th align="left">response</th>
+<th align="left">term</th>
+<th align="left">estimate</th>
+<th align="left">std.error</th>
+<th align="left">statistic</th>
+<th align="left">p.value</th>
 </tr>
-
 </thead>
-
 <tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>improvement_ratio</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>(Intercept)</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.01</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.18</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.08</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.94</p>
-</td>
-
+<tr class="odd">
+<td align="left">improvement_ratio</td>
+<td align="left">(Intercept)</td>
+<td align="left">-0.01</td>
+<td align="left">0.18</td>
+<td align="left">-0.08</td>
+<td align="left">0.94</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>improvement_ratio</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>popUpper Aripo</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.23</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.28</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.82</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.42</p>
-</td>
-
+<tr class="even">
+<td align="left">improvement_ratio</td>
+<td align="left">popUpper Aripo</td>
+<td align="left">-0.23</td>
+<td align="left">0.28</td>
+<td align="left">-0.82</td>
+<td align="left">0.42</td>
 </tr>
-
 </tbody>
-
 </table>
-
 <p>Reduced learning model</p>
 <ul>
 <li>Remove population to see if there was learning overall</li>
@@ -1154,79 +834,25 @@ body {
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="co"># Model summary: learning overall</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a><span class="kw">pretty_PredictTab</span>(m_learn)</span></code></pre></div>
 <table>
-
-<caption>
-
-</caption>
-
 <thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-<p>term</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>estimate</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>std.error</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>statistic</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>p.value</p>
-</th>
-
+<tr class="header">
+<th align="left">term</th>
+<th align="left">estimate</th>
+<th align="left">std.error</th>
+<th align="left">statistic</th>
+<th align="left">p.value</th>
 </tr>
-
 </thead>
-
 <tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>(Intercept)</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.09</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.14</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.7</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.49</p>
-</td>
-
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="left">-0.09</td>
+<td align="left">0.14</td>
+<td align="left">-0.7</td>
+<td align="left">0.49</td>
 </tr>
-
 </tbody>
-
 </table>
-
 <h2 id="all-population-comparison-model-summaries">All population comparison model summaries</h2>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="co"># Bind all population comparisons together</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a>m_pop_comp_final_tidy &lt;-</span>
@@ -1237,321 +863,82 @@ body {
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true"></a>m_pop_comp_final_tidy <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># See reduced inno predictor model for trial measure of learning</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>(.) </span></code></pre></div>
 <table>
-
 <thead>
-
-<tr>
-
-<th style="text-align:left;">
-
-<p>response</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>predictor</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>estimate</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>std.error</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>statistic</p>
-</th>
-
-<th style="text-align:left;">
-
-<p>p.value</p>
-</th>
-
+<tr class="header">
+<th align="left">response</th>
+<th align="left">predictor</th>
+<th align="left">estimate</th>
+<th align="left">std.error</th>
+<th align="left">statistic</th>
+<th align="left">p.value</th>
 </tr>
-
 </thead>
-
 <tbody>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>improvement_ratio</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>(Intercept)</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.01</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.18</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.08</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.94</p>
-</td>
-
+<tr class="odd">
+<td align="left">improvement_ratio</td>
+<td align="left">(Intercept)</td>
+<td align="left">-0.01</td>
+<td align="left">0.18</td>
+<td align="left">-0.08</td>
+<td align="left">0.94</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>improvement_ratio</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>popUpper Aripo</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.23</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.28</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.82</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.42</p>
-</td>
-
+<tr class="even">
+<td align="left">improvement_ratio</td>
+<td align="left">popUpper Aripo</td>
+<td align="left">-0.23</td>
+<td align="left">0.28</td>
+<td align="left">-0.82</td>
+<td align="left">0.42</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>goal_zone_lat_LN</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>(Intercept)</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>3.96</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.19</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>20.67</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>&lt;0.001</p>
-</td>
-
+<tr class="odd">
+<td align="left">goal_zone_lat_LN</td>
+<td align="left">(Intercept)</td>
+<td align="left">3.96</td>
+<td align="left">0.19</td>
+<td align="left">20.67</td>
+<td align="left">&lt;0.001</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>goal_zone_lat_LN</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>popUpper Aripo</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-0.56</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.22</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>-2.53</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.015</p>
-</td>
-
+<tr class="even">
+<td align="left">goal_zone_lat_LN</td>
+<td align="left">popUpper Aripo</td>
+<td align="left">-0.56</td>
+<td align="left">0.22</td>
+<td align="left">-2.53</td>
+<td align="left">0.015</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>body_length_LN</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>(Intercept)</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>3</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.03</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>101.11</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>&lt;0.001</p>
-</td>
-
+<tr class="odd">
+<td align="left">body_length_LN</td>
+<td align="left">(Intercept)</td>
+<td align="left">3</td>
+<td align="left">0.03</td>
+<td align="left">101.11</td>
+<td align="left">&lt;0.001</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>body_length_LN</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>popUpper Aripo</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.07</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.04</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>1.84</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.073</p>
-</td>
-
+<tr class="even">
+<td align="left">body_length_LN</td>
+<td align="left">popUpper Aripo</td>
+<td align="left">0.07</td>
+<td align="left">0.04</td>
+<td align="left">1.84</td>
+<td align="left">0.073</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>tot_z_LN</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>(Intercept)</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>4.27</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.08</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>53.56</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>&lt;0.001</p>
-</td>
-
+<tr class="odd">
+<td align="left">tot_z_LN</td>
+<td align="left">(Intercept)</td>
+<td align="left">4.27</td>
+<td align="left">0.08</td>
+<td align="left">53.56</td>
+<td align="left">&lt;0.001</td>
 </tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-<p>tot_z_LN</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>popUpper Aripo</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.28</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.1</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>2.76</p>
-</td>
-
-<td style="text-align:left;">
-
-<p>0.009</p>
-</td>
-
+<tr class="even">
+<td align="left">tot_z_LN</td>
+<td align="left">popUpper Aripo</td>
+<td align="left">0.28</td>
+<td align="left">0.1</td>
+<td align="left">2.76</td>
+<td align="left">0.009</td>
 </tr>
-
 </tbody>
-
 </table>
 
 </body>
