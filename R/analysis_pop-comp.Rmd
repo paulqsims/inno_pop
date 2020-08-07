@@ -82,7 +82,7 @@ data_analysis_NA_inno <-
          site_uni, trial) %>%
   drop_na() 
 
-# Fit reduced model, see predictors of innovation section for how this model was obtained
+# Fit population comparison model
 m_inno_pop_comp <- 
   lme(goal_z_lat_LN ~ pop + trial,
       weights = varIdent(form = ~ 1|site_uni * pop),  # control for heteroscedasticity
