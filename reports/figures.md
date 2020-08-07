@@ -127,7 +127,7 @@ p <- ggplot(data_inno_mean_plot,
 print(p)
 ```
 
-![](../figs/pop-comp-inno-1.png)<!-- -->
+![](../figs/Figure2-Pop-Comp-Inno-1.png)<!-- -->
 
 ## Innovation predicted by total zones entered
 
@@ -217,4 +217,4 @@ p <- ggplot(data_inno_mean_plot,
 print(p)
 ```
 
-![](../figs/inno-predict-total-zones-1.png)<!-- -->
+![](../figs/Figure3-Inno-Predict-Total-Zones-1.png)<!-- -->

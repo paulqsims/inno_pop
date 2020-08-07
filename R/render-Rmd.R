@@ -23,3 +23,4 @@ for (i in seq_along(docs_to_render)) {
                     output_format = c("html_document",
                                       "github_document"))
 }
+
