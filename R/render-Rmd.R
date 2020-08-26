@@ -18,9 +18,7 @@ docs_to_render <-
   c("R/analysis_pop-comp.Rmd", "R/analysis_inno-predict.Rmd",
                     "R/analysis-summary.Rmd", "R/figures.Rmd") 
 
-for (i in seq_along(docs_to_render)) {
-  rmarkdown::render(docs_to_render[i], output_dir = "reports/",
-                    output_format = c("html_document",
-                                      "github_document"))
+for (doc in seq_along(docs_to_render)) {
+  rmarkdown::render(docs_to_render[doc], output_dir = "reports/",
+                    output_format = NULL)
 }
-
