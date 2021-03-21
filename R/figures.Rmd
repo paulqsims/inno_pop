@@ -98,7 +98,7 @@ p <- ggplot(data_inno_mean_plot,
                 size = 1.25) +
   geom_signif(comparisons = list(c("Lower Aripo", "Upper Aripo")),  # significance brackets 
               map_signif_level = T, annotation = "*", vjust = 0.65, 
-              y_position = 6.6, color = "black", size = 1,
+              y_position = 6.2, color = "black", size = 1,
               textsize = 12, fontface = "bold") +
   xlab("Population") +
   ylab(expression(paste(bold(Goal~zone~latency~log)[italic(e)]~bold((sec))~bold(""%+-%"")*bold("95"*"%"~C.I.)))) +
@@ -108,7 +108,7 @@ p <- ggplot(data_inno_mean_plot,
   scale_y_continuous(trans = "log",  # transforming Y axis to log scale
                      breaks = scales::trans_breaks("log", function(x) exp(x)), 
                      labels = scales::number_format(accuracy = 1)) +
-  coord_trans(y = 'log') +  # transforming Y axis to log scale
+  #coord_trans(y = 'log') +  # transforming Y axis to log scale
   theme_bw() +
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(), 
