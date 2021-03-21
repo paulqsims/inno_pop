@@ -186,7 +186,7 @@ p <- ggplot(data_inno_mean_plot,
                 linetype = Population),
             size = 1.4) +
   xlab("Total zones entered (standardized)") +
-  ylab(expression(paste(bold(Goal~zone~latency~log)[italic(e)]~bold((sec))))) +
+  ylab(expression(paste(bold(Goal~zone~latency)~bold((sec))))) +
   scale_color_manual(values = c("#E41A1C", "#377EB8","#377EB8"),
                      name = "Population") +
   scale_shape_discrete(name = "Population") + 
