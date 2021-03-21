@@ -108,52 +108,6 @@ m_inno_pop_comp_tidy %>%
   knitr::kable(.) 
 ```
 
-### Learning: Improvement ratio
-
-Fit learning population comparison model
-
-```{r learn-fit}
-# Create dataset without NAs - `lme()` won't remove them
-data_analysis_NA_learn <-
-  data_analysis %>%
-  filter(trial == 1) %>%
-  select(learn_prop_LN, pop, group, site_uni) %>%
-  drop_na() 
-
-m_learn_pop_comp <- 
-  gls(learn_prop_LN ~ pop,
-      weights = varIdent(form = ~ 1|site_uni * pop),
-      data = data_analysis_NA_learn,
-      method = "REML")
-```
-
-Population differences in learning model summary
-
-```{r pop-comp-learn}
-# Tidy learning population comparison model
-m_learn_pop_comp_tidy <-
-  m_learn_pop_comp %>%
-  pretty_PredictTab(., mixedModel = TRUE, kable = FALSE) %>%
-  mutate(response = "improvement_ratio") %>%
-  relocate(response)
-
-# Model summary
-m_learn_pop_comp_tidy %>%
-  knitr::kable(.) 
-```
-
-Reduced learning model 
-
-- Remove population to see if there was learning overall
-
-```{r learn-no-pop}
-# update model to intercept only
-m_learn <- update(m_learn_pop_comp, ~ 1)  
-
-# Model summary: learning overall
-pretty_PredictTab(m_learn)
-```
-
 ## All population comparison model summaries
 
 ```{r}
