@@ -101,7 +101,7 @@ p <- ggplot(data_inno_mean_plot,
               y_position = 6.2, color = "black", size = 1,
               textsize = 12, fontface = "bold") +
   xlab("Population") +
-  ylab(expression(paste(bold(Goal~zone~latency~log)[italic(e)]~bold((sec))~bold(""%+-%"")*bold("95"*"%"~C.I.)))) +
+  ylab(expression(paste(bold(Goal~zone~latency)~bold((sec))~bold(""%+-%"")*bold("95"*"%"~C.I.)))) +
   scale_color_manual(values = c("#E41A1C", "#377EB8","#377EB8"),
                      name = "Population") +
   scale_shape_discrete(name = "Population") + 
