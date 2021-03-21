@@ -22,7 +22,7 @@ R Markdown files can be rendered by sourcing
 [render-Rmd.R](https://github.com/paulqsims/inno_pop/blob/master/R/render-Rmd.R)
 in `R/`
 
-**Last update**: 2020-08-07
+**Last update**: 2021-03-21
 
 ## Authors
 
@@ -41,39 +41,38 @@ Simon M. Reader (<simon.reader@mcgill.ca>)
 
 ## Prerequisites: R version and R packages
 
-R version 3.6.3 (2020-02-29)
+R version 4.0.4 (2021-02-15)
 
 | Package\_Name | Version | Function      |
 | :------------ | :------ | :------------ |
 | tidyverse     | 1.3.0   | Data clean up |
-| broom         | 0.7.0   | Data clean up |
+| broom         | 0.7.5   | Data clean up |
 | broom.mixed   | 0.2.6   | Data clean up |
-| nlme          | 3.1.148 | Analyses      |
+| nlme          | 3.1.152 | Analyses      |
 | MuMIn         | 1.43.17 | Analyses      |
-| ggplot2       | 3.3.2   | Plots         |
-| ggsignif      | 0.6.0   | Plots         |
+| ggplot2       | 3.3.3   | Plots         |
+| ggsignif      | 0.6.1   | Plots         |
 | scales        | 1.1.1   | Plots         |
-| effects       | 4.1.4   | Plots         |
-| rprojroot     | 1.3.2   | Miscellaneous |
-| rmarkdown     | 2.3     | Miscellaneous |
-| knitr         | 1.29    | Miscellaneous |
+| effects       | 4.2.0   | Plots         |
+| rprojroot     | 2.0.2   | Miscellaneous |
+| rmarkdown     | 2.7     | Miscellaneous |
+| knitr         | 1.31    | Miscellaneous |
 
 ## Metadata
 
 Reference file:
 [data\_Sims-Reader\_2020.csv](https://github.com/paulqsims/inno_pop/blob/master/data/data_Sims-Reader_2020.csv)
 
-| Column       | Description                                                                                    |
-| :----------- | :--------------------------------------------------------------------------------------------- |
-| pop          | Population: Lower or upper Aripo                                                               |
-| site         | Site sampled                                                                                   |
-| site\_uni    | Unique site identifier                                                                         |
-| trial        | Trial: 1 or 2                                                                                  |
-| group        | Group id                                                                                       |
-| goal\_z\_lat | Latency to reach the goal zone, zone 11, (sec)                                                 |
-| tot\_z       | Total zones entered                                                                            |
-| body\_length | Body length (mm)                                                                               |
-| learn\_prop  | Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1 |
+| Column       | Description                                    |
+| :----------- | :--------------------------------------------- |
+| pop          | Population: Lower or upper Aripo               |
+| site         | Site sampled                                   |
+| site\_uni    | Unique site identifier                         |
+| trial        | Trial: 1 or 2                                  |
+| group        | Group id                                       |
+| goal\_z\_lat | Latency to reach the goal zone, zone 11, (sec) |
+| tot\_z       | Total zones entered                            |
+| body\_length | Body length (mm)                               |
 
   - Missing values are input as `NA` text
 
