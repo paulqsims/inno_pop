@@ -113,7 +113,7 @@ m_inno_pop_comp_tidy %>%
 ```{r}
 # Bind all population comparisons together
 m_pop_comp_final_tidy <-
-  bind_rows(m_learn_pop_comp_tidy, m_inno_pop_comp_tidy,
+  bind_rows(m_inno_pop_comp_tidy,
             m_length_totz_popcomp_tidy) %>%
   rename(predictor = "term")
 
