@@ -22,7 +22,7 @@ R Markdown files can be rendered by sourcing
 [render-Rmd.R](https://github.com/paulqsims/inno_pop/blob/master/R/render-Rmd.R)
 in `R/`
 
-**Last update**: 2021-03-21
+**Last update**: 2021-03-22
 
 ## Authors
 
