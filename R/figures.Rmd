@@ -5,13 +5,13 @@
 - Purpose: Plots for Sims and Reader 2020
 
 ```{r figures-opts}
-knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
-                     eval = TRUE, echo = TRUE, message = FALSE,
-                     warning = FALSE)
 knitr::opts_chunk$set(root.dir = rprojroot::find_rstudio_root_file(),
                       fig.path = "../figs/",
-                     eval = TRUE, echo = TRUE, message = FALSE,
+                     eval = TRUE, echo = FALSE, message = FALSE,
                      warning = FALSE, dev = c("png", "pdf"), dpi = 300)
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file(),
+                     eval = TRUE, echo = FALSE, message = FALSE,
+                     warning = FALSE)
 ```
 
 ## Setup
@@ -71,6 +71,14 @@ data_inno_means <-
 # Plot estimated mean of innovation for each population
 # data points represent raw latency values, averaged across trials
 
+# Get custom y label values and breaks and add to custom_labels.y
+# round(exp(seq(from = 1,to = 6, by = 1)), digits = 0)
+custom_labels.y <- c(expression(atop("20","(e"^3*")")),
+                     expression(atop("55","(e"^4*")")),
+                     expression(atop("148","(e"^5*")")),
+                     expression(atop("403","(e"^6*")")))
+custom_breaks.y <- round(exp(seq(from = 3,to = 6, by = 1)), digits = 0)
+
 p <- ggplot(data_inno_mean_plot,  
             aes(x = pop,
                 y = inno_mean,
@@ -98,7 +106,7 @@ p <- ggplot(data_inno_mean_plot,
                 size = 1.25) +
   geom_signif(comparisons = list(c("Lower Aripo", "Upper Aripo")),  # significance brackets 
               map_signif_level = T, annotation = "*", vjust = 0.65, 
-              y_position = 6.2, color = "black", size = 1,
+              y_position = 6.3, color = "black", size = 1,
               textsize = 12, fontface = "bold") +
   xlab("Population") +
   ylab(expression(paste(bold(Goal~zone~latency)~bold((sec))~bold(""%+-%"")*bold("95"*"%"~C.I.)))) +
@@ -106,8 +114,8 @@ p <- ggplot(data_inno_mean_plot,
                      name = "Population") +
   scale_shape_discrete(name = "Population") + 
   scale_y_continuous(trans = "log",  # transforming Y axis to log scale
-                     breaks = scales::trans_breaks("log", function(x) exp(x)), 
-                     labels = scales::number_format(accuracy = 1)) +
+                     breaks = custom_breaks.y, 
+                     labels = custom_labels.y) +
   #coord_trans(y = 'log') +  # transforming Y axis to log scale
   theme_bw() +
   theme(panel.grid.major = element_blank(),
