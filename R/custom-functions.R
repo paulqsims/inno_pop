@@ -103,14 +103,16 @@ pretty_PredictTab <- function(modelOutput, title = NULL,
     broom.mixed::tidy(modelOutput,
                       effects = "fixed") %>%
     rd_tidy_out(.) %>%  # round tidy output
-      {if (kable == TRUE) {  # return kable
+      {
+        if (kable == TRUE) {  # return kable
         kable_title(., title)  # modify kable title and alignment
-      } else { return(.) }}  # return dataframe, not kable
+      } else { print(.) }
+        }  # return dataframe, not kable
   } else {  # if not a mixed model
     broom::tidy(modelOutput) %>%
       rd_tidy_out(.) %>%  # round tidy output
         {if (kable == TRUE) {
           kable_title(., title)  # modify kable title and alignment
-        } else { return(.) }}  # return dataframe, not kable
+        } else { print(.) }}  # return dataframe, not kable
   }
 }
