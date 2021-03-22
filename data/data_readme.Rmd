@@ -35,8 +35,7 @@ var_descrip <- c(
   "Group id",
   "Latency to reach the goal zone, zone 11, (sec)",
   "Total zones entered",
-  "Body length (mm)",
-  "Improvement ratio learning measure = goal zone latency on trial 2/goal zone latency on trial 1")
+  "Body length (mm)")
 
 var_metadata <- tibble(var_names,var_descrip) %>%
                   rename(Column = "var_names", Description = "var_descrip")
