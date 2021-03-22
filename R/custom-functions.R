@@ -25,7 +25,7 @@ read_mod_data <- function(data) {
     mutate(across(where(is.character), ~ as_factor(.x)),
            trial = as.factor(trial),
            across(.cols = c(goal_z_lat, body_length,  # log transformations
-                            learn_prop, tot_z),  
+                            tot_z),  
                   ~ log(.x),
                   .names = "{col}_LN"),  # add log suffix
            across(.cols = c(body_length, tot_z),  
