@@ -103,7 +103,7 @@ m_inno_pop_comp_tidy <-
   relocate(response) %>%
   filter(term != "trial1") %>%  # remove trial output as it is not of interest here
   select(-df)
-
+ 
 m_inno_pop_comp_tidy %>%
   knitr::kable(.) 
 ```
